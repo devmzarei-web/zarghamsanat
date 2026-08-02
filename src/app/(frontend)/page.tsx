@@ -10,18 +10,21 @@ import CertificationsStrip from '@/components/CertificationsStrip/Certifications
 
 export const revalidate = 60 // ISR: revalidate every 60 seconds
 
+import { seedDatabase } from '@/seed'
+
 async function getHomePageData() {
   try {
     const payload = await getPayloadClient()
 
-    const [siteSettings, stats, services, projects, clients, certificates, homePageDoc] = await Promise.all([
+    let servicesRes = await payload.find({ collection: 'services', sort: 'order', limit: 10 })
+    if (servicesRes.docs.length === 0) {
+      await seedDatabase()
+      servicesRes = await payload.find({ collection: 'services', sort: 'order', limit: 10 })
+    }
+
+    const [siteSettings, stats, projects, clients, certificates, homePageDoc] = await Promise.all([
       payload.findGlobal({ slug: 'site-settings' }),
       payload.findGlobal({ slug: 'stats' }),
-      payload.find({
-        collection: 'services',
-        sort: 'order',
-        limit: 10,
-      }),
       payload.find({
         collection: 'projects',
         where: { featured: { equals: true } },
@@ -48,7 +51,7 @@ async function getHomePageData() {
       JSON.stringify({
         siteSettings,
         stats,
-        services: services?.docs ?? [],
+        services: servicesRes?.docs ?? [],
         projects: projects?.docs ?? [],
         clients: clients?.docs ?? [],
         certificates: certificates?.docs ?? [],
