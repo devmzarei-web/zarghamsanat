@@ -31,13 +31,13 @@ export const Projects: CollectionConfig = {
       name: 'location',
       type: 'text',
       label: 'محل اجرا',
-      required: true,
+      required: false,
     },
     {
       name: 'client',
       type: 'text',
       label: 'کارفرما',
-      required: true,
+      required: false,
     },
     {
       name: 'serviceDescription',
@@ -62,7 +62,7 @@ export const Projects: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       label: 'تصویر شاخص',
-      required: true,
+      required: false,
     },
     {
       name: 'beforeAfterImages',
