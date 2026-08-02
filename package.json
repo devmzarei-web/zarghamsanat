@@ -1,0 +1,39 @@
+{
+  "name": "zarghamsanat",
+  "version": "1.0.0",
+  "description": "ضرغام صنعت اروند - وب‌سایت رسمی شرکت",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "payload": "payload"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.6.0",
+    "@payloadcms/db-postgres": "^3.87.0",
+    "@payloadcms/next": "^3.87.0",
+    "@payloadcms/richtext-lexical": "^3.87.0",
+    "graphql": "^16.14.2",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.25",
+    "lucide-react": "^1.28.0",
+    "next": "^16.2.12",
+    "payload": "^3.87.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-hook-form": "^7.84.0",
+    "sharp": "^0.35.3",
+    "swiper": "^14.0.7",
+    "zod": "^4.4.3"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3"
+  }
+}

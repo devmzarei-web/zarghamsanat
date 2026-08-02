@@ -1,0 +1,95 @@
+.bar {
+  background: var(--white);
+  border-top: 4px solid var(--safety-orange-500);
+  border-bottom: 1px solid var(--pipeline-grey-200);
+  padding-block: 2.75rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 10;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-6);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+  padding: 1.25rem var(--space-4);
+  border-radius: var(--radius-xl);
+  transition: all var(--transition-base);
+  cursor: default;
+  background: var(--off-white);
+  border: 1px solid var(--pipeline-grey-200);
+}
+
+.item:hover {
+  background: var(--white);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--safety-orange-500);
+}
+
+.iconWrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--safety-orange-100);
+  border: 2px solid var(--safety-orange-500);
+  color: var(--safety-orange-600);
+  transition: all var(--transition-base);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+}
+
+.item:hover .iconWrap {
+  background: var(--safety-orange-500);
+  border-color: var(--safety-orange-500);
+  color: var(--white);
+  transform: scale(1.1) rotate(4deg);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.title {
+  font-size: var(--text-base);
+  font-weight: 800;
+  color: var(--carbon-black);
+  font-family: var(--font-heading);
+}
+
+.desc {
+  font-size: var(--text-xs);
+  color: var(--pipeline-grey-600);
+  line-height: 1.6;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .list { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+  .item:last-child {
+    grid-column: span 2;
+  }
+}

@@ -1,0 +1,91 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loading);
+  background: var(--navy-900);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: inset(0 0 0% 0);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.logoWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.zMark {
+  width: 90px;
+  height: 90px;
+  animation: spinGlow 3s ease-in-out infinite;
+}
+
+@keyframes spinGlow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(201, 146, 42, 0.6)); }
+  50% { filter: drop-shadow(0 0 20px rgba(201, 146, 42, 1)); }
+}
+
+.companyName {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nameMain {
+  font-family: var(--font-persian);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+.nameSub {
+  font-family: var(--font-persian);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 500;
+  color: var(--gold-400);
+  letter-spacing: 0.05em;
+}
+
+.progressBar {
+  width: min(300px, 80vw);
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold-600), var(--gold-400), var(--gold-300));
+  border-radius: 9999px;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(201, 146, 42, 0.6);
+}
+
+.tagline {
+  font-family: var(--font-persian);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.1em;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
