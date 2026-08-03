@@ -1,6 +1,6 @@
 admin@zarghamsanat.ir
 
-Zargham@2026
+ZarghamAdmin2026!Secure
 
 
 # 1. Open PostgreSQL CLI as postgres user

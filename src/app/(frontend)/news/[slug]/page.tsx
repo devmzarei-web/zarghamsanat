@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { getPayloadClient } from '@/lib/payload'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 interface Params { params: Promise<{ slug: string }> }
 

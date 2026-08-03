@@ -73,6 +73,17 @@ const CAPABILITIES = [
   },
 ]
 
+const getMediaUrl = (mediaObj: any): string | null => {
+  if (!mediaObj) return null
+  if (typeof mediaObj === 'string') return mediaObj
+  if (typeof mediaObj === 'object' && mediaObj !== null) {
+    if (mediaObj.url) return mediaObj.url
+    if (mediaObj.sizes?.card?.url) return mediaObj.sizes.card.url
+    if (mediaObj.sizes?.thumbnail?.url) return mediaObj.sizes.thumbnail.url
+  }
+  return null
+}
+
 interface CapabilitiesSectionProps {
   services?: any[]
 }
@@ -99,7 +110,7 @@ export default function CapabilitiesSection({ services = [] }: CapabilitiesSecti
             const isActive = activeIndex === index
             
             // Handle CMS data structure vs Fallback data
-            const iconUrl = typeof item.icon === 'object' && item.icon?.url ? item.icon.url : null
+            const iconUrl = getMediaUrl(item.icon)
             const IconComponent = typeof item.icon === 'function' ? item.icon : null
             const title = item.title
             const desc = item.shortDescription || item.desc || ''

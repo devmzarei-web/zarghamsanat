@@ -24,6 +24,17 @@ interface ClientLogosProps {
   projects?: Project[]
 }
 
+const getMediaUrl = (mediaObj: any): string | null => {
+  if (!mediaObj) return null
+  if (typeof mediaObj === 'string') return mediaObj
+  if (typeof mediaObj === 'object' && mediaObj !== null) {
+    if (mediaObj.url) return mediaObj.url
+    if (mediaObj.sizes?.card?.url) return mediaObj.sizes.card.url
+    if (mediaObj.sizes?.thumbnail?.url) return mediaObj.sizes.thumbnail.url
+  }
+  return null
+}
+
 export default function ClientLogos({ clients, projects = [] }: ClientLogosProps) {
   const displayClients = clients && clients.length > 0 ? clients : DEFAULT_CLIENTS
   const [selectedClient, setSelectedClient] = useState<Client | null>(null)
@@ -42,7 +53,7 @@ export default function ClientLogos({ clients, projects = [] }: ClientLogosProps
 
           <div className={styles.grid}>
             {displayClients.map((client, i) => {
-              const logoUrl = typeof client.logo === 'object' && client.logo?.url ? client.logo.url : null
+              const logoUrl = getMediaUrl(client.logo)
 
               return (
                 <ScrollReveal key={client.id || i} animation="zoom-in" delay={i * 50}>

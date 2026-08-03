@@ -4,7 +4,8 @@ import { MapPin, Building, ChevronLeft } from 'lucide-react'
 import { getPayloadClient } from '@/lib/payload'
 import PageHero from '@/components/PageHero/PageHero'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 async function getProjectsPageData() {
   try {
@@ -109,7 +110,7 @@ export default async function ProjectsPage() {
 
   try {
     const payload = await getPayloadClient()
-    const result = await payload.find({ collection: 'projects', sort: 'order', limit: 50 })
+    const result = await payload.find({ collection: 'projects', sort: 'order', limit: 100 })
     const docs = JSON.parse(JSON.stringify(result?.docs ?? []))
     if (docs.length > 0) projects = docs
   } catch (_) {}
@@ -127,46 +128,55 @@ export default async function ProjectsPage() {
       <section className="section">
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
-            {projects.map((project: any) => (
-              <article
-                key={project.id}
-                style={{
-                  background: 'var(--white)',
-                  borderRadius: 'var(--radius-xl)',
-                  overflow: 'hidden',
-                  boxShadow: 'var(--shadow-md)',
-                  border: '1px solid var(--gray-100)',
-                  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                }}
-                className="card"
-              >
-                <div style={{ position: 'relative', height: '220px', background: 'var(--navy-800)' }}>
-                  {project.coverImage ? (
-                    <img
-                      src={project.coverImage.url}
-                      alt={project.coverImage.alt || project.title}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  ) : (
-                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.2)', fontSize: '3rem' }}>
-                      🏗️
-                    </div>
-                  )}
-                </div>
-                <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--navy-900)' }}>
-                    {project.title}
-                  </h2>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
-                      <Building size={12} style={{ color: 'var(--gold-500)' }} />
-                      {project.client}
-                    </span>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
-                      <MapPin size={12} style={{ color: 'var(--gold-500)' }} />
-                      {project.location}
-                    </span>
+            {projects.map((project: any) => {
+              const clientName = typeof project.clientRelation === 'object' && project.clientRelation?.name
+                ? project.clientRelation.name
+                : project.client
+
+              return (
+                <article
+                  key={project.id}
+                  style={{
+                    background: 'var(--white)',
+                    borderRadius: 'var(--radius-xl)',
+                    overflow: 'hidden',
+                    boxShadow: 'var(--shadow-md)',
+                    border: '1px solid var(--gray-100)',
+                    transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+                  }}
+                  className="card"
+                >
+                  <div style={{ position: 'relative', height: '220px', background: 'var(--navy-800)' }}>
+                    {project.coverImage ? (
+                      <img
+                        src={project.coverImage.url}
+                        alt={project.coverImage.alt || project.title}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    ) : (
+                      <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.2)', fontSize: '3rem' }}>
+                        🏗️
+                      </div>
+                    )}
                   </div>
+                  <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--navy-900)' }}>
+                      {project.title}
+                    </h2>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                      {clientName && (
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
+                          <Building size={12} style={{ color: 'var(--gold-500)' }} />
+                          {clientName}
+                        </span>
+                      )}
+                      {project.location && (
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
+                          <MapPin size={12} style={{ color: 'var(--gold-500)' }} />
+                          {project.location}
+                        </span>
+                      )}
+                    </div>
                   <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     {project.serviceDescription}
                   </p>
@@ -175,7 +185,7 @@ export default async function ProjectsPage() {
                   </Link>
                 </div>
               </article>
-            ))}
+            )})}
           </div>
         </div>
       </section>

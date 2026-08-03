@@ -5,7 +5,8 @@ import { toPersianDigits } from '@/lib/utils'
 import ContactForm from '@/components/ContactForm/ContactForm'
 import PageHero from '@/components/PageHero/PageHero'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 async function getContactData() {
   try {

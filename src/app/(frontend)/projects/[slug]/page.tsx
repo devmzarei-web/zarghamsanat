@@ -5,7 +5,8 @@ import { MapPin, Building, ChevronLeft, Calendar, Award, FileCheck } from 'lucid
 import { getPayloadClient } from '@/lib/payload'
 import ProjectSatisfactionCard from '@/components/ProjectSatisfactionCard/ProjectSatisfactionCard'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 interface Params { params: Promise<{ slug: string }> }
 

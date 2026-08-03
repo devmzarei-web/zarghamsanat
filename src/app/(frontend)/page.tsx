@@ -8,21 +8,19 @@ import ServicesSection from '@/components/ServicesSection/ServicesSection'
 import ClientLogos from '@/components/ClientLogos/ClientLogos'
 import CertificationsStrip from '@/components/CertificationsStrip/CertificationsStrip'
 
-export const revalidate = 60 // ISR: revalidate every 60 seconds
-
-import { seedDatabase } from '@/seed'
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 async function getHomePageData() {
   try {
     const payload = await getPayloadClient()
 
-    let servicesRes = await payload.find({ collection: 'services', sort: 'order', limit: 10 })
-    if (servicesRes.docs.length === 0) {
-      await seedDatabase()
-      servicesRes = await payload.find({ collection: 'services', sort: 'order', limit: 10 })
-    }
-
-    const [siteSettings, stats, projects, clients, certificates, homePageDoc] = await Promise.all([
+    const [servicesRes, siteSettings, stats, projects, clients, certificates, homePageDoc] = await Promise.all([
+      payload.find({
+        collection: 'services',
+        sort: 'order',
+        limit: 100,
+      }),
       payload.findGlobal({ slug: 'site-settings' }),
       payload.findGlobal({ slug: 'stats' }),
       payload.find({
@@ -33,11 +31,11 @@ async function getHomePageData() {
       payload.find({
         collection: 'clients',
         sort: 'order',
-        limit: 30,
+        limit: 100,
       }),
       payload.find({
         collection: 'certificates',
-        limit: 10,
+        limit: 100,
       }),
       payload.find({
         collection: 'pages',
@@ -58,6 +56,7 @@ async function getHomePageData() {
       })
     )
   } catch (e) {
+    console.error('Error fetching homepage CMS data:', e)
     return null
   }
 }

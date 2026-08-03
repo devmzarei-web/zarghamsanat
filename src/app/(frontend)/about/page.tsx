@@ -5,7 +5,8 @@ import PageHero from '@/components/PageHero/PageHero'
 
 import { toPersianDigits } from '@/lib/utils'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 async function getAboutData() {
   try {
