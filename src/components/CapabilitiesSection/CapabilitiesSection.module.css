@@ -87,10 +87,9 @@
 }
 
 .cmsIcon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
 }
 
 /* Body */

@@ -29,6 +29,7 @@ const getMediaUrl = (mediaObj: any): string | null => {
   if (typeof mediaObj === 'string') return mediaObj
   if (typeof mediaObj === 'object' && mediaObj !== null) {
     if (mediaObj.url) return mediaObj.url
+    if (mediaObj.filename) return `/media/${mediaObj.filename}`
     if (mediaObj.sizes?.card?.url) return mediaObj.sizes.card.url
     if (mediaObj.sizes?.thumbnail?.url) return mediaObj.sizes.thumbnail.url
   }
@@ -38,6 +39,15 @@ const getMediaUrl = (mediaObj: any): string | null => {
 export default function ClientLogos({ clients, projects = [] }: ClientLogosProps) {
   const displayClients = clients && clients.length > 0 ? clients : DEFAULT_CLIENTS
   const [selectedClient, setSelectedClient] = useState<Client | null>(null)
+
+  // Prioritize clients with uploaded logos so they appear first
+  const sortedClients = [...displayClients].sort((a, b) => {
+    const hasLogoA = Boolean(getMediaUrl(a.logo))
+    const hasLogoB = Boolean(getMediaUrl(b.logo))
+    if (hasLogoA && !hasLogoB) return -1
+    if (!hasLogoA && hasLogoB) return 1
+    return (a.order ?? 0) - (b.order ?? 0)
+  })
 
   return (
     <>
@@ -52,7 +62,7 @@ export default function ClientLogos({ clients, projects = [] }: ClientLogosProps
           </ScrollReveal>
 
           <div className={styles.grid}>
-            {displayClients.map((client, i) => {
+            {sortedClients.map((client, i) => {
               const logoUrl = getMediaUrl(client.logo)
 
               return (

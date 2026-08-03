@@ -8,6 +8,7 @@ import styles from './EmployerModal.module.css'
 export interface Client {
   id: string
   name: string
+  order?: number
   logo?: { url: string; alt?: string }
 }
 
