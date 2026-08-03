@@ -22,7 +22,7 @@ interface HeaderProps {
     companyName?: string
     tagline?: string
     phone1?: string
-    logo?: { url?: string } | string
+    logo?: { url?: string; filename?: string } | string
   }
 }
 
@@ -30,10 +30,14 @@ export default function Header({ settings }: HeaderProps) {
   const phone = settings?.phone1 || '061-53328646'
   const companyName = settings?.companyName || 'ضرغام صنعت اروند'
   const tagline = settings?.tagline || 'پیمانکاری، صنعتی، پایپینگ و مکانیکال'
-  const logoUrl =
-    settings?.logo && typeof settings.logo === 'object' && settings.logo.url
-      ? settings.logo.url
-      : '/images/Zargham-Logo.png'
+  let logoUrl = '/images/Zargham-Logo.png'
+  if (settings?.logo && typeof settings.logo === 'object') {
+    if (settings.logo.url) logoUrl = settings.logo.url
+    else if (settings.logo.filename) logoUrl = `/media/${settings.logo.filename}`
+  } else if (typeof settings?.logo === 'string') {
+    logoUrl = settings.logo
+  }
+
   const headerRef = useRef<HTMLElement>(null)
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
