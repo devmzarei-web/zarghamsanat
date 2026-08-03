@@ -1,5 +1,5 @@
 import React from 'react'
-import { toPersianDigits } from '@/lib/utils'
+import { toPersianDigits, formatShamsiYearMonth } from '@/lib/utils'
 import styles from './ProjectSignboard.module.css'
 
 interface ProjectSignboardProps {
@@ -77,14 +77,14 @@ export default function ProjectSignboard({
           {startDate && (
             <div className={styles.row}>
               <span className={styles.label}>تاریخ شروع:</span>
-              <span className={styles.value}>{toPersianDigits(startDate)}</span>
+              <span className={styles.value}>{formatShamsiYearMonth(startDate)}</span>
             </div>
           )}
 
           {completionDate && (
             <div className={styles.row}>
               <span className={styles.label}>تاریخ تحویل / پایان:</span>
-              <span className={styles.value}>{toPersianDigits(completionDate)}</span>
+              <span className={styles.value}>{formatShamsiYearMonth(completionDate)}</span>
             </div>
           )}
 

@@ -21,35 +21,7 @@ export default function ProjectSatisfactionCard({
 
   return (
     <>
-      <div style={{
-        background: 'var(--gray-50)',
-        border: '1.5px solid var(--gray-200)',
-        borderRadius: 'var(--radius-xl)',
-        padding: '2rem',
-        marginTop: '2.5rem',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-          <div style={{
-            width: 40, height: 40, borderRadius: '50%',
-            background: 'rgba(201,146,42,0.12)', border: '1.5px solid rgba(201,146,42,0.3)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold-500)',
-          }}>
-            <Award size={22} />
-          </div>
-          <div>
-            <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 800, color: 'var(--navy-900)', fontFamily: 'var(--font-heading)' }}>
-              رضایت‌نامه و تاییدیه حسن انجام کار کارفرما
-            </h3>
-            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
-              صادر شده توسط {clientName}
-            </span>
-          </div>
-        </div>
-
-        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-          {notes || `شرکت ${clientName} طی این رضایت‌نامه رسمی، کیفیت اجرا، مدیریت زمان‌بندی و رعایت کامل الزامات فنی و ایمنی در پروژه ${projectTitle} توسط شرکت ضرغام صنعت اروند را تایید نموده است.`}
-        </p>
-
+      <div style={{ marginTop: '1rem' }}>
         {/* Thumbnail viewer trigger */}
         <div
           onClick={() => setIsOpen(true)}

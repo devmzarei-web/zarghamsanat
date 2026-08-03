@@ -31,3 +31,26 @@ export function getServiceUrl(slug?: string): string {
   return `/services/${clean}`
 }
 
+/**
+ * Format any ISO date string to Shamsi Year and Month (e.g., بهمن ۱۴۰۴)
+ */
+export function formatShamsiYearMonth(dateStr?: string): string {
+  if (!dateStr) return ''
+  const str = String(dateStr).trim()
+  if (str.length <= 7 && !str.includes('T') && !str.includes('-')) {
+    return toPersianDigits(str)
+  }
+  try {
+    const d = new Date(str)
+    if (isNaN(d.getTime())) return toPersianDigits(str)
+    const formatter = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+      year: 'numeric',
+      month: 'long',
+    })
+    return formatter.format(d)
+  } catch (_) {
+    return toPersianDigits(str)
+  }
+}
+
+
