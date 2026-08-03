@@ -199,12 +199,82 @@ export default async function ProjectDetailPage({ params }: Params) {
 
               {/* Dedicated Client Satisfaction Letter Block */}
               {satisfactionImgUrl && (
-                <ProjectSatisfactionCard
-                  imageUrl={satisfactionImgUrl}
-                  clientName={project.client}
-                  projectTitle={project.title}
-                  notes={project.satisfactionNotes}
-                />
+                <div style={{ marginBottom: '3rem' }}>
+                  <ProjectSatisfactionCard
+                    imageUrl={satisfactionImgUrl}
+                    clientName={project.client}
+                    projectTitle={project.title}
+                    notes={project.satisfactionNotes}
+                  />
+                </div>
+              )}
+
+              {/* Before and After Images */}
+              {project.beforeAfterImages && project.beforeAfterImages.length > 0 && (
+                <div style={{ marginBottom: '4rem' }}>
+                  <h3 style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--navy-900)', marginBottom: '1.5rem', borderBottom: '2px solid var(--gold-500)', paddingBottom: '0.5rem', display: 'inline-block' }}>
+                    تصاویر قبل و بعد از اجرا
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+                    {project.beforeAfterImages.map((item: any, idx: number) => (
+                      <div key={idx} style={{ background: 'var(--white)', padding: '1.5rem', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--gray-100)' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                          {item.before?.url && (
+                            <div style={{ position: 'relative' }}>
+                              <span style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'rgba(239,68,68,0.9)', color: '#fff', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: 'var(--text-xs)', fontWeight: 700, zIndex: 2, backdropFilter: 'blur(4px)' }}>
+                                قبل از اجرا
+                              </span>
+                              <div style={{ position: 'relative', height: '240px', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+                                <img src={item.before.url} alt={item.before.alt || 'قبل از اجرا'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                              </div>
+                            </div>
+                          )}
+                          {item.after?.url && (
+                            <div style={{ position: 'relative' }}>
+                              <span style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'rgba(16,185,129,0.9)', color: '#fff', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: 'var(--text-xs)', fontWeight: 700, zIndex: 2, backdropFilter: 'blur(4px)' }}>
+                                بعد از اجرا
+                              </span>
+                              <div style={{ position: 'relative', height: '240px', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+                                <img src={item.after.url} alt={item.after.alt || 'بعد از اجرا'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        {item.caption && (
+                          <p style={{ marginTop: '1rem', fontSize: 'var(--text-sm)', color: 'var(--gray-600)', textAlign: 'center', fontWeight: 500 }}>
+                            {item.caption}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Gallery */}
+              {project.gallery && project.gallery.length > 0 && (
+                <div style={{ marginBottom: '3rem' }}>
+                  <h3 style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--navy-900)', marginBottom: '1.5rem', borderBottom: '2px solid var(--gold-500)', paddingBottom: '0.5rem', display: 'inline-block' }}>
+                    گالری تصاویر پروژه
+                  </h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem' }}>
+                    {project.gallery.map((item: any, idx: number) => {
+                      if (!item.image?.url) return null;
+                      return (
+                        <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                          <div style={{ position: 'relative', height: '180px', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+                            <img src={item.image.url} alt={item.image.alt || `تصویر ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }} className="gallery-img-hover" />
+                          </div>
+                          {item.caption && (
+                            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--gray-500)', textAlign: 'center' }}>
+                              {item.caption}
+                            </p>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
               )}
             </div>
 
