@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ChevronLeft, ArrowUpLeft } from 'lucide-react'
+import { getProjectUrl, getServiceUrl } from '@/lib/utils'
 import styles from './ServicesSection.module.css'
 import ContactForm from '@/components/ContactForm/ContactForm'
 import ScrollReveal from '@/components/ScrollReveal/ScrollReveal'
@@ -66,7 +67,7 @@ export default function ServicesSection({ services, projects = [] }: ServicesSec
   const displayImage = relatedProject?.coverImage || activeService.coverImage
   const displayTitle = relatedProject?.title || activeService.title
   const displayDesc = relatedProject?.serviceDescription || activeService.shortDescription
-  const displayLink = relatedProject ? `/projects/${relatedProject.slug}` : `/services/${activeService.slug}`
+  const displayLink = relatedProject ? getProjectUrl(relatedProject.slug) : getServiceUrl(activeService.slug)
   const linkLabel = relatedProject ? 'مشاهده پروژه' : 'اطلاعات بیشتر'
 
   return (

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { MapPin, Building, ChevronLeft } from 'lucide-react'
 import { getPayloadClient } from '@/lib/payload'
+import { getProjectUrl } from '@/lib/utils'
 import PageHero from '@/components/PageHero/PageHero'
 
 export const dynamic = 'force-dynamic'
@@ -180,7 +181,7 @@ export default async function ProjectsPage() {
                   <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     {project.serviceDescription}
                   </p>
-                  <Link href={`/projects/${project.slug}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--gold-500)', paddingTop: '0.75rem', borderTop: '1px solid var(--gray-100)' }}>
+                  <Link href={getProjectUrl(project.slug)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--gold-500)', paddingTop: '0.75rem', borderTop: '1px solid var(--gray-100)' }}>
                     مشاهده جزئیات <ChevronLeft size={14} />
                   </Link>
                 </div>

@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { X, Building2, MapPin, ArrowUpLeft, Briefcase } from 'lucide-react'
+import { getProjectUrl } from '@/lib/utils'
 import styles from './EmployerModal.module.css'
 
 export interface Client {
@@ -111,7 +112,7 @@ export default function EmployerModal({ client, projects, onClose }: EmployerMod
                 return (
                   <Link
                     key={proj.id || proj.slug}
-                    href={`/projects/${proj.slug}`}
+                    href={getProjectUrl(proj.slug)}
                     className={styles.projectCard}
                     onClick={onClose}
                   >

@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { MapPin, Building, ChevronLeft, Calendar, Award, FileCheck } from 'lucide-react'
+import { MapPin, Building, ChevronLeft, Calendar, FileCheck, Layers, Image as ImageIcon, Award } from 'lucide-react'
 import { getPayloadClient } from '@/lib/payload'
 import ProjectSatisfactionCard from '@/components/ProjectSatisfactionCard/ProjectSatisfactionCard'
+import styles from './ProjectDetail.module.css'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -111,34 +112,52 @@ const DEFAULT_PROJECTS = [
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
+  const cleanSlug = slug.replace(/^\/+/, '').replace(/^projects\//, '').replace(/^services\//, '')
+
   try {
     const payload = await getPayloadClient()
     const result = await payload.find({
       collection: 'projects',
-      where: { slug: { equals: slug } },
+      where: {
+        or: [
+          { slug: { equals: slug } },
+          { slug: { equals: cleanSlug } },
+          { slug: { equals: `/${cleanSlug}` } },
+          { slug: { equals: `projects/${cleanSlug}` } },
+        ],
+      },
       limit: 1,
     })
-    const project = (result?.docs?.[0] ? JSON.parse(JSON.stringify(result.docs[0])) : null) || DEFAULT_PROJECTS.find(p => p.slug === slug)
+    const project = (result?.docs?.[0] ? JSON.parse(JSON.stringify(result.docs[0])) : null) || DEFAULT_PROJECTS.find(p => p.slug === cleanSlug || p.slug === slug)
     if (!project) return { title: 'پروژه یافت نشد' }
     return {
       title: `${project.title} | ضرغام صنعت اروند`,
       description: project.serviceDescription,
     }
   } catch (_) {
-    const fallback = DEFAULT_PROJECTS.find(p => p.slug === slug)
+    const fallback = DEFAULT_PROJECTS.find(p => p.slug === cleanSlug || p.slug === slug)
     return { title: fallback ? fallback.title : 'پروژه | ضرغام صنعت اروند' }
   }
 }
 
 export default async function ProjectDetailPage({ params }: Params) {
   const { slug } = await params
+  const cleanSlug = slug.replace(/^\/+/, '').replace(/^projects\//, '').replace(/^services\//, '')
+
   let project: any = null
 
   try {
     const payload = await getPayloadClient()
     const result = await payload.find({
       collection: 'projects',
-      where: { slug: { equals: slug } },
+      where: {
+        or: [
+          { slug: { equals: slug } },
+          { slug: { equals: cleanSlug } },
+          { slug: { equals: `/${cleanSlug}` } },
+          { slug: { equals: `projects/${cleanSlug}` } },
+        ],
+      },
       limit: 1,
     })
     if (result?.docs?.[0]) {
@@ -147,7 +166,7 @@ export default async function ProjectDetailPage({ params }: Params) {
   } catch (_) {}
 
   if (!project) {
-    project = DEFAULT_PROJECTS.find(p => p.slug === slug)
+    project = DEFAULT_PROJECTS.find(p => p.slug === cleanSlug || p.slug === slug)
   }
 
   if (!project) notFound()
@@ -156,50 +175,69 @@ export default async function ProjectDetailPage({ params }: Params) {
     ? project.satisfactionLetter.url
     : (typeof project.satisfactionLetter === 'string' ? project.satisfactionLetter : null)
 
+  const coverUrl = typeof project.coverImage === 'object' && project.coverImage?.url
+    ? project.coverImage.url
+    : (typeof project.coverImage === 'string' ? project.coverImage : null)
+
   return (
-    <div style={{ paddingTop: 'var(--header-height)' }}>
-      {/* Hero image */}
-      {project.coverImage && (
-        <div style={{ height: '48vh', position: 'relative', overflow: 'hidden' }}>
+    <div className={styles.pageWrapper}>
+      {/* Hero Banner */}
+      {coverUrl ? (
+        <div className={styles.hero}>
           <img
-            src={project.coverImage.url}
-            alt={project.coverImage.alt || project.title}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            src={coverUrl}
+            alt={project.coverImage?.alt || project.title}
+            className={styles.heroImg}
           />
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(to top, rgba(6,8,15,0.95) 0%, rgba(13,21,41,0.6) 60%, transparent 100%)',
-          }} />
-          <div className="container" style={{ position: 'absolute', bottom: '2.5rem', right: 0, left: 0 }}>
-            <span className="badge badge--gold" style={{ marginBottom: '0.75rem' }}>پروژه تکمیلی</span>
-            <h1 style={{ fontSize: 'var(--text-4xl)', fontWeight: 800, color: 'var(--white)', fontFamily: 'var(--font-heading)' }}>
-              {project.title}
-            </h1>
+          <div className={styles.heroOverlay} />
+          <div className={`container ${styles.heroContent}`}>
+            <span className={`${styles.statusBadge} ${project.status === 'completed' ? styles.badgeCompleted : styles.badgeInProgress}`}>
+              {project.status === 'completed' ? 'تکمیل شده / خاتمه یافته' : 'در حال اجرا'}
+            </span>
+            <h1 className={styles.heroTitle}>{project.title}</h1>
+          </div>
+        </div>
+      ) : (
+        <div style={{ background: 'var(--navy-900)', padding: '5rem 0 3rem 0', color: '#fff' }}>
+          <div className="container">
+            <span className={`${styles.statusBadge} ${project.status === 'completed' ? styles.badgeCompleted : styles.badgeInProgress}`} style={{ marginBottom: '1rem' }}>
+              {project.status === 'completed' ? 'تکمیل شده / خاتمه یافته' : 'در حال اجرا'}
+            </span>
+            <h1 className={styles.heroTitle}>{project.title}</h1>
           </div>
         </div>
       )}
 
-      <section className="section">
+      {/* Main Section */}
+      <section className={styles.mainSection}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '4rem', alignItems: 'start' }}>
-            {/* Main content */}
-            <div>
-              {!project.coverImage && (
-                <h1 style={{ fontSize: 'var(--text-4xl)', fontWeight: 800, color: 'var(--navy-900)', marginBottom: '2rem', fontFamily: 'var(--font-heading)' }}>
-                  {project.title}
-                </h1>
-              )}
-              <h2 style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--navy-900)', marginBottom: '1rem' }}>
-                شرح و مشخصات پروژه
-              </h2>
-              <div className="gold-divider" />
-              <p style={{ fontSize: 'var(--text-lg)', color: 'var(--gray-700)', lineHeight: 1.9, marginBottom: '3rem' }}>
-                {project.serviceDescription}
-              </p>
+          <div className={styles.grid}>
+            {/* Right Main Body */}
+            <div className={styles.contentBody}>
+              {/* Description Box */}
+              <div>
+                <div className={styles.sectionHeader}>
+                  <h2 className={styles.sectionTitle}>
+                    <Layers size={22} className={styles.sectionTitleIcon} />
+                    شرح و مشخصات پروژه
+                  </h2>
+                  <div className={styles.divider} />
+                </div>
+                <div className={styles.descCard}>
+                  <p>{project.serviceDescription}</p>
+                </div>
+              </div>
 
-              {/* Dedicated Client Satisfaction Letter Block */}
+              {/* Dedicated Satisfaction Letter Block */}
               {satisfactionImgUrl && (
-                <div style={{ marginBottom: '3rem' }}>
+                <div>
+                  <div className={styles.sectionHeader}>
+                    <h2 className={styles.sectionTitle}>
+                      <Award size={22} className={styles.sectionTitleIcon} />
+                      تاییدیه حسن انجام کار کارفرما
+                    </h2>
+                    <div className={styles.divider} />
+                  </div>
                   <ProjectSatisfactionCard
                     imageUrl={satisfactionImgUrl}
                     clientName={project.client}
@@ -209,67 +247,60 @@ export default async function ProjectDetailPage({ params }: Params) {
                 </div>
               )}
 
-              {/* Before and After Images */}
+              {/* Before & After Images */}
               {project.beforeAfterImages && project.beforeAfterImages.length > 0 && (
-                <div style={{ marginBottom: '4rem' }}>
-                  <h3 style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--navy-900)', marginBottom: '1.5rem', borderBottom: '2px solid var(--gold-500)', paddingBottom: '0.5rem', display: 'inline-block' }}>
-                    تصاویر قبل و بعد از اجرا
-                  </h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-                    {project.beforeAfterImages.map((item: any, idx: number) => (
-                      <div key={idx} style={{ background: 'var(--white)', padding: '1.5rem', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--gray-100)' }}>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-                          {item.before?.url && (
-                            <div style={{ position: 'relative' }}>
-                              <span style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'rgba(239,68,68,0.9)', color: '#fff', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: 'var(--text-xs)', fontWeight: 700, zIndex: 2, backdropFilter: 'blur(4px)' }}>
-                                قبل از اجرا
-                              </span>
-                              <div style={{ position: 'relative', height: '240px', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-                                <img src={item.before.url} alt={item.before.alt || 'قبل از اجرا'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                              </div>
-                            </div>
-                          )}
-                          {item.after?.url && (
-                            <div style={{ position: 'relative' }}>
-                              <span style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'rgba(16,185,129,0.9)', color: '#fff', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: 'var(--text-xs)', fontWeight: 700, zIndex: 2, backdropFilter: 'blur(4px)' }}>
-                                بعد از اجرا
-                              </span>
-                              <div style={{ position: 'relative', height: '240px', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-                                <img src={item.after.url} alt={item.after.alt || 'بعد از اجرا'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                        {item.caption && (
-                          <p style={{ marginTop: '1rem', fontSize: 'var(--text-sm)', color: 'var(--gray-600)', textAlign: 'center', fontWeight: 500 }}>
-                            {item.caption}
-                          </p>
+                <div className={styles.beforeAfterBlock}>
+                  <div className={styles.sectionHeader}>
+                    <h2 className={styles.sectionTitle}>
+                      <ImageIcon size={22} className={styles.sectionTitleIcon} />
+                      تصاویر قبل و بعد از اجرا
+                    </h2>
+                    <div className={styles.divider} />
+                  </div>
+
+                  {project.beforeAfterImages.map((item: any, idx: number) => (
+                    <div key={idx} className={styles.beforeAfterCard}>
+                      <div className={styles.beforeAfterGrid}>
+                        {item.before?.url && (
+                          <div className={styles.imgBox}>
+                            <span className={`${styles.imgTag} ${styles.tagBefore}`}>قبل از اجرا</span>
+                            <img src={item.before.url} alt={item.before.alt || 'قبل از اجرا'} className={styles.imgItem} />
+                          </div>
+                        )}
+                        {item.after?.url && (
+                          <div className={styles.imgBox}>
+                            <span className={`${styles.imgTag} ${styles.tagAfter}`}>بعد از اجرا</span>
+                            <img src={item.after.url} alt={item.after.alt || 'بعد از اجرا'} className={styles.imgItem} />
+                          </div>
                         )}
                       </div>
-                    ))}
-                  </div>
+                      {item.caption && <p className={styles.caption}>{item.caption}</p>}
+                    </div>
+                  ))}
                 </div>
               )}
 
-              {/* Gallery */}
+              {/* Project Gallery */}
               {project.gallery && project.gallery.length > 0 && (
-                <div style={{ marginBottom: '3rem' }}>
-                  <h3 style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--navy-900)', marginBottom: '1.5rem', borderBottom: '2px solid var(--gold-500)', paddingBottom: '0.5rem', display: 'inline-block' }}>
-                    گالری تصاویر پروژه
-                  </h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem' }}>
+                <div>
+                  <div className={styles.sectionHeader}>
+                    <h2 className={styles.sectionTitle}>
+                      <ImageIcon size={22} className={styles.sectionTitleIcon} />
+                      گالری تصاویر پروژه
+                    </h2>
+                    <div className={styles.divider} />
+                  </div>
+
+                  <div className={styles.galleryGrid}>
                     {project.gallery.map((item: any, idx: number) => {
-                      if (!item.image?.url) return null;
+                      const imgUrl = typeof item.image === 'object' && item.image?.url ? item.image.url : null
+                      if (!imgUrl) return null
                       return (
-                        <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                          <div style={{ position: 'relative', height: '180px', borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-                            <img src={item.image.url} alt={item.image.alt || `تصویر ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }} className="gallery-img-hover" />
+                        <div key={idx} className={styles.galleryItem}>
+                          <div className={styles.galleryImgBox}>
+                            <img src={imgUrl} alt={item.image?.alt || `تصویر ${idx + 1}`} className={styles.imgItem} />
                           </div>
-                          {item.caption && (
-                            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--gray-500)', textAlign: 'center' }}>
-                              {item.caption}
-                            </p>
-                          )}
+                          {item.caption && <p className={styles.galleryCaption}>{item.caption}</p>}
                         </div>
                       )
                     })}
@@ -278,39 +309,60 @@ export default async function ProjectDetailPage({ params }: Params) {
               )}
             </div>
 
-            {/* Meta sidebar */}
-            <div style={{ background: 'var(--navy-900)', borderRadius: 'var(--radius-xl)', padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.75rem', border: '1px solid rgba(201,146,42,0.2)' }}>
-              <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--gold-400)', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.75rem' }}>
-                اطلاعات پروژه
-              </h3>
-              {[
-                { icon: Building, label: 'کارفرما', value: project.client },
-                { icon: MapPin, label: 'محل اجرا', value: project.location },
-                { icon: Calendar, label: 'وضعیت قرارداد', value: project.status === 'completed' ? 'خاتمه یافته / تکمیلی' : 'در حال اجرا' },
-                { icon: FileCheck, label: 'تاییدیه حسن انجام کار', value: satisfactionImgUrl ? 'دارای رضایت‌نامه کارفرما' : 'تکمیل شده' },
-              ].map(({ icon: Icon, label, value }) => value && (
-                <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.875rem' }}>
-                  <Icon size={20} style={{ color: 'var(--gold-400)', flexShrink: 0, marginTop: 2 }} />
-                  <div>
-                    <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem' }}>{label}</div>
-                    <div style={{ fontSize: 'var(--text-base)', fontWeight: 600, color: 'var(--white)' }}>{value}</div>
+            {/* Left Sticky Sidebar */}
+            <aside className={styles.sidebar}>
+              <h3 className={styles.sidebarTitle}>مشخصات کلی قرارداد</h3>
+
+              <div className={styles.metaItem}>
+                <Building size={20} className={styles.metaIcon} />
+                <div>
+                  <div className={styles.metaLabel}>کارفرما / پیمانکار اصلی</div>
+                  <div className={styles.metaValue}>{project.client || '—'}</div>
+                </div>
+              </div>
+
+              <div className={styles.metaItem}>
+                <MapPin size={20} className={styles.metaIcon} />
+                <div>
+                  <div className={styles.metaLabel}>محل اجرا</div>
+                  <div className={styles.metaValue}>{project.location || '—'}</div>
+                </div>
+              </div>
+
+              <div className={styles.metaItem}>
+                <Calendar size={20} className={styles.metaIcon} />
+                <div>
+                  <div className={styles.metaLabel}>وضعیت پروژه</div>
+                  <div className={styles.metaValue}>
+                    {project.status === 'completed' ? 'تکمیل شده / تحویل داده شده' : 'در حال اجرا'}
                   </div>
                 </div>
-              ))}
-              <Link href="/contact" className="btn btn--primary" style={{ justifyContent: 'center', marginTop: '0.5rem' }}>
+              </div>
+
+              <div className={styles.metaItem}>
+                <FileCheck size={20} className={styles.metaIcon} />
+                <div>
+                  <div className={styles.metaLabel}>رضایت‌نامه کارفرما</div>
+                  <div className={styles.metaValue}>
+                    {satisfactionImgUrl ? 'دارای رضایت‌نامه رسمی' : 'ثبت شده در سامانه'}
+                  </div>
+                </div>
+              </div>
+
+              <Link href="/contact" className="btn btn--primary" style={{ width: '100%', justifyContent: 'center', marginTop: '0.75rem' }}>
                 درخواست خدمات مشابه
               </Link>
-            </div>
+            </aside>
+          </div>
+
+          <div style={{ marginTop: '3.5rem' }}>
+            <Link href="/projects" className={styles.backLink}>
+              <ChevronLeft size={16} style={{ transform: 'rotate(180deg)' }} />
+              بازگشت به لیست پروژه‌ها
+            </Link>
           </div>
         </div>
       </section>
-
-      <div className="container" style={{ paddingBottom: '4rem' }}>
-        <Link href="/projects" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--gold-500)', fontWeight: 600, fontSize: 'var(--text-sm)', textDecoration: 'none' }}>
-          <ChevronLeft size={16} style={{ transform: 'rotate(180deg)' }} />
-          بازگشت به همه پروژه‌ها
-        </Link>
-      </div>
     </div>
   )
 }

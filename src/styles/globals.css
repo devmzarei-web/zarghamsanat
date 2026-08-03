@@ -378,3 +378,39 @@ select {
   background: var(--safety-orange-500);
   color: var(--white);
 }
+
+/* ── Mobile & Tablet Responsiveness Overrides ── */
+@media (max-width: 992px) {
+  :root {
+    --header-height: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 72px;
+    --space-24: 3.5rem;
+    --space-16: 2.5rem;
+    --space-12: 2rem;
+  }
+
+  .section {
+    padding-block: 3.5rem;
+  }
+
+  .btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-height: 68px;
+  }
+
+  .section {
+    padding-block: 2.75rem;
+  }
+}
+

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { MapPin, Building, ChevronLeft } from 'lucide-react'
+import { getProjectUrl } from '@/lib/utils'
 import styles from './FeaturedProjects.module.css'
 
 interface Project {
@@ -83,7 +84,7 @@ function ProjectCard({ project }: { project: Project }) {
 
         <p className={styles.cardDesc}>{project.serviceDescription}</p>
 
-        <Link href={`/projects/${project.slug}`} className={styles.cardLink}>
+        <Link href={getProjectUrl(project.slug)} className={styles.cardLink}>
           مشاهده جزئیات
           <ChevronLeft size={14} />
         </Link>
