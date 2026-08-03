@@ -122,15 +122,24 @@ export const Projects: CollectionConfig = {
       label: 'عنوان / توضیح تاییدیه رضایت‌نامه',
     },
     {
+      name: 'startDate',
+      type: 'text',
+      label: 'تاریخ شروع (شمسی یا میلادی)',
+    },
+    {
       name: 'completionDate',
-      type: 'date',
-      label: 'تاریخ تکمیل',
-      admin: {
-        date: {
-          pickerAppearance: 'monthOnly',
-          displayFormat: 'MM/yyyy',
-        },
-      },
+      type: 'text',
+      label: 'تاریخ تکمیل / پایان (شمسی یا میلادی)',
+    },
+    {
+      name: 'durationMonths',
+      type: 'text',
+      label: 'مدت زمان پروژه (مثال: ۱۲ ماه)',
+    },
+    {
+      name: 'supervisor',
+      type: 'text',
+      label: 'نظارت فیلد و مهندسی',
     },
     {
       name: 'status',

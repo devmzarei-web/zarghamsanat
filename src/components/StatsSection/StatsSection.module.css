@@ -1,6 +1,6 @@
 .section {
   background: var(--off-white);
-  padding-block: 5rem;
+  padding-block: 2.25rem;
   border-top: 1px solid var(--pipeline-grey-200);
   border-bottom: 1px solid var(--pipeline-grey-200);
   position: relative;
@@ -10,7 +10,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-6);
+  gap: var(--space-4, 1rem);
 }
 
 .card {
@@ -18,9 +18,9 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--space-3);
-  padding: 2.5rem 1.5rem;
-  border-radius: var(--radius-2xl);
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
+  border-radius: var(--radius-xl, 1rem);
   background: var(--white);
   border: 1.5px solid var(--pipeline-grey-200);
   box-shadow: var(--shadow-sm);
@@ -34,15 +34,15 @@
   position: absolute;
   top: 0;
   inset-inline: 0;
-  height: 4px;
+  height: 3px;
   background: linear-gradient(90deg, var(--safety-orange-500), var(--safety-orange-400));
   transform: scaleX(0);
   transition: transform var(--transition-slow);
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-xl);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
   border-color: var(--safety-orange-500);
 }
 
@@ -51,15 +51,15 @@
 }
 
 .cardIcon {
-  width: 68px;
-  height: 68px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--safety-orange-100);
   color: var(--safety-orange-600);
-  border: 2px solid var(--safety-orange-500);
+  border: 1.5px solid var(--safety-orange-500);
   transition: all var(--transition-base);
 }
 
@@ -67,40 +67,44 @@
   background: var(--safety-orange-500);
   color: var(--white);
   border-color: var(--safety-orange-500);
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.35);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
 }
 
 .cardNumber {
-  font-size: var(--text-5xl);
+  font-size: var(--text-2xl, 1.5rem);
   font-weight: 900;
   color: var(--carbon-black);
   font-family: var(--font-heading);
-  line-height: 1;
+  line-height: 1.1;
   display: flex;
   align-items: baseline;
   gap: 0.125em;
 }
 
 .cardSuffix {
-  font-size: var(--text-3xl);
+  font-size: var(--text-lg, 1.125rem);
   color: var(--safety-orange-500);
   font-weight: 800;
 }
 
 .cardLabel {
-  font-size: var(--text-sm);
+  font-size: var(--text-xs, 0.75rem);
   font-weight: 700;
   color: var(--pipeline-grey-600);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
 }
 
-@media (max-width: 1024px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 992px) {
+  .grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+  .card { padding: 1rem 0.5rem; }
 }
 
-@media (max-width: 480px) {
-  .grid { grid-template-columns: 1fr; }
-  .card { padding: var(--space-6); }
+@media (max-width: 640px) {
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .card { padding: 0.85rem 0.5rem; }
+  .cardNumber { font-size: 1.25rem; }
+  .cardIcon { width: 36px; height: 36px; }
 }
+
