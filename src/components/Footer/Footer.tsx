@@ -31,6 +31,7 @@ interface FooterProps {
     email?: string
     address?: string
     postalCode?: string
+    logo?: { url?: string } | string
   }
 }
 
@@ -43,6 +44,10 @@ export default function Footer({ settings }: FooterProps) {
   const email = settings?.email || 'info@zarghamsanat.ir'
   const address = settings?.address || 'آبادان، کوی قدس، خیابان بهار ۲۷، پلاک ۵'
   const postalCode = settings?.postalCode || '6317814564'
+  const logoUrl =
+    settings?.logo && typeof settings.logo === 'object' && settings.logo.url
+      ? settings.logo.url
+      : '/images/Zargham-Logo.png'
 
   return (
     <footer className={styles.footer}>
@@ -54,7 +59,7 @@ export default function Footer({ settings }: FooterProps) {
           <div className={styles.logoWrap}>
             <div className={styles.logoMark}>
               <img
-                src="/images/Zargham-Logo.png"
+                src={logoUrl}
                 alt={companyName}
                 width={76}
                 height={76}

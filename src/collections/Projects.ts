@@ -36,7 +36,14 @@ export const Projects: CollectionConfig = {
     {
       name: 'client',
       type: 'text',
-      label: 'کارفرما',
+      label: 'کارفرما (متنی)',
+      required: false,
+    },
+    {
+      name: 'clientRelation',
+      type: 'relationship',
+      relationTo: 'clients',
+      label: 'کارفرما (انتخاب از لیست کارفرمایان)',
       required: false,
     },
     {

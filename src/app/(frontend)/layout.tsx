@@ -54,12 +54,17 @@ export default async function RootLayout({
     }
   } catch (_) {}
 
+  const faviconUrl =
+    settings?.favicon && typeof settings.favicon === 'object' && settings.favicon.url
+      ? settings.favicon.url
+      : '/favicon.ico'
+
   return (
     <html lang="fa" dir="rtl">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={faviconUrl} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
       </head>
       <body>

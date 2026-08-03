@@ -20,7 +20,7 @@ interface Project {
   title: string
   slug: string
   serviceDescription: string
-  relatedService?: string | { id: string }
+  relatedService?: any
   coverImage?: { url: string; alt?: string }
 }
 
@@ -42,14 +42,27 @@ export default function ServicesSection({ services, projects = [] }: ServicesSec
 
   const activeService = list[active]
 
-  // Find a project related to the active service
+  // Find a project related to the active service (by ID or Slug)
   const relatedProject = projects.find(p => {
-    if (!p.relatedService) return false;
-    if (typeof p.relatedService === 'string') return p.relatedService === activeService.id;
-    return p.relatedService.id === activeService.id;
-  }) || projects[active % projects.length] // fallback to any project for visual filler if none matched
+    if (!p.relatedService || !activeService) return false
+    const sId = String(activeService.id)
+    const sSlug = activeService.slug ? String(activeService.slug) : ''
 
-  // Data to display in the center pane (Project > Fallback Service)
+    const rel = p.relatedService
+    if (Array.isArray(rel)) {
+      return rel.some((item: any) =>
+        typeof item === 'object' && item !== null
+          ? String(item.id) === sId || (item.slug && String(item.slug) === sSlug)
+          : String(item) === sId
+      )
+    }
+    if (typeof rel === 'object' && rel !== null) {
+      return String(rel.id) === sId || (rel.slug && String(rel.slug) === sSlug)
+    }
+    return String(rel) === sId
+  })
+
+  // Data to display in the center pane
   const displayImage = relatedProject?.coverImage || activeService.coverImage
   const displayTitle = relatedProject?.title || activeService.title
   const displayDesc = relatedProject?.serviceDescription || activeService.shortDescription

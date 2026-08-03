@@ -17,11 +17,11 @@ export async function seedDatabase() {
           collection: 'users',
           data: {
             email: 'admin@zarghamsanat.ir',
-            password: 'ZarghamAdmin2026!Secure',
+            password: 'Zargham@2026',
             name: 'مدیر سیستم',
           },
         })
-        console.log('✅ Created Admin User: admin@zarghamsanat.ir / ZarghamAdmin2026!Secure')
+        console.log('✅ Created Admin User: admin@zarghamsanat.ir / Zargham@2026')
       }
     } catch (err) {
       console.log('⚠ Admin user seeding skipped or already exists')

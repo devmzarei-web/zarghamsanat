@@ -22,6 +22,7 @@ interface HeaderProps {
     companyName?: string
     tagline?: string
     phone1?: string
+    logo?: { url?: string } | string
   }
 }
 
@@ -29,6 +30,10 @@ export default function Header({ settings }: HeaderProps) {
   const phone = settings?.phone1 || '061-53328646'
   const companyName = settings?.companyName || 'ضرغام صنعت اروند'
   const tagline = settings?.tagline || 'پیمانکاری، صنعتی، پایپینگ و مکانیکال'
+  const logoUrl =
+    settings?.logo && typeof settings.logo === 'object' && settings.logo.url
+      ? settings.logo.url
+      : '/images/Zargham-Logo.png'
   const headerRef = useRef<HTMLElement>(null)
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
@@ -62,16 +67,16 @@ export default function Header({ settings }: HeaderProps) {
           <Link href="/" className={styles.logo} onClick={() => setMenuOpen(false)}>
             <div className={styles.logoMark}>
               <img
-                src="/images/Zargham-Logo.png"
-                alt="ضرغام صنعت اروند"
+                src={logoUrl}
+                alt={companyName}
                 width={72}
                 height={72}
                 style={{ objectFit: 'contain', width: '100%', height: '100%' }}
               />
             </div>
             <div className={styles.logoText}>
-              <span className={styles.logoMain}>ضرغام صنعت اروند</span>
-              <span className={styles.logoSub}>پیمانکاری، صنعتی، پایپینگ و مکانیکال</span>
+              <span className={styles.logoMain}>{companyName}</span>
+              <span className={styles.logoSub}>{tagline}</span>
             </div>
           </Link>
 

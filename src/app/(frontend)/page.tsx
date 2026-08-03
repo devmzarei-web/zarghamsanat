@@ -27,9 +27,8 @@ async function getHomePageData() {
       payload.findGlobal({ slug: 'stats' }),
       payload.find({
         collection: 'projects',
-        where: { featured: { equals: true } },
         sort: 'order',
-        limit: 6,
+        limit: 100,
       }),
       payload.find({
         collection: 'clients',
@@ -122,7 +121,7 @@ export default async function HomePage() {
 
       <ServicesSection services={services} projects={projects} />
 
-      <ClientLogos clients={clients} />
+      <ClientLogos clients={clients} projects={projects} />
 
       <CertificationsStrip certificates={certificates} />
     </>
