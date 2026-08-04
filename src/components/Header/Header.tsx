@@ -7,13 +7,13 @@ import { Menu, X, Phone } from 'lucide-react'
 import { toPersianDigits } from '@/lib/utils'
 import styles from './Header.module.css'
 
-const NAV_LINKS = [
+const DEFAULT_NAV_LINKS = [
   { label: 'صفحه اصلی', href: '/' },
   { label: 'درباره ما', href: '/about' },
   { label: 'خدمات', href: '/services' },
   { label: 'پروژه‌ها', href: '/projects' },
   { label: 'گواهینامه‌ها', href: '/certificates' },
-  { label: 'اخبار', href: '/news' },
+  { label: 'مقالات', href: '/articles' },
   { label: 'تماس با ما', href: '/contact' },
 ]
 
@@ -23,6 +23,7 @@ interface HeaderProps {
     tagline?: string
     phone1?: string
     logo?: { url?: string; filename?: string } | string
+    navItems?: Array<{ label: string; href: string; order?: number }>
   }
 }
 
@@ -37,6 +38,12 @@ export default function Header({ settings }: HeaderProps) {
   } else if (typeof settings?.logo === 'string') {
     logoUrl = settings.logo
   }
+
+  // Dynamic Navigation Links from CMS or Fallback
+  const cmsNav = settings?.navItems ?? []
+  const navLinks = cmsNav.length > 0
+    ? cmsNav.sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    : DEFAULT_NAV_LINKS
 
   const headerRef = useRef<HTMLElement>(null)
   const pathname = usePathname()
@@ -87,7 +94,7 @@ export default function Header({ settings }: HeaderProps) {
           {/* Desktop Nav */}
           <nav className={styles.nav} aria-label="ناوبری اصلی">
             <ul className={styles.navList}>
-              {NAV_LINKS.map((link) => {
+              {navLinks.map((link) => {
                 const isActive = pathname === link.href
                 return (
                   <li key={link.href}>
@@ -129,7 +136,7 @@ export default function Header({ settings }: HeaderProps) {
         <div className={styles.mobileMenuInner}>
           <nav>
             <ul className={styles.mobileNavList}>
-              {NAV_LINKS.map((link, i) => (
+              {navLinks.map((link, i) => (
                 <li
                   key={link.href}
                   className={styles.mobileNavItem}

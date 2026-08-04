@@ -7,7 +7,6 @@ export const ContactSubmissions: CollectionConfig = {
     plural: 'درخواست‌های همکاری',
   },
   access: {
-    // Only admins can read submissions
     read: ({ req: { user } }) => Boolean(user),
     create: () => true,
     update: ({ req: { user } }) => Boolean(user),
@@ -16,7 +15,6 @@ export const ContactSubmissions: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'phone', 'requestType', 'status', 'createdAt'],
-    description: 'فرم‌های درخواست همکاری دریافت شده از وب‌سایت',
   },
   fields: [
     {

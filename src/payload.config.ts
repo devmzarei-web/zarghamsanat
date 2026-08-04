@@ -10,6 +10,7 @@ import { Services } from './collections/Services'
 import { Projects } from './collections/Projects'
 import { Certificates } from './collections/Certificates'
 import { News } from './collections/News'
+import { Articles } from './collections/Articles'
 import { ContactSubmissions } from './collections/ContactSubmissions'
 import { Clients } from './collections/Clients'
 import { Pages } from './collections/Pages'
@@ -55,6 +56,7 @@ export default buildConfig({
     Services,
     Projects,
     Certificates,
+    Articles,
     News,
     ContactSubmissions,
     Clients,

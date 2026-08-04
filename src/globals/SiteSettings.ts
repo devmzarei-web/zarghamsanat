@@ -6,9 +6,6 @@ export const SiteSettings: GlobalConfig = {
   access: {
     read: () => true,
   },
-  admin: {
-    description: 'تنظیمات اصلی سایت - لوگو، اطلاعات تماس، هیرو',
-  },
   fields: [
     {
       type: 'tabs',
@@ -40,6 +37,44 @@ export const SiteSettings: GlobalConfig = {
               type: 'upload',
               relationTo: 'media',
               label: 'فاویکون',
+            },
+          ],
+        },
+        // ── Header Navigation ────────────────────────
+        {
+          label: 'منوی هدر (Navigation)',
+          fields: [
+            {
+              name: 'navItems',
+              type: 'array',
+              label: 'آیتم‌های منوی هدر',
+              labels: {
+                singular: 'آیتم منو',
+                plural: 'آیتم‌های منو',
+              },
+              fields: [
+                {
+                  name: 'label',
+                  type: 'text',
+                  label: 'عنوان لینک',
+                  required: true,
+                },
+                {
+                  name: 'href',
+                  type: 'text',
+                  label: 'آدرس (URL / Route)',
+                  required: true,
+                  admin: {
+                    description: 'مثال: / ، /about ، /services ، /projects ، /articles ، /contact',
+                  },
+                },
+                {
+                  name: 'order',
+                  type: 'number',
+                  label: 'ترتیب نمایش',
+                  defaultValue: 0,
+                },
+              ],
             },
           ],
         },
@@ -123,7 +158,6 @@ export const SiteSettings: GlobalConfig = {
               label: 'ویدیو هیرو',
               admin: {
                 description: 'فایل ویدیو (MP4 توصیه می‌شود)',
-                condition: (data) => data.heroType === 'video',
               },
             },
             {
@@ -132,9 +166,6 @@ export const SiteSettings: GlobalConfig = {
               label: 'اسلاید‌های هیرو',
               minRows: 1,
               maxRows: 3,
-              admin: {
-                condition: (data) => data.heroType === 'slider',
-              },
               fields: [
                 {
                   name: 'image',

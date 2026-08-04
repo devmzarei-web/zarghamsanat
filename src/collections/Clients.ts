@@ -12,7 +12,6 @@ export const Clients: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'order', 'updatedAt'],
-    description: 'لوگو و نام کارفرمایان برای نمایش در صفحه اصلی',
   },
   fields: [
     {
