@@ -1,0 +1,42 @@
+.backToTopBtn {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 99;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.15rem;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--safety-orange-500), #c2410c);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(249, 115, 22, 0.45);
+  transition: all var(--transition-fast);
+  font-family: var(--font-persian);
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.backToTopBtn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(249, 115, 22, 0.6);
+  background: linear-gradient(135deg, var(--safety-orange-400), var(--safety-orange-600));
+}
+
+.btnText {
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .backToTopBtn {
+    bottom: 1.25rem;
+    left: 1.25rem;
+    padding: 0.65rem 0.85rem;
+  }
+  .btnText {
+    display: none;
+  }
+}

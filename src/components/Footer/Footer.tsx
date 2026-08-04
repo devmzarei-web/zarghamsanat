@@ -33,9 +33,14 @@ interface FooterProps {
     postalCode?: string
     logo?: { url?: string; filename?: string } | string
   }
+  services?: Array<{
+    id?: string
+    title: string
+    slug: string
+  }>
 }
 
-export default function Footer({ settings }: FooterProps) {
+export default function Footer({ settings, services = [] }: FooterProps) {
   const currentYear = new Date().getFullYear()
 
   const companyName = settings?.companyName || 'ضرغام صنعت اروند'
@@ -51,6 +56,11 @@ export default function Footer({ settings }: FooterProps) {
   } else if (typeof settings?.logo === 'string') {
     logoUrl = settings.logo
   }
+
+  // Dynamic services list from CMS or fallback
+  const displayServices = services.length > 0
+    ? services.map(s => ({ label: s.title, href: `/services#${s.slug}` }))
+    : SERVICES.map(title => ({ label: title, href: '/services' }))
 
   return (
     <footer className={styles.footer}>
@@ -81,10 +91,10 @@ export default function Footer({ settings }: FooterProps) {
           <p className={styles.brandMotto}>{tagline}</p>
         </div>
 
-        {/* Quick Links */}
+        {/* Quick Links (Sub-grid layout) */}
         <div className={styles.col}>
           <h3 className={styles.colTitle}>لینک‌های سریع</h3>
-          <ul className={styles.linkList}>
+          <ul className={styles.linkGrid}>
             {QUICK_LINKS.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className={styles.footerLink}>
@@ -96,15 +106,15 @@ export default function Footer({ settings }: FooterProps) {
           </ul>
         </div>
 
-        {/* Services */}
-        <div className={styles.col}>
+        {/* Services (Sub-grid layout dynamically populated from CMS) */}
+        <div className={styles.colLarge}>
           <h3 className={styles.colTitle}>خدمات ما</h3>
-          <ul className={styles.linkList}>
-            {SERVICES.map((svc) => (
-              <li key={svc}>
-                <Link href="/services" className={styles.footerLink}>
+          <ul className={styles.servicesGrid}>
+            {displayServices.map((svc, idx) => (
+              <li key={idx}>
+                <Link href={svc.href} className={styles.footerLink}>
                   <ChevronLeft size={14} />
-                  {svc}
+                  {svc.label}
                 </Link>
               </li>
             ))}

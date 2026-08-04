@@ -72,6 +72,44 @@ export const Services: CollectionConfig = {
       ],
     },
     {
+      name: 'features',
+      type: 'array',
+      label: 'ویژگی‌ها و قابلیت‌های کلیدی',
+      fields: [
+        {
+          name: 'feature',
+          type: 'text',
+          label: 'عنوان / مورد اصلی',
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'faqs',
+      type: 'array',
+      label: 'پرسش‌های متداول (FAQ)',
+      fields: [
+        {
+          name: 'question',
+          type: 'text',
+          label: 'پرسش',
+          required: true,
+        },
+        {
+          name: 'answer',
+          type: 'textarea',
+          label: 'پاسخ',
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'ctaText',
+      type: 'text',
+      label: 'متن دکمه اقدام (CTA)',
+      defaultValue: 'استعلام و مشاوره تخصصی',
+    },
+    {
       name: 'order',
       type: 'number',
       label: 'ترتیب نمایش',

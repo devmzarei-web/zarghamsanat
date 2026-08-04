@@ -60,11 +60,18 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   let settings: any = null
+  let services: any[] = []
   try {
     const payload = await getPayloadClient()
-    const rawSettings = await payload.findGlobal({ slug: 'site-settings' })
+    const [rawSettings, servicesRes] = await Promise.all([
+      payload.findGlobal({ slug: 'site-settings' }),
+      payload.find({ collection: 'services', sort: 'order', limit: 100 }),
+    ])
     if (rawSettings) {
       settings = JSON.parse(JSON.stringify(rawSettings))
+    }
+    if (servicesRes?.docs) {
+      services = JSON.parse(JSON.stringify(servicesRes.docs))
     }
   } catch (_) {}
 
@@ -107,7 +114,7 @@ export default async function RootLayout({
           <main id="main-content">
             {children}
           </main>
-          <Footer settings={settings} />
+          <Footer settings={settings} services={services} />
         </LenisProvider>
       </body>
     </html>

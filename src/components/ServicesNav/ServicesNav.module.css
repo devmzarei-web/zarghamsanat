@@ -1,0 +1,112 @@
+.stickyWrapper {
+  position: sticky;
+  top: calc(var(--header-height, 80px));
+  z-index: 90;
+  background: rgba(17, 26, 40, 0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 2px solid rgba(249, 115, 22, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  padding-block: 0.75rem;
+  transition: all var(--transition-fast);
+}
+
+.navBar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.navHeader {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navTitle {
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 800;
+  color: var(--safety-orange-400);
+  font-family: var(--font-heading);
+  white-space: nowrap;
+}
+
+.pillsScrollContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(249, 115, 22, 0.4) transparent;
+  padding-bottom: 0.25rem;
+  width: 100%;
+}
+
+.pillsScrollContainer::-webkit-scrollbar {
+  height: 4px;
+}
+
+.pillsScrollContainer::-webkit-scrollbar-thumb {
+  background: rgba(249, 115, 22, 0.4);
+  border-radius: 4px;
+}
+
+.pillBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: var(--font-persian);
+  flex-shrink: 0;
+}
+
+.pillBtn:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(249, 115, 22, 0.4);
+  transform: translateY(-1px);
+}
+
+.pillBtnActive {
+  color: var(--white);
+  background: linear-gradient(135deg, var(--safety-orange-500), #c2410c);
+  border-color: var(--safety-orange-500);
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+}
+
+.pillDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all var(--transition-fast);
+}
+
+.pillBtnActive .pillDot {
+  background: var(--white);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 768px) {
+  .stickyWrapper {
+    top: 60px;
+    padding-block: 0.5rem;
+  }
+  .navTitle {
+    display: none;
+  }
+  .pillBtn {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.7rem;
+  }
+}
