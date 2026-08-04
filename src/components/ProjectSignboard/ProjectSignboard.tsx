@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useRef, useLayoutEffect, useState } from 'react'
 import { toPersianDigits, formatShamsiYearMonth } from '@/lib/utils'
 import styles from './ProjectSignboard.module.css'
 
@@ -11,6 +13,52 @@ interface ProjectSignboardProps {
   completionDate?: string
   durationMonths?: string | number
   supervisor?: string
+}
+
+function AutoFitValue({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLSpanElement>(null)
+  const [scale, setScale] = useState(1)
+  const [isMultiLine, setIsMultiLine] = useState(false)
+
+  useLayoutEffect(() => {
+    const container = containerRef.current
+    const text = textRef.current
+    if (!container || !text) return
+
+    // Reset styles to accurately measure scroll width
+    text.style.fontSize = ''
+    text.style.whiteSpace = 'nowrap'
+
+    const containerWidth = container.clientWidth
+    const textWidth = text.scrollWidth
+
+    if (textWidth > containerWidth && containerWidth > 0) {
+      const calculatedRatio = containerWidth / textWidth
+      if (calculatedRatio < 0.65) {
+        setScale(0.72)
+        setIsMultiLine(true)
+      } else {
+        setScale(Math.max(0.65, Math.floor(calculatedRatio * 100) / 100))
+        setIsMultiLine(false)
+      }
+    } else {
+      setScale(1)
+      setIsMultiLine(false)
+    }
+  }, [children])
+
+  return (
+    <div ref={containerRef} className={styles.valueContainer}>
+      <span
+        ref={textRef}
+        className={`${styles.value} ${className} ${isMultiLine ? styles.multiLineValue : ''}`}
+        style={scale < 1 ? { fontSize: `${scale * 0.75}rem` } : undefined}
+      >
+        {children}
+      </span>
+    </div>
+  )
 }
 
 export default function ProjectSignboard({
@@ -40,59 +88,59 @@ export default function ProjectSignboard({
         <div className={styles.rowsContainer}>
           <div className={styles.row}>
             <span className={styles.label}>نام پروژه:</span>
-            <span className={styles.value}>{title}</span>
+            <AutoFitValue>{title}</AutoFitValue>
           </div>
 
           {client && (
             <div className={styles.row}>
               <span className={styles.label}>کارفرما:</span>
-              <span className={styles.value}>{client}</span>
+              <AutoFitValue>{client}</AutoFitValue>
             </div>
           )}
 
           {location && (
             <div className={styles.row}>
               <span className={styles.label}>محل اجرا:</span>
-              <span className={styles.value}>{location}</span>
+              <AutoFitValue>{location}</AutoFitValue>
             </div>
           )}
 
           <div className={styles.row}>
             <span className={styles.label}>پیمانکار مجری:</span>
-            <span className={styles.value}>شرکت ضرغام صنعت اروند</span>
+            <AutoFitValue>شرکت ضرغام صنعت اروند</AutoFitValue>
           </div>
 
           <div className={styles.row}>
             <span className={styles.label}>نظارت فیلد و مهندسی:</span>
-            <span className={styles.value}>{supervisor}</span>
+            <AutoFitValue>{supervisor}</AutoFitValue>
           </div>
 
           {durationMonths && (
             <div className={styles.row}>
               <span className={styles.label}>مدت زمان قرارداد:</span>
-              <span className={styles.value}>{toPersianDigits(durationMonths)} ماه</span>
+              <AutoFitValue>{toPersianDigits(durationMonths)} ماه</AutoFitValue>
             </div>
           )}
 
           {startDate && (
             <div className={styles.row}>
               <span className={styles.label}>تاریخ شروع:</span>
-              <span className={styles.value}>{formatShamsiYearMonth(startDate)}</span>
+              <AutoFitValue>{formatShamsiYearMonth(startDate)}</AutoFitValue>
             </div>
           )}
 
           {completionDate && (
             <div className={styles.row}>
               <span className={styles.label}>تاریخ تحویل / پایان:</span>
-              <span className={styles.value}>{formatShamsiYearMonth(completionDate)}</span>
+              <AutoFitValue>{formatShamsiYearMonth(completionDate)}</AutoFitValue>
             </div>
           )}
 
           <div className={styles.row}>
             <span className={styles.label}>وضعیت کنونی:</span>
-            <span className={`${styles.value} ${status === 'completed' ? styles.statusCompleted : styles.statusProgress}`}>
+            <AutoFitValue className={status === 'completed' ? styles.statusCompleted : styles.statusProgress}>
               {formattedStatus}
-            </span>
+            </AutoFitValue>
           </div>
         </div>
       </div>

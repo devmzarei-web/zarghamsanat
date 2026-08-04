@@ -250,6 +250,30 @@
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 
+/* ── Mobile Indicator & Toggle Elements ── */
+.mobileSelectedIndicator {
+  display: none;
+}
+
+.sparkleIcon {
+  color: var(--safety-orange-400);
+}
+
+.formHeaderTitleGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.formToggleBadge {
+  display: none;
+}
+
+.formBodyWrapper {
+  display: block;
+}
+
 /* ── Form Panel ── */
 .formPanel {
   background: rgba(26, 54, 93, 0.85);
@@ -291,10 +315,130 @@
 }
 
 @media (max-width: 1024px) {
+  .section {
+    padding-block: 3.5rem 4rem;
+  }
+
   .grid {
     grid-template-columns: 1fr;
-    gap: var(--space-6);
+    gap: 1.25rem;
   }
-  .sidebar { position: static; }
-  .formPanel { position: static; }
+
+  .sidebarWrapper,
+  .detailWrapperOut,
+  .formPanelWrapper {
+    height: auto;
+  }
+
+  .sidebar {
+    position: static;
+    padding: 1.25rem 1rem;
+    gap: 1rem;
+    height: auto;
+  }
+
+  .serviceList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .serviceItem {
+    padding: 0.65rem 0.5rem;
+    font-size: 0.78rem;
+    text-align: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+  }
+
+  .serviceItemDot,
+  .serviceItemChevron {
+    display: none;
+  }
+
+  .serviceItemText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mobileSelectedIndicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(249, 115, 22, 0.15);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    border-radius: var(--radius-xl);
+    padding: 0.55rem 0.85rem;
+    font-size: 0.8rem;
+    color: var(--safety-orange-400);
+    margin-bottom: 0.75rem;
+  }
+
+  .mobileSelectedIndicator strong {
+    color: var(--white);
+  }
+
+  .detailImage {
+    height: 200px;
+  }
+
+  .detailBody {
+    padding: 1.25rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .detailTitle {
+    font-size: 1.15rem;
+  }
+
+  .detailDesc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .formPanel {
+    position: static;
+    padding: 1.1rem;
+    gap: 0.75rem;
+    height: auto;
+  }
+
+  .formHeader {
+    cursor: pointer;
+  }
+
+  .formToggleBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--safety-orange-400);
+    background: rgba(249, 115, 22, 0.15);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+  }
+
+  .formBodyWrapper {
+    display: none;
+    padding-top: 0.5rem;
+  }
+
+  .formPanelExpanded .formBodyWrapper {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceList {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+
+  .serviceItem {
+    padding: 0.55rem 0.35rem;
+    font-size: 0.72rem;
+  }
 }

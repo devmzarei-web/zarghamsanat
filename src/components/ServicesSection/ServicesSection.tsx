@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
-import { ChevronLeft, ArrowUpLeft } from 'lucide-react'
+import { ChevronLeft, ArrowUpLeft, Sparkles, ChevronDown, ChevronUp } from 'lucide-react'
 import { getProjectUrl, getServiceUrl } from '@/lib/utils'
 import styles from './ServicesSection.module.css'
 import ContactForm from '@/components/ContactForm/ContactForm'
@@ -40,6 +40,8 @@ interface ServicesSectionProps {
 export default function ServicesSection({ services, projects = [] }: ServicesSectionProps) {
   const list = services && services.length > 0 ? services : DEFAULT_SERVICES
   const [active, setActive] = useState(0)
+  const [isFormExpanded, setIsFormExpanded] = useState(false)
+  const detailRef = useRef<HTMLDivElement>(null)
 
   const activeService = list[active]
 
@@ -62,6 +64,15 @@ export default function ServicesSection({ services, projects = [] }: ServicesSec
     }
     return String(rel) === sId
   })
+
+  const handleServiceSelect = (index: number) => {
+    setActive(index)
+    if (typeof window !== 'undefined' && window.innerWidth <= 1024) {
+      setTimeout(() => {
+        detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }, 50)
+    }
+  }
 
   // Data to display in the center pane
   const displayImage = relatedProject?.coverImage || activeService.coverImage
@@ -87,14 +98,14 @@ export default function ServicesSection({ services, projects = [] }: ServicesSec
                   <li key={svc.id} role="presentation">
                     <button
                       className={`${styles.serviceItem} ${i === active ? styles.serviceItemActive : ''}`}
-                      onClick={() => setActive(i)}
+                      onClick={() => handleServiceSelect(i)}
                       role="tab"
                       aria-selected={i === active}
                       id={`service-tab-${i}`}
                       aria-controls={`service-panel-${i}`}
                     >
                       <span className={styles.serviceItemDot} />
-                      {svc.title}
+                      <span className={styles.serviceItemText}>{svc.title}</span>
                       <ChevronLeft size={16} className={styles.serviceItemChevron} />
                     </button>
                   </li>
@@ -109,11 +120,18 @@ export default function ServicesSection({ services, projects = [] }: ServicesSec
           {/* Center: Active Project/Service display with slide-in animation wrapper */}
           <ScrollReveal animation="fade-up" delay={200} className={styles.detailWrapperOut}>
             <div
+              ref={detailRef}
               className={styles.detailWrapper}
               role="tabpanel"
               id={`service-panel-${active}`}
               aria-labelledby={`service-tab-${active}`}
             >
+              {/* Mobile Active Service Indicator Header */}
+              <div className={styles.mobileSelectedIndicator}>
+                <Sparkles size={14} className={styles.sparkleIcon} />
+                <span>خدمت انتخاب شده: <strong>{activeService.title}</strong></span>
+              </div>
+
               {/* The key prop forces React to unmount and remount this element when 'active' changes, triggering CSS animations */}
               <div key={`anim-${active}`} className={styles.detailAnimContainer}>
                 <div className={styles.detail}>
@@ -150,12 +168,29 @@ export default function ServicesSection({ services, projects = [] }: ServicesSec
 
           {/* Left: Collaboration form */}
           <ScrollReveal animation="slide-right" delay={300} className={styles.formPanelWrapper}>
-            <div className={styles.formPanel}>
-              <div className={styles.formHeader}>
-                <h3 className={styles.formTitle}>درخواست همکاری</h3>
+            <div className={`${styles.formPanel} ${isFormExpanded ? styles.formPanelExpanded : ''}`}>
+              <div
+                className={styles.formHeader}
+                onClick={() => setIsFormExpanded(prev => !prev)}
+                role="button"
+                tabIndex={0}
+              >
+                <div className={styles.formHeaderTitleGroup}>
+                  <h3 className={styles.formTitle}>درخواست همکاری</h3>
+                  <span className={styles.formToggleBadge}>
+                    {isFormExpanded ? (
+                      <>بستن <ChevronUp size={14} /></>
+                    ) : (
+                      <>ارسال پیام <ChevronDown size={14} /></>
+                    )}
+                  </span>
+                </div>
                 <p className={styles.formSubtitle}>پیام خود را ثبت کنید، کارشناسان ما در اسرع وقت با شما تماس می‌گیرند</p>
               </div>
-              <ContactForm />
+
+              <div className={styles.formBodyWrapper}>
+                <ContactForm />
+              </div>
             </div>
           </ScrollReveal>
         </div>
