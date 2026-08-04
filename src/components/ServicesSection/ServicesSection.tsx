@@ -93,6 +93,31 @@ export default function ServicesSection({ services, projects = [] }: ServicesSec
                 <h2 className={styles.sidebarTitle}>خدمات ما</h2>
                 <div className="gold-divider" />
               </div>
+              {/* Mobile Service Dropdown Selector (visible on mobile/tablet) */}
+              <div className={styles.mobileSelectWrapper}>
+                <div className={styles.mobileSelectHeader}>
+                  <span className="section-label">تخصص ما</span>
+                  <h3 className={styles.mobileSelectTitle}>انتخاب خدمت مورد نظر:</h3>
+                </div>
+                <div className={styles.mobileSelectBox}>
+                  <select
+                    id="mobile-service-select"
+                    value={active}
+                    onChange={(e) => handleServiceSelect(Number(e.target.value))}
+                    className={styles.mobileSelectInput}
+                    aria-label="انتخاب خدمت"
+                  >
+                    {list.map((svc, i) => (
+                      <option key={svc.id} value={i}>
+                        {svc.title}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown size={20} className={styles.mobileSelectArrow} />
+                </div>
+              </div>
+
+              {/* Desktop Service List (visible on desktop) */}
               <ul className={styles.serviceList} role="tablist">
                 {list.map((svc, i) => (
                   <li key={svc.id} role="presentation">
