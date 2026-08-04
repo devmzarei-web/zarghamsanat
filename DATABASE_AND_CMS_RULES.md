@@ -69,3 +69,9 @@ If you need to delete an entire collection (e.g. converting `News` to `Articles`
 3. **Manual Drop Migration**: Do NOT rely on `payload migrate:create` to drop the collection automatically as it may generate a flawed schema-rebuild migration. Instead, manually write a migration file with `DROP TABLE IF EXISTS "collection_name" CASCADE;`.
 4. **Clean Previous Migrations**: Check previous migrations in `src/migrations/` and ensure they do not try to `ALTER TABLE "deleted_collection"` after the table is dropped.
 5. **Always add `sharp` configuration** in `payload.config.ts` (e.g., `sharp,`) to prevent CMS UI crashes when editing items with image references.
+
+---
+
+## 7. 🔒 Payload Internal Tables & Document Locks Rule
+- **Rule**: When replacing or adding collections (e.g. replacing `News` with `Articles`), ensure that Payload's internal document lock relationship table `payload_locked_documents_rels` has its relationship columns updated (e.g., adding `articles_id` and dropping `news_id`).
+- **Why**: Payload 3.x queries `payload_locked_documents_rels` on every admin page load. If the table is missing the foreign key column for a new collection, PostgreSQL will throw `column payload_locked_documents__rels.<collection>_id does not exist` and crash the Payload CMS Admin interface (`/admin`).
