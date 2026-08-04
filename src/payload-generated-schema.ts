@@ -35,11 +35,11 @@ export const enum_certificates_type = pgEnum("enum_certificates_type", [
   "inspection",
   "other",
 ]);
-export const enum_news_category = pgEnum("enum_news_category", [
+export const enum_articles_category = pgEnum("enum_articles_category", [
+  "technical",
   "company",
   "projects",
   "certificates",
-  "events",
   "industry",
 ]);
 export const enum_contact_submissions_request_type = pgEnum(
@@ -235,6 +235,45 @@ export const services_gallery = pgTable(
   ],
 );
 
+export const services_features = pgTable(
+  "services_features",
+  {
+    _order: integer("_order").notNull(),
+    _parentID: integer("_parent_id").notNull(),
+    id: varchar("id").primaryKey(),
+    feature: varchar("feature").notNull(),
+  },
+  (columns) => [
+    index("services_features_order_idx").on(columns._order),
+    index("services_features_parent_id_idx").on(columns._parentID),
+    foreignKey({
+      columns: [columns["_parentID"]],
+      foreignColumns: [services.id],
+      name: "services_features_parent_id_fk",
+    }).onDelete("cascade"),
+  ],
+);
+
+export const services_faqs = pgTable(
+  "services_faqs",
+  {
+    _order: integer("_order").notNull(),
+    _parentID: integer("_parent_id").notNull(),
+    id: varchar("id").primaryKey(),
+    question: varchar("question").notNull(),
+    answer: varchar("answer").notNull(),
+  },
+  (columns) => [
+    index("services_faqs_order_idx").on(columns._order),
+    index("services_faqs_parent_id_idx").on(columns._parentID),
+    foreignKey({
+      columns: [columns["_parentID"]],
+      foreignColumns: [services.id],
+      name: "services_faqs_parent_id_fk",
+    }).onDelete("cascade"),
+  ],
+);
+
 export const services = pgTable(
   "services",
   {
@@ -249,6 +288,7 @@ export const services = pgTable(
     coverImage: integer("cover_image_id").references(() => media.id, {
       onDelete: "set null",
     }),
+    ctaText: varchar("cta_text").default("استعلام و مشاوره تخصصی"),
     order: numeric("order", { mode: "number" }).default(0),
     updatedAt: timestamp("updated_at", {
       mode: "string",
@@ -430,24 +470,26 @@ export const certificates = pgTable(
   ],
 );
 
-export const news = pgTable(
-  "news",
+export const articles = pgTable(
+  "articles",
   {
     id: serial("id").primaryKey(),
     title: varchar("title").notNull(),
     slug: varchar("slug").notNull(),
     summary: varchar("summary").notNull(),
+    author: varchar("author").default("تیم فنی ضرغام صنعت اروند"),
+    readingTime: varchar("reading_time").default("۵ دقیقه"),
     content: jsonb("content").notNull(),
     coverImage: integer("cover_image_id").references(() => media.id, {
       onDelete: "set null",
     }),
-    category: enum_news_category("category").default("company"),
+    category: enum_articles_category("category").default("technical"),
     publishDate: timestamp("publish_date", {
       mode: "string",
       withTimezone: true,
       precision: 3,
     }).notNull(),
-    published: boolean("published").default(false),
+    published: boolean("published").default(true),
     featured: boolean("featured").default(false),
     seo_metaTitle: varchar("seo_meta_title"),
     seo_metaDescription: varchar("seo_meta_description"),
@@ -467,10 +509,10 @@ export const news = pgTable(
       .notNull(),
   },
   (columns) => [
-    uniqueIndex("news_slug_idx").on(columns.slug),
-    index("news_cover_image_idx").on(columns.coverImage),
-    index("news_updated_at_idx").on(columns.updatedAt),
-    index("news_created_at_idx").on(columns.createdAt),
+    uniqueIndex("articles_slug_idx").on(columns.slug),
+    index("articles_cover_image_idx").on(columns.coverImage),
+    index("articles_updated_at_idx").on(columns.updatedAt),
+    index("articles_created_at_idx").on(columns.createdAt),
   ],
 );
 
@@ -578,6 +620,43 @@ export const pages = pgTable(
   ],
 );
 
+export const team = pgTable(
+  "team",
+  {
+    id: serial("id").primaryKey(),
+    name: varchar("name").notNull(),
+    role: varchar("role").notNull(),
+    isCeo: boolean("is_ceo").default(false),
+    photo: integer("photo_id").references(() => media.id, {
+      onDelete: "set null",
+    }),
+    bio: varchar("bio"),
+    quote: varchar("quote"),
+    email: varchar("email"),
+    phone: varchar("phone"),
+    order: numeric("order", { mode: "number" }).default(0),
+    updatedAt: timestamp("updated_at", {
+      mode: "string",
+      withTimezone: true,
+      precision: 3,
+    })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp("created_at", {
+      mode: "string",
+      withTimezone: true,
+      precision: 3,
+    })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => [
+    index("team_photo_idx").on(columns.photo),
+    index("team_updated_at_idx").on(columns.updatedAt),
+    index("team_created_at_idx").on(columns.createdAt),
+  ],
+);
+
 export const payload_kv = pgTable(
   "payload_kv",
   {
@@ -627,10 +706,11 @@ export const payload_locked_documents_rels = pgTable(
     servicesID: integer("services_id"),
     projectsID: integer("projects_id"),
     certificatesID: integer("certificates_id"),
-    newsID: integer("news_id"),
+    articlesID: integer("articles_id"),
     "contact-submissionsID": integer("contact_submissions_id"),
     clientsID: integer("clients_id"),
     pagesID: integer("pages_id"),
+    teamID: integer("team_id"),
   },
   (columns) => [
     index("payload_locked_documents_rels_order_idx").on(columns.order),
@@ -647,12 +727,15 @@ export const payload_locked_documents_rels = pgTable(
     index("payload_locked_documents_rels_certificates_id_idx").on(
       columns.certificatesID,
     ),
-    index("payload_locked_documents_rels_news_id_idx").on(columns.newsID),
+    index("payload_locked_documents_rels_articles_id_idx").on(
+      columns.articlesID,
+    ),
     index("payload_locked_documents_rels_contact_submissions_id_idx").on(
       columns["contact-submissionsID"],
     ),
     index("payload_locked_documents_rels_clients_id_idx").on(columns.clientsID),
     index("payload_locked_documents_rels_pages_id_idx").on(columns.pagesID),
+    index("payload_locked_documents_rels_team_id_idx").on(columns.teamID),
     foreignKey({
       columns: [columns["parent"]],
       foreignColumns: [payload_locked_documents.id],
@@ -684,9 +767,9 @@ export const payload_locked_documents_rels = pgTable(
       name: "payload_locked_documents_rels_certificates_fk",
     }).onDelete("cascade"),
     foreignKey({
-      columns: [columns["newsID"]],
-      foreignColumns: [news.id],
-      name: "payload_locked_documents_rels_news_fk",
+      columns: [columns["articlesID"]],
+      foreignColumns: [articles.id],
+      name: "payload_locked_documents_rels_articles_fk",
     }).onDelete("cascade"),
     foreignKey({
       columns: [columns["contact-submissionsID"]],
@@ -702,6 +785,11 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns["pagesID"]],
       foreignColumns: [pages.id],
       name: "payload_locked_documents_rels_pages_fk",
+    }).onDelete("cascade"),
+    foreignKey({
+      columns: [columns["teamID"]],
+      foreignColumns: [team.id],
+      name: "payload_locked_documents_rels_team_fk",
     }).onDelete("cascade"),
   ],
 );
@@ -788,15 +876,38 @@ export const payload_migrations = pgTable(
   ],
 );
 
+export const site_settings_nav_items = pgTable(
+  "site_settings_nav_items",
+  {
+    _order: integer("_order").notNull(),
+    _parentID: integer("_parent_id").notNull(),
+    id: varchar("id").primaryKey(),
+    label: varchar("label").notNull(),
+    href: varchar("href").notNull(),
+    order: numeric("order", { mode: "number" }).default(0),
+  },
+  (columns) => [
+    index("site_settings_nav_items_order_idx").on(columns._order),
+    index("site_settings_nav_items_parent_id_idx").on(columns._parentID),
+    foreignKey({
+      columns: [columns["_parentID"]],
+      foreignColumns: [site_settings.id],
+      name: "site_settings_nav_items_parent_id_fk",
+    }).onDelete("cascade"),
+  ],
+);
+
 export const site_settings_hero_slides = pgTable(
   "site_settings_hero_slides",
   {
     _order: integer("_order").notNull(),
     _parentID: integer("_parent_id").notNull(),
     id: varchar("id").primaryKey(),
-    image: integer("image_id").references(() => media.id, {
-      onDelete: "set null",
-    }),
+    image: integer("image_id")
+      .notNull()
+      .references(() => media.id, {
+        onDelete: "set null",
+      }),
     title: varchar("title"),
     subtitle: varchar("subtitle"),
   },
@@ -941,6 +1052,23 @@ export const relations_services_gallery = relations(
     }),
   }),
 );
+export const relations_services_features = relations(
+  services_features,
+  ({ one }) => ({
+    _parentID: one(services, {
+      fields: [services_features._parentID],
+      references: [services.id],
+      relationName: "features",
+    }),
+  }),
+);
+export const relations_services_faqs = relations(services_faqs, ({ one }) => ({
+  _parentID: one(services, {
+    fields: [services_faqs._parentID],
+    references: [services.id],
+    relationName: "faqs",
+  }),
+}));
 export const relations_services = relations(services, ({ one, many }) => ({
   icon: one(media, {
     fields: [services.icon],
@@ -954,6 +1082,12 @@ export const relations_services = relations(services, ({ one, many }) => ({
   }),
   gallery: many(services_gallery, {
     relationName: "gallery",
+  }),
+  features: many(services_features, {
+    relationName: "features",
+  }),
+  faqs: many(services_faqs, {
+    relationName: "faqs",
   }),
 }));
 export const relations_projects_before_after_images = relations(
@@ -1021,9 +1155,9 @@ export const relations_certificates = relations(certificates, ({ one }) => ({
     relationName: "image",
   }),
 }));
-export const relations_news = relations(news, ({ one }) => ({
+export const relations_articles = relations(articles, ({ one }) => ({
   coverImage: one(media, {
-    fields: [news.coverImage],
+    fields: [articles.coverImage],
     references: [media.id],
     relationName: "coverImage",
   }),
@@ -1044,6 +1178,13 @@ export const relations_pages = relations(pages, ({ one }) => ({
     fields: [pages.heroImage],
     references: [media.id],
     relationName: "heroImage",
+  }),
+}));
+export const relations_team = relations(team, ({ one }) => ({
+  photo: one(media, {
+    fields: [team.photo],
+    references: [media.id],
+    relationName: "photo",
   }),
 }));
 export const relations_payload_kv = relations(payload_kv, () => ({}));
@@ -1080,10 +1221,10 @@ export const relations_payload_locked_documents_rels = relations(
       references: [certificates.id],
       relationName: "certificates",
     }),
-    newsID: one(news, {
-      fields: [payload_locked_documents_rels.newsID],
-      references: [news.id],
-      relationName: "news",
+    articlesID: one(articles, {
+      fields: [payload_locked_documents_rels.articlesID],
+      references: [articles.id],
+      relationName: "articles",
     }),
     "contact-submissionsID": one(contact_submissions, {
       fields: [payload_locked_documents_rels["contact-submissionsID"]],
@@ -1099,6 +1240,11 @@ export const relations_payload_locked_documents_rels = relations(
       fields: [payload_locked_documents_rels.pagesID],
       references: [pages.id],
       relationName: "pages",
+    }),
+    teamID: one(team, {
+      fields: [payload_locked_documents_rels.teamID],
+      references: [team.id],
+      relationName: "team",
     }),
   }),
 );
@@ -1137,6 +1283,16 @@ export const relations_payload_migrations = relations(
   payload_migrations,
   () => ({}),
 );
+export const relations_site_settings_nav_items = relations(
+  site_settings_nav_items,
+  ({ one }) => ({
+    _parentID: one(site_settings, {
+      fields: [site_settings_nav_items._parentID],
+      references: [site_settings.id],
+      relationName: "navItems",
+    }),
+  }),
+);
 export const relations_site_settings_hero_slides = relations(
   site_settings_hero_slides,
   ({ one }) => ({
@@ -1165,6 +1321,9 @@ export const relations_site_settings = relations(
       references: [media.id],
       relationName: "favicon",
     }),
+    navItems: many(site_settings_nav_items, {
+      relationName: "navItems",
+    }),
     heroVideo: one(media, {
       fields: [site_settings.heroVideo],
       references: [media.id],
@@ -1185,7 +1344,7 @@ export const relations_stats = relations(stats, () => ({}));
 type DatabaseSchema = {
   enum_projects_status: typeof enum_projects_status;
   enum_certificates_type: typeof enum_certificates_type;
-  enum_news_category: typeof enum_news_category;
+  enum_articles_category: typeof enum_articles_category;
   enum_contact_submissions_request_type: typeof enum_contact_submissions_request_type;
   enum_contact_submissions_status: typeof enum_contact_submissions_status;
   enum_site_settings_title_font: typeof enum_site_settings_title_font;
@@ -1195,21 +1354,25 @@ type DatabaseSchema = {
   users: typeof users;
   media: typeof media;
   services_gallery: typeof services_gallery;
+  services_features: typeof services_features;
+  services_faqs: typeof services_faqs;
   services: typeof services;
   projects_before_after_images: typeof projects_before_after_images;
   projects_gallery: typeof projects_gallery;
   projects: typeof projects;
   certificates: typeof certificates;
-  news: typeof news;
+  articles: typeof articles;
   contact_submissions: typeof contact_submissions;
   clients: typeof clients;
   pages: typeof pages;
+  team: typeof team;
   payload_kv: typeof payload_kv;
   payload_locked_documents: typeof payload_locked_documents;
   payload_locked_documents_rels: typeof payload_locked_documents_rels;
   payload_preferences: typeof payload_preferences;
   payload_preferences_rels: typeof payload_preferences_rels;
   payload_migrations: typeof payload_migrations;
+  site_settings_nav_items: typeof site_settings_nav_items;
   site_settings_hero_slides: typeof site_settings_hero_slides;
   site_settings: typeof site_settings;
   stats: typeof stats;
@@ -1217,21 +1380,25 @@ type DatabaseSchema = {
   relations_users: typeof relations_users;
   relations_media: typeof relations_media;
   relations_services_gallery: typeof relations_services_gallery;
+  relations_services_features: typeof relations_services_features;
+  relations_services_faqs: typeof relations_services_faqs;
   relations_services: typeof relations_services;
   relations_projects_before_after_images: typeof relations_projects_before_after_images;
   relations_projects_gallery: typeof relations_projects_gallery;
   relations_projects: typeof relations_projects;
   relations_certificates: typeof relations_certificates;
-  relations_news: typeof relations_news;
+  relations_articles: typeof relations_articles;
   relations_contact_submissions: typeof relations_contact_submissions;
   relations_clients: typeof relations_clients;
   relations_pages: typeof relations_pages;
+  relations_team: typeof relations_team;
   relations_payload_kv: typeof relations_payload_kv;
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels;
   relations_payload_locked_documents: typeof relations_payload_locked_documents;
   relations_payload_preferences_rels: typeof relations_payload_preferences_rels;
   relations_payload_preferences: typeof relations_payload_preferences;
   relations_payload_migrations: typeof relations_payload_migrations;
+  relations_site_settings_nav_items: typeof relations_site_settings_nav_items;
   relations_site_settings_hero_slides: typeof relations_site_settings_hero_slides;
   relations_site_settings: typeof relations_site_settings;
   relations_stats: typeof relations_stats;
