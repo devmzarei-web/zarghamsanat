@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import { CheckCircle2 } from 'lucide-react'
 import { getPayloadClient } from '@/lib/payload'
 import PageHero from '@/components/PageHero/PageHero'
-
+import TeamSection from '@/components/TeamSection/TeamSection'
 import { toPersianDigits } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
@@ -11,7 +10,7 @@ export const revalidate = 0
 async function getAboutData() {
   try {
     const payload = await getPayloadClient()
-    const [cmsPage, stats, services] = await Promise.all([
+    const [cmsPage, stats, teamRes] = await Promise.all([
       payload.find({
         collection: 'pages',
         where: { slug: { equals: 'about' } },
@@ -19,9 +18,9 @@ async function getAboutData() {
       }),
       payload.findGlobal({ slug: 'stats' }),
       payload.find({
-        collection: 'services',
+        collection: 'team' as any,
         sort: 'order',
-        limit: 20,
+        limit: 50,
       }),
     ])
 
@@ -29,7 +28,7 @@ async function getAboutData() {
       JSON.stringify({
         cmsPage: cmsPage?.docs?.[0] ?? null,
         stats,
-        services: services?.docs ?? [],
+        teamMembers: teamRes?.docs ?? [],
       })
     )
   } catch (_) {
@@ -46,27 +45,11 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-const DEFAULT_CAPABILITIES = [
-  'اجرای کامل عملیات پایپینگ، عایق‌کاری، سندبلاست و رنگ‌آمیزی صنعتی',
-  'نصب تجهیزات مکانیکی ثابت و دوار در پلنت‌های پالایشگاهی و پتروشیمی',
-  'انجام عملیات‌های سیویل، فونداسیون‌های سنگین، ترنچ و ساختمانی',
-  'طراحی، ساخت و نصب انواع مخازن ذخیره و تحت فشار',
-  'ساخت و نصب انواع سازه‌های فلزی صنعتی شامل استراکچر و پایپ ساپورت',
-  'اجرای عملیات برق، کابل‌کشی و ابزار دقیق',
-  'تأمین کلیه متریال‌های صنعتی شامل انواع ورق، لوله، اتصالات و تجهیزات',
-  'تکمیل، رفع پانچ، پیش‌راه‌اندازی و کمک در راه‌اندازی پروژه‌ها',
-]
-
 export default async function AboutPage() {
   const data = await getAboutData()
   const cmsPage = data?.cmsPage
   const stats = data?.stats
-  const servicesList = data?.services ?? []
-
-  // Dynamic capabilities list from CMS services or default
-  const capabilities = servicesList.length > 0
-    ? servicesList.map((s: any) => s.title)
-    : DEFAULT_CAPABILITIES
+  const teamMembers = data?.teamMembers ?? []
 
   const foundedYear = stats?.foundedYear ?? 1390
   const projectsCompleted = stats?.projectsCompleted ?? 150
@@ -132,36 +115,8 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Dynamic Capabilities from CMS Services collection */}
-      <section className="section" style={{ background: 'var(--gray-100)' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span className="section-label">خدمات و دامنه فعالیت</span>
-            <h2 className="section-title">توانمندی‌های اجرایی شرکت (مدیریت‌شده در CMS)</h2>
-            <div className="gold-divider gold-divider--center" />
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-            {capabilities.map((capTitle: string, i: number) => (
-              <div key={i} style={{
-                background: 'var(--white)',
-                padding: '1.5rem 2rem',
-                borderRadius: 'var(--radius-xl)',
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '1rem',
-                boxShadow: 'var(--shadow-sm)',
-                border: '1px solid var(--gray-200)',
-              }}>
-                <CheckCircle2 size={24} style={{ color: 'var(--gold-500)', flexShrink: 0, marginTop: '2px' }} />
-                <span style={{ fontSize: 'var(--text-base)', color: 'var(--navy-900)', fontWeight: 600, lineHeight: 1.7 }}>
-                  {capTitle}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Leadership & Team Section */}
+      <TeamSection members={teamMembers} />
     </>
   )
 }

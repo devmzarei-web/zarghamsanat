@@ -3,21 +3,21 @@ import type { CollectionConfig } from 'payload'
 export const News: CollectionConfig = {
   slug: 'news',
   labels: {
-    singular: 'خبر',
-    plural: 'اخبار',
+    singular: 'مقاله / خبر',
+    plural: 'مقالات و اخبار',
   },
   access: {
     read: () => true,
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'publishDate', 'published', 'updatedAt'],
+    defaultColumns: ['title', 'category', 'author', 'publishDate', 'published', 'updatedAt'],
   },
   fields: [
     {
       name: 'title',
       type: 'text',
-      label: 'عنوان خبر',
+      label: 'عنوان مقاله / خبر',
       required: true,
     },
     {
@@ -30,13 +30,25 @@ export const News: CollectionConfig = {
     {
       name: 'summary',
       type: 'textarea',
-      label: 'خلاصه خبر',
+      label: 'خلاصه مقاله / چکیده',
       required: true,
+    },
+    {
+      name: 'author',
+      type: 'text',
+      label: 'نویسنده / منبع',
+      defaultValue: 'تیم فنی ضرغام صنعت اروند',
+    },
+    {
+      name: 'readingTime',
+      type: 'text',
+      label: 'زمان مطالعه (تخمینی)',
+      defaultValue: '۵ دقیقه',
     },
     {
       name: 'content',
       type: 'richText',
-      label: 'محتوای کامل خبر',
+      label: 'محتوای کامل مقاله',
       required: true,
     },
     {
@@ -50,13 +62,13 @@ export const News: CollectionConfig = {
       type: 'select',
       label: 'دسته‌بندی',
       options: [
+        { label: 'مقالات تخصصی', value: 'technical' },
         { label: 'اخبار شرکت', value: 'company' },
         { label: 'پروژه‌های جدید', value: 'projects' },
-        { label: 'گواهینامه‌ها', value: 'certificates' },
-        { label: 'رویدادها', value: 'events' },
+        { label: 'گواهینامه‌ها و استانداردها', value: 'certificates' },
         { label: 'صنعت نفت و گاز', value: 'industry' },
       ],
-      defaultValue: 'company',
+      defaultValue: 'technical',
     },
     {
       name: 'publishDate',
@@ -68,12 +80,12 @@ export const News: CollectionConfig = {
       name: 'published',
       type: 'checkbox',
       label: 'منتشر شده',
-      defaultValue: false,
+      defaultValue: true,
     },
     {
       name: 'featured',
       type: 'checkbox',
-      label: 'خبر ویژه',
+      label: 'مقاله ویژه',
       defaultValue: false,
     },
     {

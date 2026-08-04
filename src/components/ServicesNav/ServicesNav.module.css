@@ -2,10 +2,10 @@
   position: sticky;
   top: calc(var(--header-height, 80px));
   z-index: 90;
-  background: rgba(17, 26, 40, 0.95);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
-  border-bottom: 2px solid rgba(249, 115, 22, 0.4);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  border-bottom: 2px solid var(--safety-orange-500);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   padding-block: 0.75rem;
   transition: all var(--transition-fast);
 }
@@ -26,7 +26,7 @@
 .navTitle {
   font-size: var(--text-xs, 0.75rem);
   font-weight: 800;
-  color: var(--safety-orange-400);
+  color: var(--steel-blue-900);
   font-family: var(--font-heading);
   white-space: nowrap;
 }
@@ -37,7 +37,7 @@
   gap: 0.6rem;
   overflow-x: auto;
   scrollbar-width: thin;
-  scrollbar-color: rgba(249, 115, 22, 0.4) transparent;
+  scrollbar-color: var(--safety-orange-500) transparent;
   padding-bottom: 0.25rem;
   width: 100%;
 }
@@ -47,7 +47,7 @@
 }
 
 .pillsScrollContainer::-webkit-scrollbar-thumb {
-  background: rgba(249, 115, 22, 0.4);
+  background: var(--safety-orange-500);
   border-radius: 4px;
 }
 
@@ -59,9 +59,9 @@
   border-radius: var(--radius-full);
   font-size: var(--text-xs, 0.75rem);
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.8);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--pipeline-grey-700);
+  background: var(--gray-100, #f3f4f6);
+  border: 1px solid var(--gray-300, #d1d5db);
   white-space: nowrap;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -70,9 +70,9 @@
 }
 
 .pillBtn:hover {
-  color: var(--white);
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(249, 115, 22, 0.4);
+  color: var(--steel-blue-900);
+  background: var(--gray-200, #e5e7eb);
+  border-color: var(--safety-orange-500);
   transform: translateY(-1px);
 }
 
@@ -81,14 +81,14 @@
   background: linear-gradient(135deg, var(--safety-orange-500), #c2410c);
   border-color: var(--safety-orange-500);
   font-weight: 800;
-  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
 }
 
 .pillDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--pipeline-grey-400);
   transition: all var(--transition-fast);
 }
 

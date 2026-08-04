@@ -13,6 +13,7 @@ import { News } from './collections/News'
 import { ContactSubmissions } from './collections/ContactSubmissions'
 import { Clients } from './collections/Clients'
 import { Pages } from './collections/Pages'
+import { Team } from './collections/Team'
 
 // Globals
 import { SiteSettings } from './globals/SiteSettings'
@@ -58,6 +59,7 @@ export default buildConfig({
     ContactSubmissions,
     Clients,
     Pages,
+    Team,
   ],
 
   globals: [SiteSettings, Stats],

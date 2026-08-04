@@ -1,0 +1,238 @@
+.section {
+  padding-block: 4.5rem;
+  background: var(--off-white, #f9fafb);
+  border-top: 1px solid var(--gray-200, #e5e7eb);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.ceoCard {
+  background: var(--white);
+  border-radius: var(--radius-2xl);
+  border: 2px solid var(--gray-200, #e5e7eb);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.ceoGrid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  align-items: stretch;
+}
+
+.ceoPhotoWrap {
+  background: linear-gradient(135deg, var(--steel-blue-900, #111827), #1e293b);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+}
+
+.ceoPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ceoPhotoPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--white);
+}
+
+.userIcon {
+  color: var(--safety-orange-400);
+}
+
+.badgeLabel {
+  background: var(--safety-orange-500);
+  color: var(--white);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.ceoContent {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.ceoHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ceoTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ceoRoleBadge {
+  font-size: var(--text-xs);
+  font-weight: 800;
+  color: var(--safety-orange-600);
+  letter-spacing: 0.02em;
+}
+
+.ceoName {
+  font-size: var(--text-2xl);
+  font-weight: 900;
+  color: var(--steel-blue-900, #111827);
+  font-family: var(--font-heading);
+}
+
+.quoteBox {
+  position: relative;
+  background: rgba(249, 115, 22, 0.06);
+  border-right: 4px solid var(--safety-orange-500);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-lg);
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.quoteIcon {
+  color: var(--safety-orange-500);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.quoteText {
+  font-size: var(--text-base);
+  color: var(--steel-blue-900, #111827);
+  font-weight: 700;
+  line-height: 1.75;
+  font-family: var(--font-heading);
+}
+
+.ceoBio {
+  font-size: var(--text-sm);
+  color: var(--pipeline-grey-700, #374151);
+  line-height: 1.85;
+}
+
+.ceoContact {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--gray-200, #e5e7eb);
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--steel-blue-900, #111827);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.contactItem:hover {
+  color: var(--safety-orange-600);
+}
+
+/* Staff Grid */
+.staffGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.staffCard {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  border: 1.5px solid var(--gray-200, #e5e7eb);
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: all var(--transition-fast);
+}
+
+.staffCard:hover {
+  border-color: var(--safety-orange-500);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.staffPhotoWrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--off-white, #f3f4f6);
+  border: 2px solid var(--safety-orange-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.staffPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.staffPlaceholder {
+  color: var(--pipeline-grey-500);
+}
+
+.staffBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.staffRole {
+  font-size: var(--text-xs);
+  font-weight: 800;
+  color: var(--safety-orange-600);
+}
+
+.staffName {
+  font-size: var(--text-base);
+  font-weight: 800;
+  color: var(--steel-blue-900, #111827);
+  font-family: var(--font-heading);
+}
+
+.staffBio {
+  font-size: var(--text-xs);
+  color: var(--pipeline-grey-600, #4b5563);
+  line-height: 1.6;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 1024px) {
+  .ceoGrid {
+    grid-template-columns: 1fr;
+  }
+  .ceoPhotoWrap {
+    min-height: 220px;
+  }
+  .staffGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

@@ -139,7 +139,7 @@ export default async function ServicesPage() {
       <ServicesNav services={navItems} />
 
       {/* Main Content Area: Detailed Services Blocks */}
-      <main className="section" style={{ background: 'linear-gradient(180deg, #0b1320 0%, #111a28 100%)' }}>
+      <main className="section" style={{ background: 'var(--off-white)' }}>
         <div className="container">
           {services.map((svc: any, i: number) => (
             <ServiceSectionBlock key={svc.id || svc.slug} service={svc} index={i} />
