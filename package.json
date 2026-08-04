@@ -7,11 +7,10 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "payload migrate && next build",
+    "build": "payload generate:types && payload migrate && next build",
     "start": "next start",
     "lint": "next lint",
     "payload": "payload"
-
   },
   "dependencies": {
     "@hookform/resolvers": "^5.6.0",
