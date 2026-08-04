@@ -3,13 +3,13 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import sharp from 'sharp'
 
 // Collections
 import { Media } from './collections/Media'
 import { Services } from './collections/Services'
 import { Projects } from './collections/Projects'
 import { Certificates } from './collections/Certificates'
-import { News } from './collections/News'
 import { Articles } from './collections/Articles'
 import { ContactSubmissions } from './collections/ContactSubmissions'
 import { Clients } from './collections/Clients'
@@ -57,7 +57,6 @@ export default buildConfig({
     Projects,
     Certificates,
     Articles,
-    News,
     ContactSubmissions,
     Clients,
     Pages,
@@ -65,6 +64,7 @@ export default buildConfig({
   ],
 
   globals: [SiteSettings, Stats],
+  sharp,
 
   editor: lexicalEditor(),
 

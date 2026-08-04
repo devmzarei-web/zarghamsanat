@@ -78,15 +78,9 @@ export default async function ArticlesPage() {
   let articles: any[] = DEFAULT_ARTICLES
   try {
     const payload = await getPayloadClient()
-    // Fetch from articles or fallback to news collection
-    const result = await payload.find({ collection: 'articles' as any, sort: '-createdAt', limit: 20 })
+    const result = await payload.find({ collection: 'articles', sort: '-createdAt', limit: 20 })
     const docs = JSON.parse(JSON.stringify(result?.docs ?? []))
     if (docs.length > 0) articles = docs
-    else {
-      const newsRes = await payload.find({ collection: 'news', sort: '-createdAt', limit: 20 })
-      const newsDocs = JSON.parse(JSON.stringify(newsRes?.docs ?? []))
-      if (newsDocs.length > 0) articles = newsDocs
-    }
   } catch (_) {}
 
   return (

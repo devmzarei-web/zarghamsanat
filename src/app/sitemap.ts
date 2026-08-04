@@ -10,17 +10,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/services`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/projects`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE_URL}/certificates`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/news`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
+    { url: `${BASE_URL}/articles`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
     { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.6 },
   ]
 
   try {
     const payload = await getPayloadClient()
 
-    const [projects, services, news] = await Promise.all([
+    const [projects, services, articles] = await Promise.all([
       payload.find({ collection: 'projects', limit: 100 }),
       payload.find({ collection: 'services', limit: 50 }),
-      payload.find({ collection: 'news', where: { published: { equals: true } }, limit: 100 }),
+      payload.find({ collection: 'articles', where: { published: { equals: true } }, limit: 100 }),
     ])
 
     const projectRoutes: MetadataRoute.Sitemap = projects.docs.map((p: any) => ({
@@ -37,14 +37,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }))
 
-    const newsRoutes: MetadataRoute.Sitemap = news.docs.map((n: any) => ({
-      url: `${BASE_URL}/news/${n.slug}`,
+    const articleRoutes: MetadataRoute.Sitemap = articles.docs.map((n: any) => ({
+      url: `${BASE_URL}/articles/${n.slug}`,
       lastModified: new Date(n.updatedAt),
       changeFrequency: 'monthly',
       priority: 0.5,
     }))
 
-    return [...staticRoutes, ...projectRoutes, ...serviceRoutes, ...newsRoutes]
+    return [...staticRoutes, ...projectRoutes, ...serviceRoutes, ...articleRoutes]
   } catch (_) {
     return staticRoutes
   }

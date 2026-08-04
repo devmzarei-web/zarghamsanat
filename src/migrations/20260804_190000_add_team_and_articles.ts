@@ -18,9 +18,6 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
     );
 
-    -- Add Articles/News columns
-    ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "author" varchar DEFAULT 'تیم فنی ضرغام صنعت اروند';
-    ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "reading_time" varchar DEFAULT '۵ دقیقه';
 
     DO $$ BEGIN
       ALTER TABLE "team" ADD CONSTRAINT "team_photo_id_fk" FOREIGN KEY ("photo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
@@ -33,7 +30,6 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
 export async function down({ db }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
     DROP TABLE IF EXISTS "team" CASCADE;
-    ALTER TABLE "news" DROP COLUMN IF EXISTS "author";
-    ALTER TABLE "news" DROP COLUMN IF EXISTS "reading_time";
+
   `)
 }

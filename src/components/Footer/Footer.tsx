@@ -19,7 +19,7 @@ const QUICK_LINKS = [
   { label: 'خدمات', href: '/services' },
   { label: 'پروژه‌ها', href: '/projects' },
   { label: 'گواهینامه‌ها', href: '/certificates' },
-  { label: 'اخبار', href: '/news' },
+  { label: 'مقالات', href: '/articles' },
   { label: 'تماس با ما', href: '/contact' },
 ]
 

@@ -21,14 +21,7 @@ async function getArticle(slug: string) {
       limit: 1,
     })
     if (result?.docs?.[0]) return JSON.parse(JSON.stringify(result.docs[0]))
-
-    // Fallback to news
-    const newsRes = await payload.find({
-      collection: 'news',
-      where: { slug: { equals: slug } },
-      limit: 1,
-    })
-    return newsRes?.docs?.[0] ? JSON.parse(JSON.stringify(newsRes.docs[0])) : null
+    return null
   } catch (_) {
     return null
   }

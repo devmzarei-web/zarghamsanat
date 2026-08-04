@@ -59,3 +59,13 @@ When adding new fields to Payload CMS collections (e.g. adding array fields like
 3. Verify the generated migration file uses `IF NOT EXISTS` guards.
 4. Test build locally: `npx next build`.
 5. Commit both schema changes and migration files: `git commit -m "feat: ..."` & `git push origin main`.
+
+---
+
+## 6. 🗑️ Rules for Deleting Collections
+If you need to delete an entire collection (e.g. converting `News` to `Articles`):
+1. **Remove all code references first**: Use `grep_search` to find all imports, frontend page queries, seed scripts, and Payload config registrations of the collection and remove/replace them.
+2. **Remove frontend folders**: Delete the Next.js routes (e.g. `src/app/(frontend)/news`).
+3. **Manual Drop Migration**: Do NOT rely on `payload migrate:create` to drop the collection automatically as it may generate a flawed schema-rebuild migration. Instead, manually write a migration file with `DROP TABLE IF EXISTS "collection_name" CASCADE;`.
+4. **Clean Previous Migrations**: Check previous migrations in `src/migrations/` and ensure they do not try to `ALTER TABLE "deleted_collection"` after the table is dropped.
+5. **Always add `sharp` configuration** in `payload.config.ts` (e.g., `sharp,`) to prevent CMS UI crashes when editing items with image references.
