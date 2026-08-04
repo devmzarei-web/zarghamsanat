@@ -5,6 +5,7 @@ import * as migration_20260804_210000_drop_news from './20260804_210000_drop_new
 import * as migration_20260804_220000_create_missing_internal_tables from './20260804_220000_create_missing_internal_tables';
 import * as migration_20260804_230000_fix_locked_documents_rels from './20260804_230000_fix_locked_documents_rels';
 import * as migration_20260804_240000_ensure_all_rel_columns from './20260804_240000_ensure_all_rel_columns';
+import * as migration_20260804_250000_fix_articles_columns from './20260804_250000_fix_articles_columns';
 
 export const migrations = [
   {
@@ -41,5 +42,10 @@ export const migrations = [
     up: migration_20260804_240000_ensure_all_rel_columns.up,
     down: migration_20260804_240000_ensure_all_rel_columns.down,
     name: '20260804_240000_ensure_all_rel_columns',
+  },
+  {
+    up: migration_20260804_250000_fix_articles_columns.up,
+    down: migration_20260804_250000_fix_articles_columns.down,
+    name: '20260804_250000_fix_articles_columns',
   },
 ];
