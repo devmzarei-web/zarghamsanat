@@ -43,6 +43,64 @@ export const SiteSettings: GlobalConfig = {
             },
           ],
         },
+        // ── Typography & Colors ───────────────────────
+        {
+          label: 'تایپوگرافی و رنگ‌ها',
+          fields: [
+            {
+              name: 'titleFont',
+              type: 'select',
+              label: 'فونت عناوین (Titles)',
+              defaultValue: 'YekanBakh',
+              options: [
+                { label: 'یکان بخ (YekanBakh)', value: 'YekanBakh' },
+                { label: 'ایران سنس (IRANSansX)', value: 'IRANSansX' },
+                { label: 'وزیرمتن (Vazirmatn)', value: 'Vazirmatn' },
+                { label: 'انجمن (Anjoman)', value: 'Anjoman' },
+                { label: 'کمند (Kamand)', value: 'Kamand' },
+              ],
+            },
+            {
+              name: 'textFont',
+              type: 'select',
+              label: 'فونت متن اصلی (Body Text)',
+              defaultValue: 'IRANSansX',
+              options: [
+                { label: 'ایران سنس (IRANSansX)', value: 'IRANSansX' },
+                { label: 'یکان بخ (YekanBakh)', value: 'YekanBakh' },
+                { label: 'وزیرمتن (Vazirmatn)', value: 'Vazirmatn' },
+              ],
+            },
+            {
+              name: 'titleColor',
+              type: 'text',
+              label: 'رنگ عناوین (Title Color)',
+              defaultValue: '#111827',
+              admin: {
+                description: 'کد Hex رنگ عناوین (مانند #111827 مشکی، #1A365D سرمه‌ای، #F97316 نارنجی)',
+              },
+            },
+            {
+              name: 'subtitleColor',
+              type: 'text',
+              label: 'رنگ زیرعنوان‌ها (Subtitle Color)',
+              defaultValue: '#4b5563',
+              admin: {
+                description: 'کد Hex رنگ زیرعنوان‌ها (مانند #4b5563 خاکستری)',
+              },
+            },
+            {
+              name: 'textColor',
+              type: 'text',
+              label: 'رنگ متن اصلی (Body Text Color)',
+              defaultValue: '#111827',
+              admin: {
+                description: 'کد Hex رنگ متن اصلی (مانند #111827)',
+              },
+            },
+          ],
+        },
+
         // ── Hero ───────────────────────────────
         {
           label: 'هیرو (صفحه اصلی)',

@@ -57,6 +57,73 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/Vazirmatn-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Anjoman';
+  src: url('/fonts/Anjoman/Anjoman-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Anjoman';
+  src: url('/fonts/Anjoman/Anjoman-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Anjoman';
+  src: url('/fonts/Anjoman/Anjoman-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Anjoman';
+  src: url('/fonts/Anjoman/Anjoman-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kamand';
+  src: url('/fonts/Kamand/Kamand-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kamand';
+  src: url('/fonts/Kamand/Kamand-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kamand';
+  src: url('/fonts/Kamand/Kamand-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 /* ── Palette 1: Industrial Authority Tokens ── */
 :root {
   /* Header / Primary Corporate — Deep Steel Blue */
@@ -103,9 +170,12 @@
   /* Colors — Semantic */
   --color-bg: var(--off-white);
   --color-text: var(--carbon-black);
+  --color-title: var(--carbon-black);
+  --color-subtitle: var(--pipeline-grey-600);
   --color-primary: var(--safety-orange-500);
   --color-primary-hover: var(--safety-orange-600);
   --color-secondary: var(--steel-blue-800);
+
 
   /* Typography — Premium IRANSansX & YekanBakh */
   --font-persian: 'IRANSansX', 'YekanBakh', system-ui, -apple-system, sans-serif;
@@ -179,10 +249,15 @@ html {
 body {
   font-family: var(--font-persian);
   font-size: var(--text-base);
-  color: var(--carbon-black);
+  color: var(--color-text);
   background-color: var(--off-white);
   line-height: 1.7;
   overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-title);
 }
 
 img,
@@ -245,13 +320,18 @@ select {
   font-size: var(--text-4xl);
   font-weight: 900;
   line-height: 1.35;
-  color: var(--carbon-black);
+  color: var(--color-title);
   margin-bottom: var(--space-4);
 }
 
-.section-title--white {
-  color: var(--white);
+.section-subtitle {
+  color: var(--color-subtitle);
 }
+
+.section-title--white {
+  color: var(--white) !important;
+}
+
 
 /* ── Buttons ── */
 .btn {

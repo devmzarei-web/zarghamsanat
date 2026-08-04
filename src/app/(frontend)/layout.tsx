@@ -40,6 +40,20 @@ export const metadata: Metadata = {
   },
 }
 
+const TITLE_FONT_MAP: Record<string, string> = {
+  YekanBakh: "'YekanBakh', system-ui, sans-serif",
+  IRANSansX: "'IRANSansX', system-ui, sans-serif",
+  Vazirmatn: "'Vazirmatn', system-ui, sans-serif",
+  Anjoman: "'Anjoman', system-ui, sans-serif",
+  Kamand: "'Kamand', system-ui, sans-serif",
+}
+
+const TEXT_FONT_MAP: Record<string, string> = {
+  IRANSansX: "'IRANSansX', system-ui, sans-serif",
+  YekanBakh: "'YekanBakh', system-ui, sans-serif",
+  Vazirmatn: "'Vazirmatn', system-ui, sans-serif",
+}
+
 export default async function RootLayout({
   children,
 }: {
@@ -59,6 +73,12 @@ export default async function RootLayout({
       ? settings.favicon.url
       : '/favicon.ico'
 
+  const titleFontFamily = TITLE_FONT_MAP[settings?.titleFont] || TITLE_FONT_MAP['YekanBakh']
+  const textFontFamily = TEXT_FONT_MAP[settings?.textFont] || TEXT_FONT_MAP['IRANSansX']
+  const titleColor = settings?.titleColor || '#111827'
+  const subtitleColor = settings?.subtitleColor || '#4b5563'
+  const textColor = settings?.textColor || '#111827'
+
   return (
     <html lang="fa" dir="rtl">
       <head>
@@ -66,6 +86,19 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href={faviconUrl} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              :root {
+                --font-heading: ${titleFontFamily};
+                --font-persian: ${textFontFamily};
+                --color-title: ${titleColor};
+                --color-subtitle: ${subtitleColor};
+                --color-text: ${textColor};
+              }
+            `,
+          }}
+        />
       </head>
       <body>
         <LoadingScreen />
@@ -80,3 +113,4 @@ export default async function RootLayout({
     </html>
   )
 }
+
