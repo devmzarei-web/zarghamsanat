@@ -1,9 +1,6 @@
-if (!process.env.PAYLOAD_SECRET) {
-  process.env.PAYLOAD_SECRET = 'zarghamsanat_secret_key_2026_super_secure'
-}
-if (!process.env.DATABASE_URI) {
-  process.env.DATABASE_URI = 'postgresql://postgres:Number05@localhost:5432/zarghamsanat'
-}
+import { loadEnvConfig } from '@next/env'
+
+loadEnvConfig(process.cwd())
 
 import { seedDatabase } from '../seed'
 
