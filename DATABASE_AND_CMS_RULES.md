@@ -85,3 +85,26 @@ If you need to delete an entire collection (e.g. converting `News` to `Articles`
 
 - **Rule**: When replacing or adding collections (e.g. replacing `News` with `Articles`), ensure that Payload's internal document lock relationship table `payload_locked_documents_rels` has its relationship columns updated (e.g., adding `articles_id` and dropping `news_id`).
 - **Why**: Payload 3.x queries `payload_locked_documents_rels` on every admin page load. If the table is missing the foreign key column for a new collection, PostgreSQL will throw `column payload_locked_documents__rels.<collection>_id does not exist` and crash the Payload CMS Admin interface (`/admin`).
+
+---
+
+## 8. 🚨 Incident Response & Troubleshooting Protocol
+If Payload CMS `/admin` or a collection list page crashes on production:
+1. **Fetch production logs**: Run `pm2 logs --lines 50` on the VPS to obtain the exact SQL error digest (e.g. `column ... does not exist` or `relation ... does not exist`).
+2. **Identify missing database columns or tables**:
+   - Internal tables missing? (`users_sessions`, `payload_preferences`, `payload_locked_documents`, `payload_kv`).
+   - Relational columns missing? (`payload_locked_documents_rels.articles_id`, `articles.seo_meta_title`, etc.).
+3. **Write a targeted, safe fix migration**:
+   - Create a new migration file `src/migrations/YYYYMMDD_HHMMSS_fix_<issue>.ts`.
+   - Use `ALTER TABLE "..." ADD COLUMN IF NOT EXISTS "..."` for missing columns.
+   - Register the migration in `src/migrations/index.ts`.
+4. **Deploy**: `git pull origin main && npm run build && pm2 restart <app_name>`.
+
+---
+
+## 9. 🌸 Pre-populating Default Content Safely & Idempotently
+- **Rule**: When pre-populating CMS pages or collections with initial default content, the seed script MUST check if the target collection already contains ANY documents (`isCollectionEmpty`).
+- **Behavior**:
+  - If a collection has **>= 1 document**, skip seeding entirely.
+  - **Why**: This guarantees that if the admin deletes, modifies, or manages team members, clients, projects, or pages, running the seed script will **NEVER** re-create deleted items or overwrite custom edits.
+
