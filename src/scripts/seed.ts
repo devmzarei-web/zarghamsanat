@@ -5,9 +5,8 @@ if (typeof loadEnvConfig === 'function') {
   loadEnvConfig(process.cwd())
 }
 
-import { seedDatabase } from '../seed'
-
 async function run() {
+  const { seedDatabase } = await import('../seed')
   await seedDatabase()
   process.exit(0)
 }
