@@ -70,7 +70,7 @@ export default buildConfig({
 
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || 'postgresql://postgres:Number05@localhost:5432/zarghamsanat',
+      connectionString: process.env.DATABASE_URI || 'postgresql://postgres:Number05$@localhost:5432/zarghamsanat',
       ssl: process.env.DATABASE_URI && !process.env.DATABASE_URI.includes('localhost') ? { rejectUnauthorized: false } : false,
     },
     push: false,

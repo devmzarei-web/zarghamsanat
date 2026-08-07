@@ -43,7 +43,7 @@ export async function seedDatabase() {
     process.env.PAYLOAD_SECRET = 'zarghamsanat_secret_key_2026_super_secure'
   }
   if (!process.env.DATABASE_URI) {
-    process.env.DATABASE_URI = 'postgresql://postgres:Number05@localhost:5432/zarghamsanat'
+    process.env.DATABASE_URI = 'postgresql://postgres:Number05$@localhost:5432/zarghamsanat'
   }
 
   console.log('🌱 Checking & pre-populating Zargham Sanat Arvand CMS records...')
