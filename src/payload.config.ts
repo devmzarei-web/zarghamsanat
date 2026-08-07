@@ -23,8 +23,7 @@ import { Stats } from './globals/Stats'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const rawDbUri = process.env.DATABASE_URI || 'postgresql://postgres:Number05%24@localhost:5432/zarghamsanat'
-const dbUri = rawDbUri.replace('postgres:Number05@', 'postgres:Number05%24@')
+const dbUri = process.env.DATABASE_URI || 'postgresql://postgres:Number05%24@localhost:5432/zarghamsanat'
 
 export default buildConfig({
   admin: {
