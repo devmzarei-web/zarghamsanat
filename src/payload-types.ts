@@ -431,6 +431,8 @@ export interface Page {
   heroImage?: (number | null) | Media;
   storyTitle?: string | null;
   bodyContent?: string | null;
+  teamSectionBadge?: string | null;
+  teamSectionTitle?: string | null;
   metaTitle?: string | null;
   metaDescription?: string | null;
   updatedAt: string;
@@ -803,6 +805,8 @@ export interface PagesSelect<T extends boolean = true> {
   heroImage?: T;
   storyTitle?: T;
   bodyContent?: T;
+  teamSectionBadge?: T;
+  teamSectionTitle?: T;
   metaTitle?: T;
   metaDescription?: T;
   updatedAt?: T;

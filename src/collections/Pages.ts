@@ -59,6 +59,16 @@ export const Pages: CollectionConfig = {
       label: 'متن اصلی / توضیحات صفحه',
     },
     {
+      name: 'teamSectionBadge',
+      type: 'text',
+      label: 'بج / نشان بخش تیم مدیریت',
+    },
+    {
+      name: 'teamSectionTitle',
+      type: 'text',
+      label: 'عنوان بخش تیم مدیریت',
+    },
+    {
       name: 'metaTitle',
       type: 'text',
       label: 'عنوان متا (SEO)',

@@ -116,7 +116,11 @@ export default async function AboutPage() {
       </section>
 
       {/* Leadership & Team Section */}
-      <TeamSection members={teamMembers} />
+      <TeamSection
+        badge={cmsPage?.teamSectionBadge || 'سرمایه انسانی و رهبری'}
+        title={cmsPage?.teamSectionTitle || 'مدیریت ارشد و تیم متخصصین'}
+        members={teamMembers}
+      />
     </>
   )
 }

@@ -6,6 +6,7 @@ import * as migration_20260804_220000_create_missing_internal_tables from './202
 import * as migration_20260804_230000_fix_locked_documents_rels from './20260804_230000_fix_locked_documents_rels';
 import * as migration_20260804_240000_ensure_all_rel_columns from './20260804_240000_ensure_all_rel_columns';
 import * as migration_20260804_250000_fix_articles_columns from './20260804_250000_fix_articles_columns';
+import * as migration_20260807_170000_add_team_section_fields_to_pages from './20260807_170000_add_team_section_fields_to_pages';
 
 export const migrations = [
   {
@@ -47,5 +48,10 @@ export const migrations = [
     up: migration_20260804_250000_fix_articles_columns.up,
     down: migration_20260804_250000_fix_articles_columns.down,
     name: '20260804_250000_fix_articles_columns',
+  },
+  {
+    up: migration_20260807_170000_add_team_section_fields_to_pages.up,
+    down: migration_20260807_170000_add_team_section_fields_to_pages.down,
+    name: '20260807_170000_add_team_section_fields_to_pages',
   },
 ];
