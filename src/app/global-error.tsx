@@ -27,12 +27,15 @@ export default function GlobalError({
             padding: 0;
             background-color: #0a0f1d;
             color: #ffffff;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: var(--font-persian, system-ui, sans-serif);
             direction: rtl;
           }
           a, button {
             text-decoration: none;
-            font-family: inherit;
+            font-family: var(--font-persian, system-ui, sans-serif);
+          }
+          h1, h2, h3, .heading-font {
+            font-family: var(--font-heading, system-ui, sans-serif);
           }
         `}</style>
       </head>
@@ -85,12 +88,14 @@ export default function GlobalError({
                 color: '#ef4444',
                 letterSpacing: '0.1em',
                 marginBottom: '0.5rem',
+                fontFamily: 'var(--font-heading, system-ui, sans-serif)',
               }}
             >
               خطای سیستم (۵۰۰)
             </span>
 
             <h1
+              className="heading-font"
               style={{
                 fontSize: '2rem',
                 fontWeight: 900,
@@ -107,6 +112,7 @@ export default function GlobalError({
                 color: 'rgba(255, 255, 255, 0.75)',
                 lineHeight: 1.8,
                 marginBottom: '2.5rem',
+                fontFamily: 'var(--font-persian, system-ui, sans-serif)',
               }}
             >
               یک خطای موقت در سرور رخ داده است. می‌توانید مجدداً تلاش کرده یا به صفحه اصلی بازگردید.
@@ -134,6 +140,7 @@ export default function GlobalError({
                   border: 'none',
                   cursor: 'pointer',
                   boxShadow: '0 4px 15px rgba(201, 146, 42, 0.3)',
+                  fontFamily: 'var(--font-heading, system-ui, sans-serif)',
                 }}
               >
                 <RefreshCw size={18} />
@@ -152,6 +159,7 @@ export default function GlobalError({
                   fontWeight: 700,
                   borderRadius: '0.75rem',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
+                  fontFamily: 'var(--font-persian, system-ui, sans-serif)',
                 }}
               >
                 <Home size={18} />

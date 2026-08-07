@@ -1,34 +1,67 @@
 import Link from 'next/link'
-import { Home, PhoneCall, FileQuestion } from 'lucide-react'
+import { Home, PhoneCall, FileQuestion, Layers } from 'lucide-react'
+import { getPayloadClient } from '@/lib/payload'
 
 export const metadata = {
   title: 'صفحه یافت نشد (۴۰۴) | ضرغام صنعت اروند',
   description: 'صفحه مورد نظر یافت نشد. می‌توانید به صفحه اصلی یا بخش‌های دیگر سایت مراجعه کنید.',
 }
 
-export default function GlobalNotFound() {
+const TITLE_FONT_MAP: Record<string, string> = {
+  YekanBakh: "'YekanBakh', system-ui, sans-serif",
+  IRANSansX: "'IRANSansX', system-ui, sans-serif",
+  Vazirmatn: "'Vazirmatn', system-ui, sans-serif",
+  Anjoman: "'Anjoman', system-ui, sans-serif",
+  Kamand: "'Kamand', system-ui, sans-serif",
+}
+
+const TEXT_FONT_MAP: Record<string, string> = {
+  IRANSansX: "'IRANSansX', system-ui, sans-serif",
+  YekanBakh: "'YekanBakh', system-ui, sans-serif",
+  Vazirmatn: "'Vazirmatn', system-ui, sans-serif",
+}
+
+export default async function GlobalNotFound() {
+  let settings: any = null
+  try {
+    const payload = await getPayloadClient()
+    settings = await payload.findGlobal({ slug: 'site-settings' })
+  } catch (_) {}
+
+  const titleFontFamily = TITLE_FONT_MAP[settings?.titleFont] || TITLE_FONT_MAP['YekanBakh']
+  const textFontFamily = TEXT_FONT_MAP[settings?.textFont] || TEXT_FONT_MAP['IRANSansX']
+
   return (
     <html lang="fa" dir="rtl">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>صفحه یافت نشد (۴۰۴) | ضرغام صنعت اروند</title>
-        <style>{`
-          :root {
-            --font-heading: system-ui, -apple-system, sans-serif;
-          }
-          body {
-            margin: 0;
-            padding: 0;
-            background-color: #0a0f1d;
-            color: #ffffff;
-            font-family: system-ui, -apple-system, sans-serif;
-            direction: rtl;
-          }
-          a {
-            text-decoration: none;
-          }
-        `}</style>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              :root {
+                --font-heading: ${titleFontFamily};
+                --font-persian: ${textFontFamily};
+              }
+              body {
+                margin: 0;
+                padding: 0;
+                background-color: #0a0f1d;
+                color: #ffffff;
+                font-family: var(--font-persian);
+                direction: rtl;
+              }
+              a, button {
+                text-decoration: none;
+                font-family: var(--font-persian);
+              }
+              h1, h2, h3, .heading-font {
+                font-family: var(--font-heading);
+              }
+            `,
+          }}
+        />
       </head>
       <body>
         <div
@@ -79,12 +112,14 @@ export default function GlobalNotFound() {
                 color: '#fbbf24',
                 letterSpacing: '0.1em',
                 marginBottom: '0.5rem',
+                fontFamily: 'var(--font-heading)',
               }}
             >
               خطای ۴۰۴
             </span>
 
             <h1
+              className="heading-font"
               style={{
                 fontSize: '2rem',
                 fontWeight: 900,
@@ -101,9 +136,10 @@ export default function GlobalNotFound() {
                 color: 'rgba(255, 255, 255, 0.75)',
                 lineHeight: 1.8,
                 marginBottom: '2.5rem',
+                fontFamily: 'var(--font-persian)',
               }}
             >
-              متأسفانه صفحه‌ای که به دنبال آن بودید وجود ندارد یا آدرس آن تغییر کرده است. می‌توانید به صفحه اصلی بازگردید.
+              متأسفانه صفحه‌ای که به دنبال آن بودید وجود ندارد یا آدرس آن تغییر کرده است. می‌توانید به صفحه اصلی یا سایر بخش‌های سایت مراجعه کنید.
             </p>
 
             <div
@@ -126,6 +162,7 @@ export default function GlobalNotFound() {
                   fontWeight: 800,
                   borderRadius: '0.75rem',
                   boxShadow: '0 4px 15px rgba(201, 146, 42, 0.3)',
+                  fontFamily: 'var(--font-heading)',
                 }}
               >
                 <Home size={18} />
@@ -144,8 +181,10 @@ export default function GlobalNotFound() {
                   fontWeight: 700,
                   borderRadius: '0.75rem',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
+                  fontFamily: 'var(--font-persian)',
                 }}
               >
+                <Layers size={18} />
                 <span>خدمات تخصصی</span>
               </Link>
 
@@ -161,6 +200,7 @@ export default function GlobalNotFound() {
                   fontWeight: 700,
                   borderRadius: '0.75rem',
                   border: '1px solid #fbbf24',
+                  fontFamily: 'var(--font-persian)',
                 }}
               >
                 <PhoneCall size={18} />
