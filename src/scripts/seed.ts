@@ -1,6 +1,9 @@
-import { loadEnvConfig } from '@next/env'
+import nextEnv from '@next/env'
 
-loadEnvConfig(process.cwd())
+const loadEnvConfig = typeof nextEnv === 'function' ? nextEnv : (nextEnv as any)?.loadEnvConfig || (nextEnv as any)?.default?.loadEnvConfig
+if (typeof loadEnvConfig === 'function') {
+  loadEnvConfig(process.cwd())
+}
 
 import { seedDatabase } from '../seed'
 

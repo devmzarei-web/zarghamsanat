@@ -1,4 +1,4 @@
-import { loadEnvConfig } from '@next/env'
+import nextEnv from '@next/env'
 import { getPayloadClient } from './lib/payload'
 
 function createLexicalContent(text: string) {
@@ -34,7 +34,10 @@ function createLexicalContent(text: string) {
 }
 
 export async function seedDatabase() {
-  loadEnvConfig(process.cwd())
+  const loadEnvConfig = typeof nextEnv === 'function' ? nextEnv : (nextEnv as any)?.loadEnvConfig || (nextEnv as any)?.default?.loadEnvConfig
+  if (typeof loadEnvConfig === 'function') {
+    loadEnvConfig(process.cwd())
+  }
 
   if (!process.env.PAYLOAD_SECRET) {
     process.env.PAYLOAD_SECRET = 'zarghamsanat_secret_key_2026_super_secure'
