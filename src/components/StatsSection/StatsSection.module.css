@@ -27,6 +27,8 @@
   transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
   position: relative;
   overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .card::before {
@@ -41,13 +43,21 @@
 }
 
 .card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
   border-color: var(--safety-orange-500);
 }
 
 .card:hover::before {
   transform: scaleX(1);
+}
+
+.cardHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .cardIcon {
@@ -63,12 +73,28 @@
   transition: all var(--transition-base);
 }
 
+.arrowIcon {
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  color: var(--pipeline-grey-400);
+  opacity: 0;
+  transform: translate(4px, -4px);
+  transition: all var(--transition-base);
+}
+
 .card:hover .cardIcon {
   background: var(--safety-orange-500);
   color: var(--white);
   border-color: var(--safety-orange-500);
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
+}
+
+.card:hover .arrowIcon {
+  opacity: 1;
+  color: var(--safety-orange-500);
+  transform: translate(0, 0);
 }
 
 .cardNumber {
@@ -80,6 +106,7 @@
   display: flex;
   align-items: baseline;
   gap: 0.125em;
+  direction: ltr;
 }
 
 .cardSuffix {
@@ -107,4 +134,3 @@
   .cardNumber { font-size: 1.25rem; }
   .cardIcon { width: 36px; height: 36px; }
 }
-

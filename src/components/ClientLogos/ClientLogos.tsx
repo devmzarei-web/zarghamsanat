@@ -51,7 +51,7 @@ export default function ClientLogos({ clients, projects = [] }: ClientLogosProps
 
   return (
     <>
-      <section className={styles.section} aria-label="کارفرمایان">
+      <section id="clients" className={styles.section} aria-label="کارفرمایان">
         <div className="container">
           <ScrollReveal animation="fade-up">
             <div className={styles.header}>

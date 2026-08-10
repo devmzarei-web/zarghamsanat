@@ -77,6 +77,7 @@ export interface Config {
     clients: Client;
     pages: Page;
     team: Team;
+    'crew-gallery': CrewGallery;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -94,6 +95,7 @@ export interface Config {
     clients: ClientsSelect<false> | ClientsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
+    'crew-gallery': CrewGallerySelect<false> | CrewGallerySelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -470,6 +472,26 @@ export interface Team {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "crew-gallery".
+ */
+export interface CrewGallery {
+  id: number;
+  title: string;
+  category: 'welders' | 'fitters' | 'piping' | 'mechanical' | 'tanks' | 'sandblast' | 'civil' | 'hse' | 'team';
+  /**
+   * اگر دسته‌بندی جدیدی مد نظر دارید می‌توانید در این بخش وارد نمایید.
+   */
+  customCategory?: string | null;
+  image?: (number | null) | Media;
+  caption?: string | null;
+  location?: string | null;
+  featured?: boolean | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -531,6 +553,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'team';
         value: number | Team;
+      } | null)
+    | ({
+        relationTo: 'crew-gallery';
+        value: number | CrewGallery;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -825,6 +851,22 @@ export interface TeamSelect<T extends boolean = true> {
   quote?: T;
   email?: T;
   phone?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "crew-gallery_select".
+ */
+export interface CrewGallerySelect<T extends boolean = true> {
+  title?: T;
+  category?: T;
+  customCategory?: T;
+  image?: T;
+  caption?: T;
+  location?: T;
+  featured?: T;
   order?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -571,6 +571,69 @@ export async function seedDatabase() {
       console.log('ℹ Articles collection already initialized. Skipping article seed.')
     }
 
+    // 11. Collection: CrewGallery
+    if (await isCollectionEmpty('crew-gallery')) {
+      const DEFAULT_CREW_GALLERY = [
+        {
+          title: 'عملیات جوشکاری تخصصی ۶G آلیاژی و استنلس استیل',
+          category: 'welders',
+          location: 'پتروشیمی مارون - ماهشهر',
+          caption: 'اجرای جوشکاری تخصصی TIG/SMAW بر اساس WPS/PQR تایید شده با گواهی رادیوگرافی ۱۰۰٪.',
+          featured: true,
+          order: 1,
+        },
+        {
+          title: 'مونتاژ و فیتینگ اسپول‌های پایپینگ فشار قوی',
+          category: 'fitters',
+          location: 'پالایش نفت آبادان',
+          caption: 'پیش‌ساخت و آماده‌سازی اسپول‌های ۲۴ اینچ کلاس ۱۵۰۰ با رعایت کامل تلرانس‌های ASME B31.3.',
+          featured: true,
+          order: 2,
+        },
+        {
+          title: 'نصب و تراز دقیق لیزری پمپ‌های سنگین پالایشگاهی',
+          category: 'mechanical',
+          location: 'فولاد شادگان',
+          caption: 'نصب و گروت‌ریزی پکیج‌های پمپاژ صنعتی و کمپرسورهای دوار فوق سنگین.',
+          featured: true,
+          order: 3,
+        },
+        {
+          title: 'مونتاژ بدنه مخازن کروی ذخیره‌سازی نفت خام',
+          category: 'tanks',
+          location: 'پالایش نفت آبادان',
+          caption: 'مونتاژ ورق‌های بدنه مخزن با جک‌های هیدرولیکی اتوماتیک و بازرسی انحراف عمودی API 650.',
+          featured: true,
+          order: 4,
+        },
+        {
+          title: 'سندبلاست تا درجه Sa 2.5 و اعمال پوشش اپوکسی',
+          category: 'sandblast',
+          location: 'پتروشیمی مارون',
+          caption: 'آماده‌سازی سطح فلزی و اعمال سه لایه رنگ صنعتی زینک‌ریچ و پلی‌اوراتان بر اساس استاندارد SSPC.',
+          featured: true,
+          order: 5,
+        },
+        {
+          title: 'نظارت مستمر کارشناسان HSE و ایمنی در سایت عملیاتی',
+          category: 'hse',
+          location: 'سایت پروژه آبادان',
+          caption: 'کنترل دقیق تجهیزات حفاظت فردی، صدور مجوز کار (Permit to Work) و پایش سلامت کارگاه.',
+          featured: true,
+          order: 6,
+        },
+      ]
+
+      for (const galleryItem of DEFAULT_CREW_GALLERY) {
+        try {
+          await payload.create({ collection: 'crew-gallery' as any, data: galleryItem as any })
+          console.log(`✅ Gallery item seeded: ${galleryItem.title}`)
+        } catch (_) {}
+      }
+    } else {
+      console.log('ℹ CrewGallery collection already initialized. Skipping gallery seed.')
+    }
+
     console.log('🎉 Seed check complete!')
   } catch (err: any) {
     console.error('❌ Error pre-populating CMS data:', err?.message || err)

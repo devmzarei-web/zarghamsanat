@@ -16,6 +16,7 @@ import { ContactSubmissions } from './collections/ContactSubmissions'
 import { Clients } from './collections/Clients'
 import { Pages } from './collections/Pages'
 import { Team } from './collections/Team'
+import { CrewGallery } from './collections/CrewGallery'
 
 // Globals
 import { SiteSettings } from './globals/SiteSettings'
@@ -86,6 +87,7 @@ export default buildConfig({
     Clients,
     Pages,
     Team,
+    CrewGallery,
   ],
 
   globals: [SiteSettings, Stats],
