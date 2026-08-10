@@ -19,6 +19,7 @@ async function getGalleryData() {
         collection: 'crew-gallery' as any,
         sort: 'order',
         limit: 100,
+        depth: 2,
       }),
     ])
 

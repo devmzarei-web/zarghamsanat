@@ -1,0 +1,264 @@
+.sliderContainer {
+  width: 100%;
+  padding-block: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.swiperWrapper {
+  width: 100%;
+  padding-block: 1rem 2rem;
+}
+
+.swiper {
+  width: 100%;
+  padding-block: 2rem;
+  overflow: visible !important;
+}
+
+.slide {
+  width: 320px !important;
+  height: 420px;
+  transition: all 0.4s ease;
+}
+
+@media (min-width: 768px) {
+  .slide {
+    width: 360px !important;
+    height: 460px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .slide {
+    width: 400px !important;
+    height: 500px;
+  }
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: var(--radius-2xl, 1.5rem);
+  overflow: hidden;
+  background: var(--steel-blue-900, #111827);
+  border: 2px solid rgba(251, 191, 36, 0.35);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:global(.swiper-slide-active) .card {
+  border-color: var(--safety-orange-500, #f97316);
+  box-shadow: 0 25px 60px rgba(249, 115, 22, 0.35);
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.card:hover .cardImage {
+  transform: scale(1.06);
+}
+
+.cardGradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 15, 29, 0.1) 0%, rgba(10, 15, 29, 0.75) 100%);
+  pointer-events: none;
+}
+
+.slideCategoryBadge {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(10, 15, 29, 0.85);
+  color: var(--gold-400, #fbbf24);
+  border: 1.5px solid rgba(251, 191, 36, 0.4);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.75rem;
+  font-weight: 800;
+  backdrop-filter: blur(8px);
+  z-index: 2;
+}
+
+.quickExpandBtn {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--safety-orange-500, #f97316), var(--safety-orange-600, #ea580c));
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+  z-index: 2;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.quickExpandBtn:hover {
+  transform: scale(1.1);
+}
+
+/* Detail Info Box below Carousel */
+.detailBox {
+  maxWidth: 820px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1.5px solid var(--pipeline-grey-200, #e5e7eb);
+  border-radius: var(--radius-2xl, 1.5rem);
+  padding: 2rem 2.5rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: center;
+  align-items: center;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.controlsRow {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.navCircleBtn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid var(--gray-300, #d1d5db);
+  color: var(--steel-blue-900, #111827);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.navCircleBtn:hover {
+  background: var(--safety-orange-500, #f97316);
+  color: #ffffff;
+  border-color: var(--safety-orange-500, #f97316);
+  transform: scale(1.08);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+}
+
+.slideCounter {
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 800;
+  color: var(--pipeline-grey-600, #4b5563);
+  font-family: var(--font-heading);
+  direction: ltr;
+}
+
+.activeDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.badgeGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.catBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--safety-orange-100, #ffedd5);
+  color: var(--safety-orange-700, #c2410c);
+  border: 1px solid var(--safety-orange-200, #fed7aa);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.serviceBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--steel-blue-900, #111827);
+  color: var(--gold-400, #fbbf24);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.serviceBadge:hover {
+  background: var(--safety-orange-500, #f97316);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.locationBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--gray-100, #f3f4f6);
+  color: var(--pipeline-grey-700, #374151);
+  border: 1px solid var(--gray-200, #e5e7eb);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.activeTitle {
+  font-size: var(--text-xl, 1.25rem);
+  font-weight: 900;
+  color: var(--steel-blue-900, #111827);
+  font-family: var(--font-heading);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.activeCaption {
+  font-size: var(--text-sm, 0.875rem);
+  color: var(--pipeline-grey-600, #4b5563);
+  line-height: 1.8;
+  max-width: 680px;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .slide {
+    width: 270px !important;
+    height: 360px;
+  }
+  .detailBox {
+    padding: 1.5rem 1rem;
+    border-radius: 1rem;
+  }
+  .activeTitle {
+    font-size: 1.1rem;
+  }
+}

@@ -485,6 +485,8 @@ export interface CrewGallery {
   image?: (number | null) | Media;
   caption?: string | null;
   location?: string | null;
+  relatedService?: (number | null) | Service;
+  relatedProject?: (number | null) | Project;
   featured?: boolean | null;
   order?: number | null;
   updatedAt: string;
@@ -866,6 +868,8 @@ export interface CrewGallerySelect<T extends boolean = true> {
   image?: T;
   caption?: T;
   location?: T;
+  relatedService?: T;
+  relatedProject?: T;
   featured?: T;
   order?: T;
   updatedAt?: T;

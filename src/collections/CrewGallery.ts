@@ -63,9 +63,23 @@ export const CrewGallery: CollectionConfig = {
       label: 'موقعیت / نام پروژه یا سایت کارگاهی',
     },
     {
+      name: 'relatedService',
+      type: 'relationship',
+      relationTo: 'services',
+      label: 'خدمت مرتبط (سرویس)',
+      hasMany: false,
+    },
+    {
+      name: 'relatedProject',
+      type: 'relationship',
+      relationTo: 'projects',
+      label: 'پروژه مرتبط',
+      hasMany: false,
+    },
+    {
       name: 'featured',
       type: 'checkbox',
-      label: 'نمایش ویژه در گالری',
+      label: 'نمایش ویژه در اسلایدر 3D گالری',
       defaultValue: true,
     },
     {
