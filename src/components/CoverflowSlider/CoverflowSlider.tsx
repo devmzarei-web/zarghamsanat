@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow, Navigation, Pagination, Autoplay } from 'swiper/modules'
 import type { Swiper as SwiperClass } from 'swiper'
@@ -29,19 +29,38 @@ interface CoverflowSliderProps {
   items: CoverflowItem[]
   onOpenLightbox: (item: CoverflowItem) => void
   categoryLabels: Record<string, string>
+  targetCategory?: string
+  onActiveCategoryChange?: (category: string) => void
 }
 
 export default function CoverflowSlider({
   items = [],
   onOpenLightbox,
   categoryLabels,
+  targetCategory,
+  onActiveCategoryChange,
 }: CoverflowSliderProps) {
   const [swiperInstance, setSwiperInstance] = useState<SwiperClass | null>(null)
   const [activeIndex, setActiveIndex] = useState<number>(0)
+  const isInternalSlide = useRef<boolean>(false)
 
   if (!items || items.length === 0) return null
 
   const activeItem = items[activeIndex] || items[0]
+
+  // Slide directly to matching image when targetCategory changes
+  useEffect(() => {
+    if (!swiperInstance || !targetCategory || targetCategory === 'all') return
+    const targetIdx = items.findIndex((item) => item.category === targetCategory)
+    if (targetIdx !== -1 && targetIdx !== activeIndex) {
+      isInternalSlide.current = true
+      if (items.length > 2) {
+        swiperInstance.slideToLoop(targetIdx)
+      } else {
+        swiperInstance.slideTo(targetIdx)
+      }
+    }
+  }, [targetCategory, swiperInstance, items])
 
   const getImageUrl = (imgObj: any): string => {
     if (!imgObj) return '/images/hero-slide-1.png'
@@ -63,6 +82,15 @@ export default function CoverflowSlider({
       ? activeItem.relatedService.slug
       : null
 
+  const handleSlideChange = (swiper: SwiperClass) => {
+    const realIdx = swiper.realIndex
+    setActiveIndex(realIdx)
+    const currentItem = items[realIdx]
+    if (currentItem && onActiveCategoryChange) {
+      onActiveCategoryChange(currentItem.category)
+    }
+  }
+
   return (
     <div className={styles.sliderContainer}>
       <div className={styles.swiperWrapper}>
@@ -74,9 +102,9 @@ export default function CoverflowSlider({
           initialSlide={0}
           loop={items.length > 2}
           coverflowEffect={{
-            rotate: 15,
+            rotate: 0,
             stretch: 0,
-            depth: 180,
+            depth: 140,
             modifier: 1,
             slideShadows: false,
           }}
@@ -86,7 +114,7 @@ export default function CoverflowSlider({
             pauseOnMouseEnter: true,
           }}
           onSwiper={setSwiperInstance}
-          onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+          onSlideChange={handleSlideChange}
           modules={[EffectCoverflow, Navigation, Pagination, Autoplay]}
           className={styles.swiper}
         >

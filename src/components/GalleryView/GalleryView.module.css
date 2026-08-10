@@ -1,5 +1,5 @@
 .section {
-  padding-block: 2rem 4.5rem;
+  padding-block: 1.5rem 4.5rem;
   background: var(--off-white, #f9fafb);
   display: flex;
   flex-direction: column;
@@ -8,26 +8,34 @@
 }
 
 .filterSection {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 1100px;
 }
 
 .filterBar {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
   gap: 0.75rem;
-  max-width: 1100px;
+  overflow-x: auto;
+  padding: 0.5rem 1rem;
+  max-width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.filterBar::-webkit-scrollbar {
+  display: none;
 }
 
 .filterTab {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.65rem 1.25rem;
+  padding: 0.65rem 1.35rem;
   border-radius: var(--radius-full, 9999px);
   background: var(--white, #ffffff);
   border: 1.5px solid var(--gray-200, #e5e7eb);
@@ -35,6 +43,8 @@
   font-size: var(--text-xs, 0.8125rem);
   font-weight: 700;
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: all var(--transition-fast, 0.2s ease);
 }
 

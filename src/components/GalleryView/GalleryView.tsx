@@ -102,17 +102,12 @@ const DEMO_ITEMS: GalleryItem[] = [
 
 export default function GalleryView({ items = [] }: GalleryViewProps) {
   const displayItems = items.length > 0 ? items : DEMO_ITEMS
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [activeCategory, setActiveCategory] = useState<string>('all')
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null)
 
-  // Filter categories
+  // Unique categories
   const categories = ['all', ...Array.from(new Set(displayItems.map((item) => item.category)))]
-
-  // Filtered list for Coverflow Slider
-  const filteredItems =
-    activeCategory === 'all'
-      ? displayItems
-      : displayItems.filter((item) => item.category === activeCategory)
 
   const getImageUrl = (imgObj: any): string => {
     if (!imgObj) return '/images/hero-slide-1.png'
@@ -121,33 +116,38 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
     return '/images/hero-slide-1.png'
   }
 
+  const handleCategorySelect = (catKey: string) => {
+    setSelectedCategory(catKey)
+    setActiveCategory(catKey)
+  }
+
   const handleLightboxNav = (direction: 'next' | 'prev') => {
     if (!lightboxItem) return
-    const currentIdx = filteredItems.findIndex(
+    const currentIdx = displayItems.findIndex(
       (i) => (i.id || i.title) === (lightboxItem.id || lightboxItem.title)
     )
     if (currentIdx === -1) return
 
     if (direction === 'next') {
-      const nextIdx = (currentIdx + 1) % filteredItems.length
-      setLightboxItem(filteredItems[nextIdx])
+      const nextIdx = (currentIdx + 1) % displayItems.length
+      setLightboxItem(displayItems[nextIdx])
     } else {
-      const prevIdx = (currentIdx - 1 + filteredItems.length) % filteredItems.length
-      setLightboxItem(filteredItems[prevIdx])
+      const prevIdx = (currentIdx - 1 + displayItems.length) % displayItems.length
+      setLightboxItem(displayItems[prevIdx])
     }
   }
 
   return (
     <section className={styles.section}>
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {/* Category & Service Filter Bar above Slider */}
+      <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+        {/* Single-Line Scrollable Category Filter Navigation Bar */}
         <ScrollReveal animation="fade-up">
           <div className={styles.filterSection}>
             <div className={styles.filterBar}>
               {categories.map((catKey) => (
                 <button
                   key={catKey}
-                  onClick={() => setActiveCategory(catKey)}
+                  onClick={() => handleCategorySelect(catKey)}
                   className={`${styles.filterTab} ${activeCategory === catKey ? styles.filterTabActive : ''}`}
                 >
                   <Tag size={14} />
@@ -159,11 +159,12 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
         </ScrollReveal>
 
         {/* 3D Coverflow Showcase Slider & Details Box */}
-        {filteredItems.length > 0 ? (
+        {displayItems.length > 0 ? (
           <ScrollReveal animation="fade-up">
             <CoverflowSlider
-              key={activeCategory}
-              items={filteredItems}
+              items={displayItems}
+              targetCategory={selectedCategory}
+              onActiveCategoryChange={(cat) => setActiveCategory(cat)}
               onOpenLightbox={(item) => setLightboxItem(item)}
               categoryLabels={CATEGORY_LABELS}
             />
@@ -188,7 +189,7 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
               <X size={22} />
             </button>
 
-            {filteredItems.length > 1 && (
+            {displayItems.length > 1 && (
               <>
                 <button
                   className={`${styles.navBtn} ${styles.prevBtn}`}
