@@ -162,7 +162,7 @@ export default function Footer({ settings, services = [] }: FooterProps) {
             © {toPersianDigits(currentYear)} تمامی حقوق این وب‌سایت متعلق به شرکت {companyName} می‌باشد.
           </p>
           <p className={styles.devCredit}>
-            طراحی و توسعه: <a href="https://devzarei.ir/fa.html" target="_blank" rel="noopener noreferrer">محمدعلی زارعی</a>
+            طراحی و توسعه: <span>محمدعلی زارعی</span>
           </p>
         </div>
       </div>

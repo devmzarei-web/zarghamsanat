@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Eye, MapPin, X, ChevronLeft, ChevronRight, Layers, Tag, Wrench, Sparkles } from 'lucide-react'
+import { MapPin, X, ChevronLeft, ChevronRight, Layers, Tag, Wrench } from 'lucide-react'
 import Link from 'next/link'
 import styles from './GalleryView.module.css'
 import ScrollReveal from '@/components/ScrollReveal/ScrollReveal'
@@ -105,14 +105,10 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
   const [activeCategory, setActiveCategory] = useState<string>('all')
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null)
 
-  // Featured slider items
-  const featuredSliderItems = displayItems.filter((i) => i.featured ?? true)
-  const sliderList = featuredSliderItems.length > 0 ? featuredSliderItems : displayItems
-
   // Filter categories
   const categories = ['all', ...Array.from(new Set(displayItems.map((item) => item.category)))]
 
-  // Filtered list
+  // Filtered list for Coverflow Slider
   const filteredItems =
     activeCategory === 'all'
       ? displayItems
@@ -127,7 +123,9 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
 
   const handleLightboxNav = (direction: 'next' | 'prev') => {
     if (!lightboxItem) return
-    const currentIdx = filteredItems.findIndex((i) => (i.id || i.title) === (lightboxItem.id || lightboxItem.title))
+    const currentIdx = filteredItems.findIndex(
+      (i) => (i.id || i.title) === (lightboxItem.id || lightboxItem.title)
+    )
     if (currentIdx === -1) return
 
     if (direction === 'next') {
@@ -141,28 +139,8 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
 
   return (
     <section className={styles.section}>
-      {/* 1. Coverflow 3D Showcase Slider */}
-      <div className="container">
-        <ScrollReveal animation="fade-up">
-          <div className={styles.showcaseHeader}>
-            <span className={styles.showcaseBadge}>
-              <Sparkles size={15} />
-              <span>نمایش سه‌بعدی آلبوم‌های برتر</span>
-            </span>
-            <h2 className={styles.showcaseTitle}>گالری تصویری پروژه‌ها و توانمندی‌های اجرایی</h2>
-            <p className={styles.showcaseSubtitle}>
-              برای مشاهده جزئیات هر بخش، تصاویر را ورق بزنید یا روی کلید بزرگ‌نمایی کلیک کنید.
-            </p>
-          </div>
-
-          <CoverflowSlider
-            items={sliderList}
-            onOpenLightbox={(item) => setLightboxItem(item)}
-            categoryLabels={CATEGORY_LABELS}
-          />
-        </ScrollReveal>
-
-        {/* 2. Category & Service Filter Tabs */}
+      <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {/* Category & Service Filter Bar above Slider */}
         <ScrollReveal animation="fade-up">
           <div className={styles.filterSection}>
             <div className={styles.filterBar}>
@@ -180,74 +158,17 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
           </div>
         </ScrollReveal>
 
-        {/* 3. Filtered Grid Gallery */}
-        <div className={styles.grid}>
-          {filteredItems.map((item, idx) => {
-            const imgUrl = getImageUrl(item.image)
-            const catLabel = CATEGORY_LABELS[item.category] || item.customCategory || item.category
-
-            const sTitle =
-              typeof item.relatedService === 'object' && item.relatedService
-                ? item.relatedService.title
-                : null
-
-            const sSlug =
-              typeof item.relatedService === 'object' && item.relatedService
-                ? item.relatedService.slug
-                : null
-
-            return (
-              <ScrollReveal key={item.id || idx} animation="fade-up" delay={idx * 50}>
-                <div
-                  className={styles.card}
-                  onClick={() => setLightboxItem(item)}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`مشاهده ${item.title}`}
-                >
-                  <div className={styles.imageWrap}>
-                    <img src={imgUrl} alt={item.title} className={styles.image} />
-                    <div className={styles.overlay}>
-                      <div className={styles.zoomBtn}>
-                        <Eye size={22} />
-                        <span>بزرگ‌نمایی</span>
-                      </div>
-                    </div>
-                    <span className={styles.categoryBadge}>{catLabel}</span>
-                  </div>
-
-                  <div className={styles.cardBody}>
-                    <h3 className={styles.cardTitle}>{item.title}</h3>
-
-                    <div className={styles.cardMetaRow}>
-                      {sTitle && (
-                        <Link
-                          href={sSlug ? `/services/${sSlug}` : '/services'}
-                          className={styles.serviceLinkTag}
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Wrench size={13} />
-                          <span>{sTitle}</span>
-                        </Link>
-                      )}
-
-                      {item.location && (
-                        <div className={styles.locationTag}>
-                          <MapPin size={13} />
-                          <span>{item.location}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {item.caption && <p className={styles.caption}>{item.caption}</p>}
-                  </div>
-                </div>
-              </ScrollReveal>
-            )
-          })}
-        </div>
-
-        {filteredItems.length === 0 && (
+        {/* 3D Coverflow Showcase Slider & Details Box */}
+        {filteredItems.length > 0 ? (
+          <ScrollReveal animation="fade-up">
+            <CoverflowSlider
+              key={activeCategory}
+              items={filteredItems}
+              onOpenLightbox={(item) => setLightboxItem(item)}
+              categoryLabels={CATEGORY_LABELS}
+            />
+          </ScrollReveal>
+        ) : (
           <div className={styles.emptyState}>
             <Layers size={48} />
             <p>تصویری در این دسته‌بندی یافت نشد.</p>
@@ -255,7 +176,7 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
         )}
       </div>
 
-      {/* 4. Fullscreen Lightbox Modal */}
+      {/* Sleek High-Res Lightbox Modal */}
       {lightboxItem && (
         <div className={styles.lightboxOverlay} onClick={() => setLightboxItem(null)}>
           <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
@@ -264,7 +185,7 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
               onClick={() => setLightboxItem(null)}
               aria-label="بستن"
             >
-              <X size={24} />
+              <X size={22} />
             </button>
 
             {filteredItems.length > 1 && (
@@ -274,14 +195,14 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
                   onClick={() => handleLightboxNav('prev')}
                   aria-label="تصویر قبلی"
                 >
-                  <ChevronRight size={28} />
+                  <ChevronRight size={26} />
                 </button>
                 <button
                   className={`${styles.navBtn} ${styles.nextBtn}`}
                   onClick={() => handleLightboxNav('next')}
                   aria-label="تصویر بعدی"
                 >
-                  <ChevronLeft size={28} />
+                  <ChevronLeft size={26} />
                 </button>
               </>
             )}
@@ -307,14 +228,14 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
                     href={`/services/${lightboxItem.relatedService.slug}`}
                     className={styles.lightboxServiceLink}
                   >
-                    <Wrench size={14} />
+                    <Wrench size={13} />
                     <span>{lightboxItem.relatedService.title}</span>
                   </Link>
                 )}
 
                 {lightboxItem.location && (
                   <span className={styles.lightboxLocation}>
-                    <MapPin size={15} />
+                    <MapPin size={14} />
                     <span>{lightboxItem.location}</span>
                   </span>
                 )}

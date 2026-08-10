@@ -1,48 +1,17 @@
 .section {
-  padding-block: 3.5rem 5rem;
+  padding-block: 2rem 4.5rem;
   background: var(--off-white, #f9fafb);
-}
-
-.showcaseHeader {
-  text-align: center;
-  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-}
-
-.showcaseBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  background: var(--gold-100, #fef3c7);
-  color: var(--gold-700, #b45309);
-  border: 1px solid var(--gold-300, #fcd34d);
-  padding: 0.4rem 1rem;
-  border-radius: var(--radius-full, 9999px);
-  font-size: var(--text-xs, 0.8125rem);
-  font-weight: 800;
-}
-
-.showcaseTitle {
-  font-size: var(--text-2xl, 1.75rem);
-  font-weight: 900;
-  color: var(--steel-blue-900, #111827);
-  font-family: var(--font-heading);
-  margin: 0;
-}
-
-.showcaseSubtitle {
-  font-size: var(--text-sm, 0.9375rem);
-  color: var(--pipeline-grey-600, #4b5563);
-  max-width: 600px;
-  line-height: 1.7;
-  margin: 0;
+  width: 100%;
 }
 
 .filterSection {
-  margin-block: 3.5rem 2.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .filterBar {
@@ -51,6 +20,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
+  max-width: 1100px;
 }
 
 .filterTab {
@@ -81,152 +51,6 @@
   box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
-  align-items: stretch;
-}
-
-.card {
-  background: var(--white, #ffffff);
-  border-radius: var(--radius-xl, 1rem);
-  border: 1.5px solid var(--gray-200, #e5e7eb);
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  transition: all var(--transition-normal, 0.25s ease);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-}
-
-.card:hover {
-  border-color: var(--safety-orange-500, #f97316);
-  transform: translateY(-5px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
-}
-
-.imageWrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--steel-blue-900, #111827);
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.card:hover .image {
-  transform: scale(1.08);
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 15, 29, 0.65);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.card:hover .overlay {
-  opacity: 1;
-}
-
-.zoomBtn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: linear-gradient(135deg, var(--safety-orange-500, #f97316), var(--safety-orange-600, #ea580c));
-  color: #ffffff;
-  padding: 0.65rem 1.25rem;
-  border-radius: var(--radius-full, 9999px);
-  font-size: var(--text-xs, 0.8125rem);
-  font-weight: 800;
-  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
-}
-
-.categoryBadge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(10, 15, 29, 0.85);
-  color: var(--gold-400, #fbbf24);
-  border: 1px solid rgba(251, 191, 36, 0.3);
-  padding: 0.3rem 0.75rem;
-  border-radius: var(--radius-md, 0.5rem);
-  font-size: 0.75rem;
-  font-weight: 800;
-  backdrop-filter: blur(6px);
-}
-
-.cardBody {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  flex-grow: 1;
-}
-
-.cardTitle {
-  font-size: var(--text-base, 1rem);
-  font-weight: 800;
-  color: var(--steel-blue-900, #111827);
-  font-family: var(--font-heading);
-  line-height: 1.6;
-  margin: 0;
-}
-
-.cardMetaRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.serviceLinkTag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  background: var(--steel-blue-900, #111827);
-  color: var(--gold-400, #fbbf24);
-  padding: 0.25rem 0.65rem;
-  border-radius: var(--radius-md, 0.5rem);
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.serviceLinkTag:hover {
-  background: var(--safety-orange-500, #f97316);
-  color: #ffffff;
-}
-
-.locationTag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--safety-orange-600, #ea580c);
-}
-
-.caption {
-  font-size: var(--text-xs, 0.8125rem);
-  color: var(--pipeline-grey-600, #4b5563);
-  line-height: 1.7;
-  margin: 0;
-}
-
 .emptyState {
   text-align: center;
   padding: 4rem 1.5rem;
@@ -241,9 +65,9 @@
 .lightboxOverlay {
   position: fixed;
   inset: 0;
-  z-index: 9999;
-  background: rgba(10, 15, 29, 0.92);
-  backdrop-filter: blur(12px);
+  z-index: 99999;
+  background: rgba(10, 15, 29, 0.95);
+  backdrop-filter: blur(16px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -253,13 +77,13 @@
 
 .lightboxContent {
   position: relative;
-  maxWidth: 900px;
+  maxWidth: 920px;
   width: 100%;
-  background: var(--steel-blue-900, #111827);
-  border: 1px solid rgba(201, 146, 42, 0.3);
+  background: #0d1527;
+  border: 1.5px solid rgba(251, 191, 36, 0.35);
   border-radius: var(--radius-2xl, 1.5rem);
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.7);
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -271,20 +95,22 @@
   left: 1rem;
   z-index: 10;
   background: rgba(255, 255, 255, 0.15);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .closeBtn:hover {
   background: var(--safety-orange-500, #f97316);
+  border-color: transparent;
+  transform: scale(1.08);
 }
 
 .navBtn {
@@ -292,11 +118,11 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  background: rgba(10, 15, 29, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(10, 15, 29, 0.75);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -308,10 +134,11 @@
 .navBtn:hover {
   background: var(--safety-orange-500, #f97316);
   border-color: transparent;
+  transform: translateY(-50%) scale(1.1);
 }
 
-.prevBtn { right: 1rem; }
-.nextBtn { left: 1rem; }
+.prevBtn { right: 1.25rem; }
+.nextBtn { left: 1.25rem; }
 
 .lightboxImageWrap {
   width: 100%;
@@ -330,10 +157,12 @@
 }
 
 .lightboxDetails {
-  padding: 2rem;
+  padding: 1.75rem 2rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  background: #0a0f1d;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .lightboxBadgesRow {
@@ -344,8 +173,12 @@
 }
 
 .lightboxCategory {
+  background: rgba(249, 115, 22, 0.18);
   color: var(--gold-400, #fbbf24);
-  font-size: 0.8rem;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.75rem;
   font-weight: 800;
 }
 
@@ -353,38 +186,40 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, var(--safety-orange-500, #f97316), var(--safety-orange-600, #ea580c));
   color: #ffffff;
   padding: 0.25rem 0.75rem;
   border-radius: var(--radius-full, 9999px);
   font-size: 0.75rem;
   font-weight: 700;
   text-decoration: none;
-  transition: background 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .lightboxServiceLink:hover {
-  background: var(--safety-orange-500, #f97316);
+  opacity: 0.9;
 }
 
 .lightboxLocation {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.78125rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .lightboxTitle {
   font-size: var(--text-xl, 1.25rem);
   font-weight: 900;
+  color: #ffffff !important;
   font-family: var(--font-heading);
   margin: 0;
+  line-height: 1.5;
 }
 
 .lightboxCaption {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.85) !important;
   line-height: 1.8;
   margin: 0;
 }
@@ -395,7 +230,6 @@
 }
 
 @media (max-width: 640px) {
-  .grid { grid-template-columns: 1fr; gap: 1.25rem; }
   .lightboxContent { border-radius: 1rem; }
   .lightboxDetails { padding: 1.25rem; }
 }
