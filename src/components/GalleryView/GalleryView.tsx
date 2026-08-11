@@ -102,29 +102,23 @@ const DEMO_ITEMS: GalleryItem[] = [
 
 export default function GalleryView({ items = [] }: GalleryViewProps) {
   const displayItems = items.length > 0 ? items : DEMO_ITEMS
-  const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [activeCategory, setActiveCategory] = useState<string>('all')
+  const [archiveCategory, setArchiveCategory] = useState<string>('all')
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null)
 
   // Unique categories for filter bar
   const categories = ['all', ...Array.from(new Set(displayItems.map((item) => item.category)))]
 
-  // Filtered list for Archive Grid
+  // Filtered list for Archive Grid (completely independent of top slider)
   const filteredArchiveItems =
-    activeCategory === 'all'
+    archiveCategory === 'all'
       ? displayItems
-      : displayItems.filter((item) => item.category === activeCategory)
+      : displayItems.filter((item) => item.category === archiveCategory)
 
   const getImageUrl = (imgObj: any): string => {
     if (!imgObj) return '/images/hero-slide-1.png'
     if (typeof imgObj === 'string') return imgObj
     if (typeof imgObj === 'object' && imgObj.url) return imgObj.url
     return '/images/hero-slide-1.png'
-  }
-
-  const handleCategorySelect = (catKey: string) => {
-    setSelectedCategory(catKey)
-    setActiveCategory(catKey)
   }
 
   const handleLightboxNav = (direction: 'next' | 'prev') => {
@@ -145,20 +139,18 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
 
   return (
     <div className={styles.galleryPageWrapper}>
-      {/* 1. Top Section: 3D Coverflow Showcase Slider (First screen right below header) */}
+      {/* 1. Top Hero Section: 3D Coverflow Showcase Slider in Light Theme */}
       <section className={styles.heroSliderSection}>
         <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
           <CoverflowSlider
             items={displayItems}
-            targetCategory={selectedCategory}
-            onActiveCategoryChange={(cat) => setActiveCategory(cat)}
             onOpenLightbox={(item) => setLightboxItem(item)}
             categoryLabels={CATEGORY_LABELS}
           />
         </div>
       </section>
 
-      {/* 2. Archive Section: Category Filters & Media Grid below slider */}
+      {/* 2. Independent Archive Section: Category Filters & Media Grid */}
       <section className={styles.archiveSection}>
         <div className="container">
           <ScrollReveal animation="fade-up">
@@ -177,8 +169,8 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
                 {categories.map((catKey) => (
                   <button
                     key={catKey}
-                    onClick={() => handleCategorySelect(catKey)}
-                    className={`${styles.filterTab} ${activeCategory === catKey ? styles.filterTabActive : ''}`}
+                    onClick={() => setArchiveCategory(catKey)}
+                    className={`${styles.filterTab} ${archiveCategory === catKey ? styles.filterTabActive : ''}`}
                   >
                     <Tag size={14} />
                     <span>{CATEGORY_LABELS[catKey] || catKey}</span>

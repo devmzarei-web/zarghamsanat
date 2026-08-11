@@ -4,18 +4,18 @@
   background: var(--off-white, #f9fafb);
 }
 
-/* 1. Hero Slider Section right below header */
+/* 1. Hero Slider Section (Light Theme, Integrated below Header) */
 .heroSliderSection {
   width: 100%;
-  padding-top: calc(var(--header-height, 80px) + 0.5rem);
+  padding-top: calc(var(--header-height, 80px) + 1rem);
   padding-bottom: 2.5rem;
-  background: linear-gradient(180deg, #0a0f1d 0%, #111827 100%);
-  border-bottom: 2px solid var(--safety-orange-500, #f97316);
+  background: linear-gradient(180deg, #f3f4f6 0%, #f9fafb 100%);
+  border-bottom: 1px solid var(--gray-200, #e5e7eb);
   position: relative;
   overflow: hidden;
 }
 
-/* 2. Gallery Archive Section */
+/* 2. Gallery Archive Section (Independent General Gallery) */
 .archiveSection {
   width: 100%;
   padding-block: 3.5rem 5rem;
@@ -133,7 +133,7 @@
 .imageWrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--steel-blue-900, #111827);
 }
@@ -277,7 +277,7 @@
 
 .lightboxContent {
   position: relative;
-  max-width: 920px;
+  max-width: 960px;
   width: 100%;
   background: #0d1527;
   border: 1.5px solid rgba(251, 191, 36, 0.35);
@@ -342,7 +342,7 @@
 
 .lightboxImageWrap {
   width: 100%;
-  max-height: 520px;
+  max-height: 540px;
   background: #000000;
   display: flex;
   align-items: center;
@@ -352,7 +352,7 @@
 
 .lightboxImage {
   max-width: 100%;
-  max-height: 520px;
+  max-height: 540px;
   object-fit: contain;
 }
 
