@@ -135,58 +135,65 @@ export default async function ProjectsPage() {
                 : project.client
 
               return (
-                <article
+                <Link
                   key={project.id}
-                  style={{
-                    background: 'var(--white)',
-                    borderRadius: 'var(--radius-xl)',
-                    overflow: 'hidden',
-                    boxShadow: 'var(--shadow-md)',
-                    border: '1px solid var(--gray-100)',
-                    transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                  }}
-                  className="card"
+                  href={getProjectUrl(project.slug)}
+                  style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
                 >
-                  <div style={{ position: 'relative', height: '220px', background: 'var(--navy-800)' }}>
-                    {project.coverImage ? (
-                      <img
-                        src={project.coverImage.url}
-                        alt={project.coverImage.alt || project.title}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                    ) : (
-                      <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.2)', fontSize: '3rem' }}>
-                        🏗️
-                      </div>
-                    )}
-                  </div>
-                  <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--navy-900)' }}>
-                      {project.title}
-                    </h2>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-                      {clientName && (
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
-                          <Building size={12} style={{ color: 'var(--gold-500)' }} />
-                          {clientName}
-                        </span>
-                      )}
-                      {project.location && (
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
-                          <MapPin size={12} style={{ color: 'var(--gold-500)' }} />
-                          {project.location}
-                        </span>
+                  <article
+                    style={{
+                      background: 'var(--white)',
+                      borderRadius: 'var(--radius-xl)',
+                      overflow: 'hidden',
+                      boxShadow: 'var(--shadow-md)',
+                      border: '1px solid var(--gray-100)',
+                      transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+                      height: '100%',
+                      cursor: 'pointer',
+                    }}
+                    className="card"
+                  >
+                    <div style={{ position: 'relative', height: '220px', background: 'var(--navy-800)' }}>
+                      {project.coverImage ? (
+                        <img
+                          src={project.coverImage.url}
+                          alt={project.coverImage.alt || project.title}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                      ) : (
+                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.2)', fontSize: '3rem' }}>
+                          🏗️
+                        </div>
                       )}
                     </div>
-                  <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    {project.serviceDescription}
-                  </p>
-                  <Link href={getProjectUrl(project.slug)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--gold-500)', paddingTop: '0.75rem', borderTop: '1px solid var(--gray-100)' }}>
-                    مشاهده جزئیات <ChevronLeft size={14} />
-                  </Link>
-                </div>
-              </article>
-            )})}
+                    <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                      <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--navy-900)' }}>
+                        {project.title}
+                      </h2>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                        {clientName && (
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
+                            <Building size={12} style={{ color: 'var(--gold-500)' }} />
+                            {clientName}
+                          </span>
+                        )}
+                        {project.location && (
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
+                            <MapPin size={12} style={{ color: 'var(--gold-500)' }} />
+                            {project.location}
+                          </span>
+                        )}
+                      </div>
+                      <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                        {project.serviceDescription}
+                      </p>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--gold-500)', paddingTop: '0.75rem', borderTop: '1px solid var(--gray-100)' }}>
+                        مشاهده جزئیات <ChevronLeft size={14} />
+                      </span>
+                    </div>
+                  </article>
+                </Link>
+              )})}
           </div>
         </div>
       </section>

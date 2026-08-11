@@ -110,10 +110,6 @@ export default function ProjectSignboard({
             <AutoFitValue>شرکت ضرغام صنعت اروند</AutoFitValue>
           </div>
 
-          <div className={styles.row}>
-            <span className={styles.label}>نظارت فیلد و مهندسی:</span>
-            <AutoFitValue>{supervisor}</AutoFitValue>
-          </div>
 
           {durationMonths && (
             <div className={styles.row}>

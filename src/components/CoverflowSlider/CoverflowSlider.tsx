@@ -106,8 +106,8 @@ export default function CoverflowSlider({
           loopAdditionalSlides={items.length}
           coverflowEffect={{
             rotate: 0,
-            stretch: 0,
-            depth: 140,
+            stretch: -30,
+            depth: -100,
             modifier: 1,
             slideShadows: false,
           }}

@@ -34,15 +34,15 @@
 
 @media (min-width: 768px) {
   .slide {
-    width: 480px !important;
-    height: 270px !important;
+    width: 420px !important;
+    height: 236px !important;
   }
 }
 
 @media (min-width: 1024px) {
   .slide {
-    width: 560px !important;
-    height: 315px !important;
+    width: 460px !important;
+    height: 258px !important;
   }
 }
 

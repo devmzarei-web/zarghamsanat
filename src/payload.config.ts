@@ -55,6 +55,13 @@ export default buildConfig({
     meta: {
       titleSuffix: '| ضرغام صنعت اروند',
     },
+    components: {
+      views: {
+        dashboard: {
+          Component: '/components/AdminDashboard/AdminDashboard',
+        },
+      },
+    },
     dateFormat: 'dd/MM/yyyy',
   },
 

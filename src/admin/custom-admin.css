@@ -1,0 +1,79 @@
+@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+
+:root {
+  --font-family-base: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-body: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-heading: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --theme-bg: #0a172c;
+  --theme-elevation-50: #0f203c;
+  --theme-elevation-100: #112240;
+  --theme-elevation-150: #172a4d;
+  --theme-elevation-200: #1e3661;
+  --theme-border-color: rgba(255, 255, 255, 0.12);
+  --theme-input-bg: #0d1b33;
+}
+
+html, body {
+  direction: rtl !important;
+  text-align: right !important;
+  font-family: var(--font-family-base) !important;
+  background-color: #0a172c !important;
+  color: #ffffff !important;
+}
+
+/* Force RTL on all Payload Admin containers */
+[class*="payload-admin"],
+[class*="nav"],
+[class*="sidebar"],
+[class*="table"],
+[class*="form"],
+[class*="field"],
+[class*="view"],
+.template-default {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+/* Primary Brand Accent (Safety Orange) */
+button.btn--style-primary,
+.btn--style-primary,
+button[type="submit"] {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  border-radius: 8px !important;
+}
+
+button.btn--style-primary:hover,
+.btn--style-primary:hover {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4) !important;
+}
+
+/* Sidebar Custom Styling */
+.nav {
+  background-color: #0d1b33 !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.nav__link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 700 !important;
+}
+
+.nav__link:hover,
+.nav__link--active {
+  color: #f97316 !important;
+  background: rgba(249, 115, 22, 0.12) !important;
+  border-right: 3px solid #f97316 !important;
+}
+
+/* Table Headings & Headers */
+th, td {
+  text-align: right !important;
+}
+
+.table header {
+  background: #112240 !important;
+}
