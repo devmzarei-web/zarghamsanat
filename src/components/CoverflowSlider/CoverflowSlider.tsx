@@ -91,6 +91,8 @@ export default function CoverflowSlider({
     }
   }
 
+  const initialIndex = Math.floor(items.length / 2)
+
   return (
     <div className={styles.sliderContainer}>
       <div className={styles.swiperWrapper}>
@@ -99,8 +101,9 @@ export default function CoverflowSlider({
           grabCursor={true}
           centeredSlides={true}
           slidesPerView="auto"
-          initialSlide={0}
+          initialSlide={initialIndex}
           loop={items.length > 2}
+          loopAdditionalSlides={items.length}
           coverflowEffect={{
             rotate: 0,
             stretch: 0,

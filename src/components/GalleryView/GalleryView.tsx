@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { MapPin, X, ChevronLeft, ChevronRight, Layers, Tag, Wrench } from 'lucide-react'
+import { MapPin, X, ChevronLeft, ChevronRight, Layers, Tag, Wrench, Eye, Archive } from 'lucide-react'
 import Link from 'next/link'
 import styles from './GalleryView.module.css'
 import ScrollReveal from '@/components/ScrollReveal/ScrollReveal'
@@ -26,7 +26,7 @@ interface GalleryViewProps {
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
-  all: 'همه تصاویر و فعالیت‌ها',
+  all: 'همه آلبوم‌ها و فعالیت‌ها',
   welders: 'جوشکاران تخصصی (۶G)',
   fitters: 'فیترها و مونتاژکاران',
   piping: 'پایپینگ و عایق‌کاری صنعتی',
@@ -106,8 +106,14 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
   const [activeCategory, setActiveCategory] = useState<string>('all')
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null)
 
-  // Unique categories
+  // Unique categories for filter bar
   const categories = ['all', ...Array.from(new Set(displayItems.map((item) => item.category)))]
+
+  // Filtered list for Archive Grid
+  const filteredArchiveItems =
+    activeCategory === 'all'
+      ? displayItems
+      : displayItems.filter((item) => item.category === activeCategory)
 
   const getImageUrl = (imgObj: any): string => {
     if (!imgObj) return '/images/hero-slide-1.png'
@@ -138,46 +144,127 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
   }
 
   return (
-    <section className={styles.section}>
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-        {/* Single-Line Scrollable Category Filter Navigation Bar */}
-        <ScrollReveal animation="fade-up">
-          <div className={styles.filterSection}>
-            <div className={styles.filterBar}>
-              {categories.map((catKey) => (
-                <button
-                  key={catKey}
-                  onClick={() => handleCategorySelect(catKey)}
-                  className={`${styles.filterTab} ${activeCategory === catKey ? styles.filterTabActive : ''}`}
-                >
-                  <Tag size={14} />
-                  <span>{CATEGORY_LABELS[catKey] || catKey}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </ScrollReveal>
+    <div className={styles.galleryPageWrapper}>
+      {/* 1. Top Section: 3D Coverflow Showcase Slider (First screen right below header) */}
+      <section className={styles.heroSliderSection}>
+        <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          <CoverflowSlider
+            items={displayItems}
+            targetCategory={selectedCategory}
+            onActiveCategoryChange={(cat) => setActiveCategory(cat)}
+            onOpenLightbox={(item) => setLightboxItem(item)}
+            categoryLabels={CATEGORY_LABELS}
+          />
+        </div>
+      </section>
 
-        {/* 3D Coverflow Showcase Slider & Details Box */}
-        {displayItems.length > 0 ? (
+      {/* 2. Archive Section: Category Filters & Media Grid below slider */}
+      <section className={styles.archiveSection}>
+        <div className="container">
           <ScrollReveal animation="fade-up">
-            <CoverflowSlider
-              items={displayItems}
-              targetCategory={selectedCategory}
-              onActiveCategoryChange={(cat) => setActiveCategory(cat)}
-              onOpenLightbox={(item) => setLightboxItem(item)}
-              categoryLabels={CATEGORY_LABELS}
-            />
-          </ScrollReveal>
-        ) : (
-          <div className={styles.emptyState}>
-            <Layers size={48} />
-            <p>تصویری در این دسته‌بندی یافت نشد.</p>
-          </div>
-        )}
-      </div>
+            <div className={styles.archiveHeader}>
+              <span className={styles.archiveBadge}>
+                <Archive size={15} />
+                <span>آرشیو و دسته‌بندی گالری</span>
+              </span>
+              <h2 className={styles.archiveTitle}>جستجو در آلبوم‌های تخصصی پروژه‌ها و نیروها</h2>
+              <div className="orange-divider orange-divider--center" />
+            </div>
 
-      {/* Sleek High-Res Lightbox Modal */}
+            {/* Single-Line Scrollable Category Filter Navigation Bar */}
+            <div className={styles.filterSection}>
+              <div className={styles.filterBar}>
+                {categories.map((catKey) => (
+                  <button
+                    key={catKey}
+                    onClick={() => handleCategorySelect(catKey)}
+                    className={`${styles.filterTab} ${activeCategory === catKey ? styles.filterTabActive : ''}`}
+                  >
+                    <Tag size={14} />
+                    <span>{CATEGORY_LABELS[catKey] || catKey}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Filtered Archive Grid */}
+          <div className={styles.grid}>
+            {filteredArchiveItems.map((item, idx) => {
+              const imgUrl = getImageUrl(item.image)
+              const catLabel = CATEGORY_LABELS[item.category] || item.customCategory || item.category
+
+              const sTitle =
+                typeof item.relatedService === 'object' && item.relatedService
+                  ? item.relatedService.title
+                  : null
+
+              const sSlug =
+                typeof item.relatedService === 'object' && item.relatedService
+                  ? item.relatedService.slug
+                  : null
+
+              return (
+                <ScrollReveal key={item.id || idx} animation="fade-up" delay={idx * 50}>
+                  <div
+                    className={styles.card}
+                    onClick={() => setLightboxItem(item)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`مشاهده ${item.title}`}
+                  >
+                    <div className={styles.imageWrap}>
+                      <img src={imgUrl} alt={item.title} className={styles.image} />
+                      <div className={styles.overlay}>
+                        <div className={styles.zoomBtn}>
+                          <Eye size={22} />
+                          <span>بزرگ‌نمایی</span>
+                        </div>
+                      </div>
+                      <span className={styles.categoryBadge}>{catLabel}</span>
+                    </div>
+
+                    <div className={styles.cardBody}>
+                      <h3 className={styles.cardTitle}>{item.title}</h3>
+
+                      <div className={styles.cardMetaRow}>
+                        {sTitle && (
+                          <Link
+                            href={sSlug ? `/services/${sSlug}` : '/services'}
+                            className={styles.serviceLinkTag}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Wrench size={13} />
+                            <span>{sTitle}</span>
+                          </Link>
+                        )}
+
+                        {item.location && (
+                          <div className={styles.locationTag}>
+                            <MapPin size={13} />
+                            <span>{item.location}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {item.caption && <p className={styles.caption}>{item.caption}</p>}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              )
+            })}
+          </div>
+
+          {filteredArchiveItems.length === 0 && (
+            <div className={styles.emptyState}>
+              <Layers size={48} />
+              <p>تصویری در این دسته‌بندی یافت نشد.</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* 3. Sleek High-Res Lightbox Modal */}
       {lightboxItem && (
         <div className={styles.lightboxOverlay} onClick={() => setLightboxItem(null)}>
           <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
@@ -251,6 +338,6 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
           </div>
         </div>
       )}
-    </section>
+    </div>
   )
 }

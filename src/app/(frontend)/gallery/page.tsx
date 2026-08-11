@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { getPayloadClient } from '@/lib/payload'
-import PageHero from '@/components/PageHero/PageHero'
 import GalleryView, { GalleryItem } from '@/components/GalleryView/GalleryView'
 
 export const dynamic = 'force-dynamic'
@@ -48,23 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function GalleryPage() {
   const data = await getGalleryData()
-  const cmsPage = data?.cmsPage
   const items: GalleryItem[] = data?.items ?? []
 
-  return (
-    <>
-      <PageHero
-        title={cmsPage?.heroTitle || 'گالری تصاویر و نیروهای متخصص'}
-        badge={cmsPage?.heroBadge || 'سرمایه انسانی و توانمندی‌های اجرایی'}
-        subtitle={
-          cmsPage?.heroSubtitle ||
-          'تصاویر مستند از تیم‌های تخصصی جوشکاری ۶G، فیترها، نصب تجهیزات مکانیکی، پایپینگ صنعتی و عملیات اجرایی در سایت پروژه‌ها'
-        }
-        breadcrumbs={[{ label: 'گالری تصاویر و نیروها' }]}
-        bgImage={cmsPage?.heroImage?.url || '/images/hero-slide-2.png'}
-      />
-
-      <GalleryView items={items} />
-    </>
-  )
+  return <GalleryView items={items} />
 }
