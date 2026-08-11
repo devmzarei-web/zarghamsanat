@@ -7,7 +7,8 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "payload generate:types && payload migrate && next build",
+    "build": "payload generate:types && next build",
+    "migrate": "payload migrate --force",
     "start": "next start",
     "lint": "next lint",
     "payload": "payload"
