@@ -78,8 +78,10 @@ export default function CertificatesPage() {
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '1rem',
-                  background: 'var(--white)',
-                  border: '1px solid var(--gray-200)',
+                  background: '#ffffff',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '1rem',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.06)',
                   cursor: 'pointer',
                   position: 'relative',
                   overflow: 'hidden',
@@ -89,8 +91,8 @@ export default function CertificatesPage() {
                   position: 'relative',
                   width: '100%',
                   height: '240px',
-                  background: 'var(--gray-100)',
-                  borderRadius: 'var(--radius-md)',
+                  background: '#f8fafc',
+                  borderRadius: '0.5rem',
                   overflow: 'hidden',
                   display: 'flex',
                   alignItems: 'center',
@@ -100,7 +102,7 @@ export default function CertificatesPage() {
                   <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'rgba(13,21,41,0.7)',
+                    background: 'rgba(15,37,69,0.85)',
                     opacity: 0,
                     transition: 'opacity 0.25s ease',
                     display: 'flex',
@@ -108,18 +110,18 @@ export default function CertificatesPage() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '0.5rem',
-                    color: 'var(--white)',
+                    color: '#ffffff',
                   }}
                   className="cert-overlay"
                   >
-                    <Eye size={28} style={{ color: 'var(--gold-400)' }} />
-                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600 }}>بزرگ‌نمایی گواهینامه</span>
+                    <Eye size={28} style={{ color: '#f97316' }} />
+                    <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>بزرگ‌نمایی گواهینامه</span>
                   </div>
                 </div>
-                <h2 style={{ fontSize: 'var(--text-base)', fontWeight: 700, color: 'var(--navy-900)', fontFamily: 'var(--font-heading)' }}>
+                <h2 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f2545', fontFamily: 'var(--font-heading)' }}>
                   {cert.name}
                 </h2>
-                {cert.issuer && <p style={{ fontSize: 'var(--text-xs)', color: 'var(--gray-500)', fontWeight: 500 }}>{cert.issuer}</p>}
+                {cert.issuer && <p style={{ fontSize: '0.8rem', color: '#6b7280', fontWeight: 500 }}>{cert.issuer}</p>}
               </div>
             ))}
           </div>

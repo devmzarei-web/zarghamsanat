@@ -91,18 +91,18 @@ export default async function ContactPage() {
                 <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
                   <div style={{
                     width: 48, height: 48, borderRadius: '50%',
-                    background: 'rgba(201,146,42,0.12)', border: '1.5px solid rgba(201,146,42,0.3)',
+                    background: 'rgba(249,115,22,0.12)', border: '1.5px solid rgba(249,115,22,0.3)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     flexShrink: 0,
                   }}>
-                    <Icon size={20} style={{ color: 'var(--gold-500)' }} />
+                    <Icon size={20} style={{ color: '#f97316' }} />
                   </div>
                   <div>
-                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--gray-500)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>
+                    <div style={{ fontSize: 'var(--text-xs)', color: '#6b7280', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>
                       {label}
                     </div>
                     {values.map((v, i) => (
-                      <div key={i} style={{ fontSize: 'var(--text-base)', color: 'var(--navy-900)', fontWeight: 600, lineHeight: 1.6, direction: 'rtl' }}>
+                      <div key={i} style={{ fontSize: 'var(--text-base)', color: '#0f2545', fontWeight: 600, lineHeight: 1.6, direction: 'rtl' }}>
                         {toPersianDigits(v)}
                       </div>
                     ))}
@@ -113,7 +113,7 @@ export default async function ContactPage() {
 
             {/* Form */}
             <div className={styles.formCard}>
-              <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, color: 'var(--gold-300)', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>
+              <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, color: '#fdba74', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>
                 درخواست همکاری و دریافت استعلام
               </h2>
               <p style={{ fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,0.7)', marginBottom: '2rem', lineHeight: 1.7 }}>

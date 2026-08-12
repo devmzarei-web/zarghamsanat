@@ -77,10 +77,10 @@ export default async function AboutPage() {
               <span className="section-label">تعهد و کیفیت</span>
               <h2 className="section-title">{cmsPage?.storyTitle || 'معرفی و تاریخچه شرکت'}</h2>
               <div className="gold-divider" />
-              <p style={{ color: 'var(--gray-600)', lineHeight: '1.9', marginBottom: '1.5rem', fontSize: 'var(--text-base)' }}>
+              <p style={{ color: '#4b5563', lineHeight: '1.9', marginBottom: '1.5rem', fontSize: 'var(--text-base)' }}>
                 {cmsPage?.bodyContent || defaultBodyContent}
               </p>
-              <p style={{ color: 'var(--gray-600)', lineHeight: '1.9', fontSize: 'var(--text-base)' }}>
+              <p style={{ color: '#4b5563', lineHeight: '1.9', fontSize: 'var(--text-base)' }}>
                 رضایت مشتریان از انجام پروژه‌ها باعث گردیده است تا سفارشات بعدی خود را با اطمینان خاطر در اختیار ضرغام صنعت اروند قرار دهند و این موضوع جزء افتخارات و دستاوردهای مهم شرکت محسوب می‌شود.
               </p>
             </div>
@@ -94,10 +94,10 @@ export default async function AboutPage() {
                 { label: 'کارفرمای معتبر', value: `${toPersianDigits(trustedClients)}+` },
               ].map((stat) => (
                 <div key={stat.label} style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: 'var(--text-4xl)', fontWeight: 900, color: 'var(--gold-400)', fontFamily: 'var(--font-heading)' }}>
+                  <div style={{ fontSize: 'var(--text-4xl)', fontWeight: 900, color: '#f97316', fontFamily: 'var(--font-heading)' }}>
                     {stat.value}
                   </div>
-                  <div style={{ fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,0.75)', marginTop: '0.5rem', fontWeight: 500 }}>
+                  <div style={{ fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,0.85)', marginTop: '0.5rem', fontWeight: 600 }}>
                     {stat.label}
                   </div>
                 </div>

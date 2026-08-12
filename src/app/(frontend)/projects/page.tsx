@@ -143,22 +143,22 @@ export default async function ProjectsPage() {
                 >
                   <article
                     style={{
-                      background: 'var(--white)',
-                      borderRadius: 'var(--radius-xl)',
+                      background: '#ffffff',
+                      borderRadius: '1rem',
                       overflow: 'hidden',
-                      boxShadow: 'var(--shadow-md)',
-                      border: '1px solid var(--gray-100)',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+                      border: '1px solid rgba(0, 0, 0, 0.08)',
                       transition: 'transform 0.25s ease, box-shadow 0.25s ease',
                       height: '100%',
                       cursor: 'pointer',
                     }}
                     className="card"
                   >
-                    <div style={{ position: 'relative', height: '220px', background: 'var(--navy-800)' }}>
+                    <div style={{ position: 'relative', height: '220px', background: '#0f2545' }}>
                       {project.coverImage ? (
                         <img
-                          src={project.coverImage.url}
-                          alt={project.coverImage.alt || project.title}
+                          src={typeof project.coverImage === 'object' ? project.coverImage.url : project.coverImage}
+                          alt={typeof project.coverImage === 'object' ? (project.coverImage.alt || project.title) : project.title}
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                       ) : (
@@ -168,27 +168,27 @@ export default async function ProjectsPage() {
                       )}
                     </div>
                     <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                      <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--navy-900)' }}>
+                      <h2 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#0f2545', fontFamily: 'var(--font-heading)' }}>
                         {project.title}
                       </h2>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
                         {clientName && (
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
-                            <Building size={12} style={{ color: 'var(--gold-500)' }} />
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', color: '#6b7280' }}>
+                            <Building size={12} style={{ color: '#f97316' }} />
                             {clientName}
                           </span>
                         )}
                         {project.location && (
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-xs)', color: 'var(--gray-500)' }}>
-                            <MapPin size={12} style={{ color: 'var(--gold-500)' }} />
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', color: '#6b7280' }}>
+                            <MapPin size={12} style={{ color: '#f97316' }} />
                             {project.location}
                           </span>
                         )}
                       </div>
-                      <p style={{ fontSize: 'var(--text-sm)', color: 'var(--gray-600)', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                      <p style={{ fontSize: '0.875rem', color: '#4b5563', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                         {project.serviceDescription}
                       </p>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--gold-500)', paddingTop: '0.75rem', borderTop: '1px solid var(--gray-100)' }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: 700, color: '#f97316', paddingTop: '0.75rem', borderTop: '1px solid #f3f4f6' }}>
                         مشاهده جزئیات <ChevronLeft size={14} />
                       </span>
                     </div>
