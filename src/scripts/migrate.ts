@@ -97,6 +97,14 @@ async function run() {
       "subtitle" varchar
     );`,
 
+    `DO $$ BEGIN
+      ALTER TYPE "enum_site_settings_hero_type" ADD VALUE IF NOT EXISTS 'presentation';
+    EXCEPTION WHEN OTHERS THEN NULL; END $$;`,
+
+    `DO $$ BEGIN
+      ALTER TABLE "site_settings" ALTER COLUMN "hero_type" TYPE varchar USING "hero_type"::varchar;
+    EXCEPTION WHEN OTHERS THEN NULL; END $$;`,
+
     `ALTER TABLE "site_settings_hero_slides" ALTER COLUMN "image_id" DROP NOT NULL;`,
 
     `CREATE TABLE IF NOT EXISTS "site_settings_footer_quick_links" (
