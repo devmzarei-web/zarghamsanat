@@ -47,7 +47,7 @@ if (!process.env.DATABASE_URI) {
   } catch (_) {}
 }
 
-const dbUri = process.env.DATABASE_URI || 'postgresql://postgres:Number05%24@localhost:5432/zarghamsanat'
+const dbUri = process.env.DATABASE_URI || 'postgresql://postgres@localhost:5432/zarghamsanat'
 
 export default buildConfig({
   admin: {
@@ -58,7 +58,7 @@ export default buildConfig({
     components: {
       views: {
         dashboard: {
-          Component: '@/components/AdminDashboard/AdminDashboard',
+          Component: '@/components/AdminDashboard/AdminDashboard#default',
         },
       },
     },

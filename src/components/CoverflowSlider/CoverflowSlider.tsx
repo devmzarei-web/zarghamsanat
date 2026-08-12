@@ -83,8 +83,14 @@ export default function CoverflowSlider({
       ? activeItem.relatedService.slug
       : null
 
+  // Duplicate items array if needed so Swiper Coverflow always has sufficient slides for smooth infinite loop
+  const displaySlides =
+    items.length > 0 && items.length < 12
+      ? [...items, ...items, ...items]
+      : items
+
   const handleSlideChange = (swiper: SwiperClass) => {
-    const realIdx = swiper.realIndex
+    const realIdx = swiper.realIndex % items.length
     setActiveIndex(realIdx)
     const currentItem = items[realIdx]
     if (currentItem && onActiveCategoryChange) {
@@ -128,8 +134,8 @@ export default function CoverflowSlider({
           centeredSlides={true}
           slidesPerView="auto"
           initialSlide={0}
-          loop={items.length > 1}
-          loopAdditionalSlides={items.length * 2}
+          loop={true}
+          loopAdditionalSlides={displaySlides.length}
           coverflowEffect={{
             rotate: 0,
             stretch: 0,
@@ -138,22 +144,23 @@ export default function CoverflowSlider({
             slideShadows: false,
           }}
           autoplay={{
-            delay: 4000,
+            delay: 3500,
             disableOnInteraction: false,
-            pauseOnMouseEnter: true,
+            pauseOnMouseEnter: false,
           }}
           onSwiper={setSwiperInstance}
           onSlideChange={handleSlideChange}
           modules={[EffectCoverflow, Navigation, Pagination, Autoplay]}
           className={styles.swiper}
         >
-          {items.map((item, idx) => {
+          {displaySlides.map((item, idx) => {
             const imgUrl = getImageUrl(item.image)
             const itemCat = categoryLabels[item.category] || item.customCategory || item.category
-            const isActive = idx === activeIndex
+            const realItemIdx = idx % items.length
+            const isActive = realItemIdx === activeIndex
 
             return (
-              <SwiperSlide key={item.id || idx} className={styles.slide}>
+              <SwiperSlide key={`${item.id || item.title}-${idx}`} className={styles.slide}>
                 <div
                   className={`${styles.card} ${isActive ? styles.activeCard : ''}`}
                   onClick={() => onOpenLightbox(item)}

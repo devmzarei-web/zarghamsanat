@@ -4,6 +4,7 @@ import { MapPin, Building, ChevronLeft } from 'lucide-react'
 import { getPayloadClient } from '@/lib/payload'
 import { getProjectUrl } from '@/lib/utils'
 import PageHero from '@/components/PageHero/PageHero'
+import styles from './ProjectsPage.module.css'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -128,7 +129,7 @@ export default async function ProjectsPage() {
 
       <section className="section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+          <div className={styles.projectsGrid}>
             {projects.map((project: any) => {
               const clientName = typeof project.clientRelation === 'object' && project.clientRelation?.name
                 ? project.clientRelation.name

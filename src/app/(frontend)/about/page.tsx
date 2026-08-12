@@ -3,6 +3,7 @@ import { getPayloadClient } from '@/lib/payload'
 import PageHero from '@/components/PageHero/PageHero'
 import TeamSection from '@/components/TeamSection/TeamSection'
 import { toPersianDigits } from '@/lib/utils'
+import styles from './AboutPage.module.css'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -71,7 +72,7 @@ export default async function AboutPage() {
       {/* Story (Dynamic from CMS) */}
       <section className="section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+          <div className={styles.storyGrid}>
             <div>
               <span className="section-label">تعهد و کیفیت</span>
               <h2 className="section-title">{cmsPage?.storyTitle || 'معرفی و تاریخچه شرکت'}</h2>
@@ -85,16 +86,7 @@ export default async function AboutPage() {
             </div>
 
             {/* Dynamic Stats from CMS Stats Global */}
-            <div style={{
-              background: 'var(--navy-900)',
-              borderRadius: 'var(--radius-2xl)',
-              padding: '3rem',
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '2.5rem',
-              border: '1px solid rgba(201,146,42,0.2)',
-              boxShadow: 'var(--shadow-xl)',
-            }}>
+            <div className={styles.statsCard}>
               {[
                 { label: 'سال تأسیس', value: toPersianDigits(foundedYear) },
                 { label: 'پروژه انجام شده', value: `${toPersianDigits(projectsCompleted)}+` },

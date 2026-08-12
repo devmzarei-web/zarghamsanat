@@ -1,21 +1,20 @@
 .galleryPageWrapper {
   width: 100%;
   min-height: 100vh;
-  background: var(--off-white, #f9fafb);
+  background: #0a1220;
 }
 
 /* 1. Hero Slider Section (Seamless 100vh Viewport Fit) */
 .heroSliderSection {
   width: 100%;
   height: calc(100vh - var(--header-height, 96px));
-  min-height: 540px;
-  max-height: 820px;
+  min-height: 520px;
   background: #0a1220;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 

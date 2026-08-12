@@ -37,6 +37,19 @@ export default function ServicesNav({ services }: ServicesNavProps) {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
+
+    // Smooth scroll to service if URL hash exists (e.g. /services#industrial-piping)
+    const hash = window.location.hash.replace('#', '')
+    if (hash) {
+      const timer = setTimeout(() => {
+        scrollToService(hash)
+      }, 350)
+      return () => {
+        window.removeEventListener('scroll', handleScroll)
+        clearTimeout(timer)
+      }
+    }
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [services])
 

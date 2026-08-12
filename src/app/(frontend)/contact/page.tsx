@@ -4,6 +4,7 @@ import { getPayloadClient } from '@/lib/payload'
 import { toPersianDigits } from '@/lib/utils'
 import ContactForm from '@/components/ContactForm/ContactForm'
 import PageHero from '@/components/PageHero/PageHero'
+import styles from './ContactPage.module.css'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -76,9 +77,9 @@ export default async function ContactPage() {
 
       <section className="section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '4rem', alignItems: 'start' }}>
+          <div className={styles.contactGrid}>
             {/* Dynamic Contact info from CMS */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <div className={styles.infoColumn}>
               <div>
                 <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, color: 'var(--navy-900)', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>
                   اطلاعات ارتباطی
@@ -111,7 +112,7 @@ export default async function ContactPage() {
             </div>
 
             {/* Form */}
-            <div style={{ background: 'var(--navy-900)', borderRadius: 'var(--radius-2xl)', padding: '3rem', border: '1px solid rgba(201,146,42,0.2)', boxShadow: 'var(--shadow-xl)' }}>
+            <div className={styles.formCard}>
               <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, color: 'var(--gold-300)', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>
                 درخواست همکاری و دریافت استعلام
               </h2>
