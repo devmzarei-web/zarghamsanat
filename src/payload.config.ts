@@ -107,7 +107,7 @@ export default buildConfig({
       connectionString: dbUri,
       ssl: dbUri && !dbUri.includes('localhost') ? { rejectUnauthorized: false } : false,
     },
-    push: false,
+    push: true,
   }),
 
   secret: process.env.PAYLOAD_SECRET || 'zarghamsanat_secret_key_2026_super_secure',
