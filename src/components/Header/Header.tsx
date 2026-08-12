@@ -37,7 +37,11 @@ export default function Header({ settings }: HeaderProps) {
     if (settings.logo.url) logoUrl = settings.logo.url
     else if (settings.logo.filename) logoUrl = `/media/${settings.logo.filename}`
   } else if (typeof settings?.logo === 'string') {
-    logoUrl = settings.logo
+    if (settings.logo.includes('/')) {
+      logoUrl = settings.logo
+    } else {
+      logoUrl = `/media/${settings.logo}`
+    }
   }
 
   // Dynamic Navigation Links from CMS or Fallback
@@ -89,6 +93,10 @@ export default function Header({ settings }: HeaderProps) {
                 width={72}
                 height={72}
                 style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+                onError={(e) => {
+                  e.currentTarget.onerror = null
+                  e.currentTarget.src = '/images/Zargham-Logo.png'
+                }}
               />
             </div>
             <div className={styles.logoText}>

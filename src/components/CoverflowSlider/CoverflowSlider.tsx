@@ -148,7 +148,15 @@ export default function CoverflowSlider({
             disableOnInteraction: false,
             pauseOnMouseEnter: false,
           }}
-          onSwiper={setSwiperInstance}
+          onSwiper={(swiper) => {
+            setSwiperInstance(swiper)
+            // Fix Swiper RTL loop bug by forcing initial slide
+            setTimeout(() => {
+              if (swiper && !swiper.destroyed) {
+                swiper.slideToLoop(0, 0)
+              }
+            }, 50)
+          }}
           onSlideChange={handleSlideChange}
           modules={[EffectCoverflow, Navigation, Pagination, Autoplay]}
           className={styles.swiper}

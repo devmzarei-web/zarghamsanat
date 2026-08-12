@@ -56,7 +56,11 @@ export default buildConfig({
       titleSuffix: '| ضرغام صنعت اروند',
     },
     components: {
-      // Remove custom dashboard override to use Payload's default dashboard
+      views: {
+        dashboard: {
+          Component: '@/components/AdminDashboard/AdminDashboard#default',
+        },
+      },
     },
     dateFormat: 'dd/MM/yyyy',
   },

@@ -3,7 +3,7 @@
   height: 100%;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding-block: 0.5rem 1.25rem;
+  padding-block: calc(var(--header-height, 96px) + 0.5rem) 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -166,6 +166,8 @@
   align-items: center;
   gap: 0.35rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .quickExpandBtn {
@@ -251,6 +253,8 @@
   border-radius: var(--radius-full, 9999px);
   font-size: 0.75rem;
   font-weight: 800;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .serviceBadge {

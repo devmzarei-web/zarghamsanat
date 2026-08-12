@@ -7,9 +7,7 @@
 /* 1. Hero Slider Section (Seamless 100vh Viewport Fit) */
 .heroSliderSection {
   width: 100%;
-  height: calc(100dvh - var(--header-height, 96px));
-  min-height: 520px;
-  max-height: calc(100dvh - var(--header-height, 96px));
+  height: 100dvh;
   background: #0a1220;
   position: relative;
   overflow: hidden;
