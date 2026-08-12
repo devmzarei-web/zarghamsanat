@@ -6,6 +6,7 @@ import { MapPin, Building, ChevronLeft, Layers, Image as ImageIcon, Award, ZoomI
 import ProjectSatisfactionCard from '@/components/ProjectSatisfactionCard/ProjectSatisfactionCard'
 import ProjectSignboard from '@/components/ProjectSignboard/ProjectSignboard'
 import ImageLightbox from '@/components/ImageLightbox/ImageLightbox'
+import { toPersianDigits } from '@/lib/utils'
 import styles from './ProjectDetailView.module.css'
 
 interface ProjectDetailViewProps {
@@ -63,7 +64,7 @@ export default function ProjectDetailView({ project }: ProjectDetailViewProps) {
                   <h2 className={styles.blockTitle}>شرح خدمات و توضیحات پروژه</h2>
                 </div>
                 <div className={styles.flowingParagraph}>
-                  <p>{project.serviceDescription}</p>
+                  <p>{toPersianDigits(project.serviceDescription)}</p>
                 </div>
               </div>
 

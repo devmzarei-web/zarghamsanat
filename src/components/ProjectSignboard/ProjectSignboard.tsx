@@ -88,20 +88,20 @@ export default function ProjectSignboard({
         <div className={styles.rowsContainer}>
           <div className={styles.row}>
             <span className={styles.label}>نام پروژه:</span>
-            <AutoFitValue>{title}</AutoFitValue>
+            <AutoFitValue>{toPersianDigits(title)}</AutoFitValue>
           </div>
 
           {client && (
             <div className={styles.row}>
               <span className={styles.label}>کارفرما:</span>
-              <AutoFitValue>{client}</AutoFitValue>
+              <AutoFitValue>{toPersianDigits(client)}</AutoFitValue>
             </div>
           )}
 
           {location && (
             <div className={styles.row}>
               <span className={styles.label}>محل اجرا:</span>
-              <AutoFitValue>{location}</AutoFitValue>
+              <AutoFitValue>{toPersianDigits(location)}</AutoFitValue>
             </div>
           )}
 

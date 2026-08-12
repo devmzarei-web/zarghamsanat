@@ -18,7 +18,8 @@ const QUICK_LINKS = [
   { label: 'درباره ما', href: '/about' },
   { label: 'خدمات', href: '/services' },
   { label: 'پروژه‌ها', href: '/projects' },
-  { label: 'گواهینامه‌ها', href: '/certificates' },
+  { label: 'گالری تصاویر', href: '/gallery' },
+  { label: 'گواهی‌نامه‌ها', href: '/certificates' },
   { label: 'مقالات', href: '/articles' },
   { label: 'تماس با ما', href: '/contact' },
 ]

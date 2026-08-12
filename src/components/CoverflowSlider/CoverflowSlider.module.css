@@ -1,15 +1,17 @@
 .sliderContainer {
   width: 100vw;
+  height: 100%;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding-block: 2.5rem 3.5rem;
+  padding-block: 0.5rem 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
   overflow: hidden;
   background: #0a1220;
+  box-sizing: border-box;
 }
 
 /* Dynamic Ambient Background Blur */
@@ -36,11 +38,11 @@
 /* Floating Side Navigation Buttons */
 .floatingNavBtn {
   position: absolute;
-  top: 38%;
+  top: 36%;
   transform: translateY(-50%);
   z-index: 10;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(12px);
@@ -58,7 +60,7 @@
   background: var(--safety-orange-500, #f97316);
   border-color: var(--safety-orange-500, #f97316);
   color: #ffffff;
-  transform: translateY(-50%) scale(1.12);
+  transform: translateY(-50%) scale(1.1);
   box-shadow: 0 12px 30px rgba(249, 115, 22, 0.45);
 }
 
@@ -71,13 +73,13 @@
 }
 
 @media (max-width: 768px) {
-  .floatingNavPrev { right: 0.75rem; width: 44px; height: 44px; }
-  .floatingNavNext { left: 0.75rem; width: 44px; height: 44px; }
+  .floatingNavPrev { right: 0.75rem; width: 40px; height: 40px; }
+  .floatingNavNext { left: 0.75rem; width: 40px; height: 40px; }
 }
 
 .swiperWrapper {
   width: 100%;
-  padding-block: 1rem 2rem;
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,43 +89,22 @@
 
 .swiper {
   width: 100%;
-  padding-block: 2.5rem 3rem !important;
+  padding-block: 1rem 1.5rem !important;
   overflow: visible !important;
 }
 
-/* Widescreen Industrial Photography Cards */
+/* Dynamic Responsive Photography Cards tuned for 100vh screen fit */
 .slide {
-  width: 320px !important;
-  height: 195px !important;
+  width: clamp(280px, 34vw, 540px) !important;
+  height: clamp(160px, 28vh, 310px) !important;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@media (min-width: 640px) {
-  .slide {
-    width: 480px !important;
-    height: 290px !important;
-  }
-}
-
-@media (min-width: 1024px) {
-  .slide {
-    width: 620px !important;
-    height: 360px !important;
-  }
-}
-
-@media (min-width: 1400px) {
-  .slide {
-    width: 700px !important;
-    height: 400px !important;
-  }
 }
 
 .card {
   width: 100%;
   height: 100%;
   position: relative;
-  border-radius: var(--radius-2xl, 1.5rem);
+  border-radius: var(--radius-xl, 1.25rem);
   overflow: hidden;
   background: #0d1527;
   border: 1.5px solid rgba(255, 255, 255, 0.12);
@@ -136,7 +117,7 @@
 
 .activeCard {
   border-color: var(--safety-orange-500, #f97316) !important;
-  box-shadow: 0 25px 60px rgba(249, 115, 22, 0.4), 0 0 30px rgba(249, 115, 22, 0.25) !important;
+  box-shadow: 0 20px 50px rgba(249, 115, 22, 0.35), 0 0 25px rgba(249, 115, 22, 0.2) !important;
   opacity: 1 !important;
   filter: brightness(1) !important;
   transform: scale(1.02);
@@ -166,29 +147,29 @@
 
 .slideCategoryBadge {
   position: absolute;
-  top: 1.25rem;
-  right: 1.25rem;
+  top: 1rem;
+  right: 1rem;
   background: rgba(10, 15, 29, 0.85);
   color: var(--gold-400, #fbbf24);
   border: 1px solid rgba(251, 191, 36, 0.4);
-  padding: 0.35rem 0.95rem;
+  padding: 0.25rem 0.8rem;
   border-radius: var(--radius-full, 9999px);
-  font-size: var(--text-xs, 0.8125rem);
+  font-size: var(--text-xs, 0.78125rem);
   font-weight: 800;
   backdrop-filter: blur(10px);
   z-index: 2;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .quickExpandBtn {
   position: absolute;
-  bottom: 1.25rem;
-  left: 1.25rem;
-  width: 42px;
-  height: 42px;
+  bottom: 1rem;
+  left: 1rem;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: var(--safety-orange-500, #f97316);
   border: none;
@@ -203,35 +184,35 @@
 }
 
 .quickExpandBtn:hover {
-  transform: scale(1.14);
+  transform: scale(1.12);
   background: var(--safety-orange-400, #fb923c);
 }
 
-/* Seamless Integrated Glassmorphism Caption Box */
+/* Dynamic Glassmorphism Caption Box tuned for 100vh viewport fit */
 .detailBox {
-  max-width: 860px;
+  max-width: 820px;
   width: 90%;
-  background: rgba(15, 23, 42, 0.82);
+  background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(24px);
   border: 1.5px solid rgba(249, 115, 22, 0.3);
-  border-radius: var(--radius-2xl, 1.5rem);
-  padding: 2rem 2.5rem;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  border-radius: var(--radius-xl, 1.25rem);
+  padding: clamp(0.75rem, 1.6vh, 1.25rem) clamp(1.25rem, 2vw, 2rem);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: clamp(0.4rem, 1vh, 0.75rem);
   text-align: center;
   align-items: center;
   position: relative;
   z-index: 3;
-  margin-top: 0.5rem;
+  flex-shrink: 0;
 }
 
 .activeDetailsContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.5rem;
   width: 100%;
   animation: slideCaptionUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -239,7 +220,7 @@
 @keyframes slideCaptionUp {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -252,31 +233,31 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.65rem;
+  gap: 0.5rem;
 }
 
 .catBadge {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   background: rgba(249, 115, 22, 0.18);
   color: var(--gold-400, #fbbf24);
   border: 1px solid rgba(251, 191, 36, 0.35);
-  padding: 0.3rem 0.85rem;
+  padding: 0.2rem 0.75rem;
   border-radius: var(--radius-full, 9999px);
-  font-size: var(--text-xs, 0.8125rem);
+  font-size: 0.75rem;
   font-weight: 800;
 }
 
 .serviceBadge {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   background: linear-gradient(135deg, var(--safety-orange-500, #f97316), var(--safety-orange-600, #ea580c));
   color: #ffffff;
-  padding: 0.3rem 0.85rem;
+  padding: 0.2rem 0.75rem;
   border-radius: var(--radius-full, 9999px);
-  font-size: var(--text-xs, 0.8125rem);
+  font-size: 0.75rem;
   font-weight: 800;
   text-decoration: none;
   box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
@@ -291,32 +272,32 @@
 .locationBadge {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: var(--text-xs, 0.8125rem);
+  gap: 0.35rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.85);
   background: rgba(255, 255, 255, 0.08);
-  padding: 0.3rem 0.85rem;
+  padding: 0.2rem 0.75rem;
   border-radius: var(--radius-full, 9999px);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .activeTitle {
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
   font-weight: 900;
   color: #ffffff;
   font-family: var(--font-heading);
-  line-height: 1.45;
+  line-height: 1.4;
   margin: 0;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .activeCaption {
-  font-size: var(--text-sm, 0.9rem);
+  font-size: clamp(0.78125rem, 1.1vw, 0.85rem);
   color: rgba(229, 231, 235, 0.88);
-  line-height: 1.85;
+  line-height: 1.65;
   margin: 0;
-  max-width: 740px;
+  max-width: 720px;
 }
 
 /* Controls & Progress Bar Row */
@@ -325,14 +306,14 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 1.25rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 1rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .navCircleBtn {
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -369,8 +350,8 @@
 .slideCounter {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  font-size: var(--text-sm, 0.875rem);
+  gap: 0.25rem;
+  font-size: var(--text-xs, 0.8125rem);
   font-weight: 800;
   font-family: var(--font-heading);
   direction: ltr;
@@ -390,11 +371,12 @@
 
 @media (max-width: 640px) {
   .detailBox {
-    padding: 1.25rem 1.5rem;
-    width: 94%;
+    padding: 0.85rem 1rem;
+    width: 95%;
   }
   .controlsRow {
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 }
+
 

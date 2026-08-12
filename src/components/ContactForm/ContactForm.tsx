@@ -39,8 +39,9 @@ export default function ContactForm() {
   const validate = (): boolean => {
     const newErrors: Partial<FormData> = {}
     if (!form.name.trim()) newErrors.name = 'نام الزامی است'
+    const cleanPhone = form.phone.replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))
     if (!form.phone.trim()) newErrors.phone = 'شماره تماس الزامی است'
-    else if (!/^[0-9+\-\s]{8,15}$/.test(form.phone)) newErrors.phone = 'شماره تماس معتبر نیست'
+    else if (!/^[0-9+\-\s]{8,15}$/.test(cleanPhone)) newErrors.phone = 'شماره تماس معتبر نیست'
     if (!form.requestType) newErrors.requestType = 'موضوع درخواست را انتخاب کنید'
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0

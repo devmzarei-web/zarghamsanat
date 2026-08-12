@@ -12,7 +12,8 @@ const DEFAULT_NAV_LINKS = [
   { label: 'درباره ما', href: '/about' },
   { label: 'خدمات', href: '/services' },
   { label: 'پروژه‌ها', href: '/projects' },
-  { label: 'گواهینامه‌ها', href: '/certificates' },
+  { label: 'گالری تصاویر', href: '/gallery' },
+  { label: 'گواهی‌نامه‌ها', href: '/certificates' },
   { label: 'مقالات', href: '/articles' },
   { label: 'تماس با ما', href: '/contact' },
 ]
@@ -60,6 +61,11 @@ export default function Header({ settings }: HeaderProps) {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Auto-close menu on route change
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
 
   // Lock body scroll when menu is open
   useEffect(() => {

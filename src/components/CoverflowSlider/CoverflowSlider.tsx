@@ -7,6 +7,7 @@ import type { Swiper as SwiperClass } from 'swiper'
 import { ChevronRight, ChevronLeft, Maximize2, MapPin, Tag, Wrench, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import styles from './CoverflowSlider.module.css'
+import { toPersianDigits } from '@/lib/utils'
 
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
@@ -54,13 +55,13 @@ export default function CoverflowSlider({
     const targetIdx = items.findIndex((item) => item.category === targetCategory)
     if (targetIdx !== -1 && targetIdx !== activeIndex) {
       isInternalSlide.current = true
-      if (items.length > 2) {
+      if (items.length > 1) {
         swiperInstance.slideToLoop(targetIdx)
       } else {
         swiperInstance.slideTo(targetIdx)
       }
     }
-  }, [targetCategory, swiperInstance, items])
+  }, [targetCategory, swiperInstance, items, activeIndex])
 
   const getImageUrl = (imgObj: any): string => {
     if (!imgObj) return '/images/hero-slide-1.png'
@@ -91,7 +92,6 @@ export default function CoverflowSlider({
     }
   }
 
-  const initialIndex = Math.floor(items.length / 2)
   const activeBgUrl = getImageUrl(activeItem.image)
 
   return (
@@ -103,13 +103,13 @@ export default function CoverflowSlider({
       />
       <div className={styles.ambientOverlay} />
 
-      {/* Floating Side Navigation Controls for Edge-to-Edge viewports */}
+      {/* Floating Side Navigation Controls */}
       <button
         className={`${styles.floatingNavBtn} ${styles.floatingNavPrev}`}
         onClick={() => swiperInstance?.slidePrev()}
         aria-label="تصویر قبلی"
       >
-        <ChevronRight size={26} />
+        <ChevronRight size={24} />
       </button>
 
       <button
@@ -117,27 +117,28 @@ export default function CoverflowSlider({
         onClick={() => swiperInstance?.slideNext()}
         aria-label="تصویر بعدی"
       >
-        <ChevronLeft size={26} />
+        <ChevronLeft size={24} />
       </button>
 
       <div className={styles.swiperWrapper}>
         <Swiper
+          dir="rtl"
           effect="coverflow"
           grabCursor={true}
           centeredSlides={true}
           slidesPerView="auto"
-          initialSlide={initialIndex}
-          loop={items.length > 2}
-          loopAdditionalSlides={items.length}
+          initialSlide={0}
+          loop={items.length > 1}
+          loopAdditionalSlides={items.length * 2}
           coverflowEffect={{
             rotate: 0,
             stretch: 0,
-            depth: 150,
-            modifier: 1.25,
+            depth: 120,
+            modifier: 1.15,
             slideShadows: false,
           }}
           autoplay={{
-            delay: 5000,
+            delay: 4000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}
@@ -161,7 +162,7 @@ export default function CoverflowSlider({
                 >
                   <img src={imgUrl} alt={item.title} className={styles.cardImage} />
                   <div className={styles.cardGradientOverlay} />
-                  
+
                   <span className={styles.slideCategoryBadge}>
                     <Sparkles size={12} />
                     <span>{itemCat}</span>
@@ -175,7 +176,7 @@ export default function CoverflowSlider({
                     }}
                     title="مشاهده تصویر بزرگ"
                   >
-                    <Maximize2 size={18} />
+                    <Maximize2 size={16} />
                   </button>
                 </div>
               </SwiperSlide>
@@ -206,14 +207,16 @@ export default function CoverflowSlider({
             {activeItem.location && (
               <span className={styles.locationBadge}>
                 <MapPin size={13} />
-                <span>{activeItem.location}</span>
+                <span>{toPersianDigits(activeItem.location)}</span>
               </span>
             )}
           </div>
 
-          <h2 className={styles.activeTitle}>{activeItem.title}</h2>
+          <h2 className={styles.activeTitle}>{toPersianDigits(activeItem.title)}</h2>
 
-          {activeItem.caption && <p className={styles.activeCaption}>{activeItem.caption}</p>}
+          {activeItem.caption && (
+            <p className={styles.activeCaption}>{toPersianDigits(activeItem.caption)}</p>
+          )}
         </div>
 
         {/* Counter & Progress Bar */}
@@ -223,7 +226,7 @@ export default function CoverflowSlider({
             onClick={() => swiperInstance?.slidePrev()}
             aria-label="اسلاید قبلی"
           >
-            <ChevronRight size={18} />
+            <ChevronRight size={16} />
           </button>
 
           <div className={styles.progressTrack}>
@@ -234,9 +237,13 @@ export default function CoverflowSlider({
           </div>
 
           <span className={styles.slideCounter}>
-            <span className={styles.currentNum}>{String(activeIndex + 1).padStart(2, '0')}</span>
+            <span className={styles.currentNum}>
+              {toPersianDigits(String(activeIndex + 1).padStart(2, '0'))}
+            </span>
             <span className={styles.sep}>/</span>
-            <span className={styles.totalNum}>{String(items.length).padStart(2, '0')}</span>
+            <span className={styles.totalNum}>
+              {toPersianDigits(String(items.length).padStart(2, '0'))}
+            </span>
           </span>
 
           <button
@@ -244,11 +251,12 @@ export default function CoverflowSlider({
             onClick={() => swiperInstance?.slideNext()}
             aria-label="اسلاید بعدی"
           >
-            <ChevronLeft size={18} />
+            <ChevronLeft size={16} />
           </button>
         </div>
       </div>
     </div>
   )
 }
+
 

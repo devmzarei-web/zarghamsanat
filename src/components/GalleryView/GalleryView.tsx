@@ -6,6 +6,7 @@ import Link from 'next/link'
 import styles from './GalleryView.module.css'
 import ScrollReveal from '@/components/ScrollReveal/ScrollReveal'
 import CoverflowSlider from '@/components/CoverflowSlider/CoverflowSlider'
+import { toPersianDigits } from '@/lib/utils'
 
 export interface GalleryItem {
   id?: string
@@ -200,7 +201,7 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
                     >
                       <Tag size={14} />
                       <span>{CATEGORY_LABELS[catKey] || catKey}</span>
-                      <span className={styles.filterCountBadge}>{count}</span>
+                      <span className={styles.filterCountBadge}>{toPersianDigits(count)}</span>
                     </button>
                   )
                 })}
@@ -245,7 +246,7 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
                     </div>
 
                     <div className={styles.cardBody}>
-                      <h3 className={styles.cardTitle}>{item.title}</h3>
+                      <h3 className={styles.cardTitle}>{toPersianDigits(item.title)}</h3>
 
                       <div className={styles.cardMetaRow}>
                         {sTitle && (
@@ -262,12 +263,12 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
                         {item.location && (
                           <div className={styles.locationTag}>
                             <MapPin size={13} />
-                            <span>{item.location}</span>
+                            <span>{toPersianDigits(item.location)}</span>
                           </div>
                         )}
                       </div>
 
-                      {item.caption && <p className={styles.caption}>{item.caption}</p>}
+                      {item.caption && <p className={styles.caption}>{toPersianDigits(item.caption)}</p>}
                     </div>
                   </div>
                 </ScrollReveal>
@@ -344,15 +345,15 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
                 {lightboxItem.location && (
                   <span className={styles.lightboxLocation}>
                     <MapPin size={14} />
-                    <span>{lightboxItem.location}</span>
+                    <span>{toPersianDigits(lightboxItem.location)}</span>
                   </span>
                 )}
               </div>
 
-              <h2 className={styles.lightboxTitle}>{lightboxItem.title}</h2>
+              <h2 className={styles.lightboxTitle}>{toPersianDigits(lightboxItem.title)}</h2>
 
               {lightboxItem.caption && (
-                <p className={styles.lightboxCaption}>{lightboxItem.caption}</p>
+                <p className={styles.lightboxCaption}>{toPersianDigits(lightboxItem.caption)}</p>
               )}
             </div>
           </div>
@@ -361,4 +362,5 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
     </div>
   )
 }
+
 

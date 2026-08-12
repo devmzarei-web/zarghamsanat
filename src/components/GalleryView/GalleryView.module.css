@@ -4,13 +4,19 @@
   background: var(--off-white, #f9fafb);
 }
 
-/* 1. Hero Slider Section (Seamless Integrated Header Transition) */
+/* 1. Hero Slider Section (Seamless 100vh Viewport Fit) */
 .heroSliderSection {
   width: 100%;
-  padding-top: calc(var(--header-height, 96px) + 0.5rem);
+  height: calc(100vh - var(--header-height, 96px));
+  min-height: 540px;
+  max-height: 820px;
   background: #0a1220;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 2. Gallery Archive Section */
