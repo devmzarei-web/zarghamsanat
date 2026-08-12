@@ -4,21 +4,19 @@
   background: var(--off-white, #f9fafb);
 }
 
-/* 1. Hero Slider Section (Light Theme, Integrated below Header) */
+/* 1. Hero Slider Section (Seamless Integrated Header Transition) */
 .heroSliderSection {
   width: 100%;
-  padding-top: calc(var(--header-height, 80px) + 1rem);
-  padding-bottom: 2.5rem;
-  background: linear-gradient(180deg, #f3f4f6 0%, #f9fafb 100%);
-  border-bottom: 1px solid var(--gray-200, #e5e7eb);
+  padding-top: calc(var(--header-height, 96px) + 0.5rem);
+  background: #0a1220;
   position: relative;
   overflow: hidden;
 }
 
-/* 2. Gallery Archive Section (Independent General Gallery) */
+/* 2. Gallery Archive Section */
 .archiveSection {
   width: 100%;
-  padding-block: 3.5rem 5rem;
+  padding-block: 4rem 6rem;
   background: var(--off-white, #f9fafb);
 }
 
@@ -35,9 +33,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: var(--gold-100, #fef3c7);
-  color: var(--gold-700, #b45309);
-  border: 1px solid var(--gold-300, #fcd34d);
+  background: var(--gold-100, #ffedd5);
+  color: var(--safety-orange-600, #c2410c);
+  border: 1px solid var(--gold-300, #fdba74);
   padding: 0.35rem 0.9rem;
   border-radius: var(--radius-full, 9999px);
   font-size: var(--text-xs, 0.8125rem);
@@ -78,7 +76,7 @@
 .filterTab {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
   padding: 0.65rem 1.35rem;
   border-radius: var(--radius-full, 9999px);
   background: var(--white, #ffffff);
@@ -103,6 +101,24 @@
   color: #ffffff;
   border-color: transparent;
   box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+}
+
+.filterCountBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.1rem 0.45rem;
+  border-radius: 9999px;
+  min-width: 18px;
+}
+
+.filterTabActive .filterCountBadge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
 }
 
 .grid {

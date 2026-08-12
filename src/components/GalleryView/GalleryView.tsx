@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { MapPin, X, ChevronLeft, ChevronRight, Layers, Tag, Wrench, Eye, Archive } from 'lucide-react'
 import Link from 'next/link'
 import styles from './GalleryView.module.css'
@@ -108,7 +108,7 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
   // Unique categories for filter bar
   const categories = ['all', ...Array.from(new Set(displayItems.map((item) => item.category)))]
 
-  // Filtered list for Archive Grid (completely independent of top slider)
+  // Filtered list for Archive Grid
   const filteredArchiveItems =
     archiveCategory === 'all'
       ? displayItems
@@ -121,36 +121,56 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
     return '/images/hero-slide-1.png'
   }
 
-  const handleLightboxNav = (direction: 'next' | 'prev') => {
-    if (!lightboxItem) return
-    const currentIdx = displayItems.findIndex(
-      (i) => (i.id || i.title) === (lightboxItem.id || lightboxItem.title)
-    )
-    if (currentIdx === -1) return
+  const handleLightboxNav = useCallback(
+    (direction: 'next' | 'prev') => {
+      if (!lightboxItem) return
+      const currentIdx = displayItems.findIndex(
+        (i) => (i.id || i.title) === (lightboxItem.id || lightboxItem.title)
+      )
+      if (currentIdx === -1) return
 
-    if (direction === 'next') {
-      const nextIdx = (currentIdx + 1) % displayItems.length
-      setLightboxItem(displayItems[nextIdx])
-    } else {
-      const prevIdx = (currentIdx - 1 + displayItems.length) % displayItems.length
-      setLightboxItem(displayItems[prevIdx])
+      if (direction === 'next') {
+        const nextIdx = (currentIdx + 1) % displayItems.length
+        setLightboxItem(displayItems[nextIdx])
+      } else {
+        const prevIdx = (currentIdx - 1 + displayItems.length) % displayItems.length
+        setLightboxItem(displayItems[prevIdx])
+      }
+    },
+    [lightboxItem, displayItems]
+  )
+
+  // Keyboard navigation for Lightbox modal
+  useEffect(() => {
+    if (!lightboxItem) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setLightboxItem(null)
+      } else if (e.key === 'ArrowRight') {
+        handleLightboxNav('prev')
+      } else if (e.key === 'ArrowLeft') {
+        handleLightboxNav('next')
+      }
     }
-  }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [lightboxItem, handleLightboxNav])
 
   return (
     <div className={styles.galleryPageWrapper}>
-      {/* 1. Top Hero Section: 3D Coverflow Showcase Slider in Light Theme */}
+      {/* 1. Top Hero Section: Full-Width 3D Showcase Slider */}
       <section className={styles.heroSliderSection}>
-        <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-          <CoverflowSlider
-            items={displayItems}
-            onOpenLightbox={(item) => setLightboxItem(item)}
-            categoryLabels={CATEGORY_LABELS}
-          />
-        </div>
+        <CoverflowSlider
+          items={displayItems}
+          onOpenLightbox={(item) => setLightboxItem(item)}
+          categoryLabels={CATEGORY_LABELS}
+          targetCategory={archiveCategory}
+        />
       </section>
 
-      {/* 2. Independent Archive Section: Category Filters & Media Grid */}
+      {/* 2. Archive Section: Category Filters & Media Grid */}
       <section className={styles.archiveSection}>
         <div className="container">
           <ScrollReveal animation="fade-up">
@@ -166,16 +186,24 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
             {/* Single-Line Scrollable Category Filter Navigation Bar */}
             <div className={styles.filterSection}>
               <div className={styles.filterBar}>
-                {categories.map((catKey) => (
-                  <button
-                    key={catKey}
-                    onClick={() => setArchiveCategory(catKey)}
-                    className={`${styles.filterTab} ${archiveCategory === catKey ? styles.filterTabActive : ''}`}
-                  >
-                    <Tag size={14} />
-                    <span>{CATEGORY_LABELS[catKey] || catKey}</span>
-                  </button>
-                ))}
+                {categories.map((catKey) => {
+                  const count =
+                    catKey === 'all'
+                      ? displayItems.length
+                      : displayItems.filter((i) => i.category === catKey).length
+
+                  return (
+                    <button
+                      key={catKey}
+                      onClick={() => setArchiveCategory(catKey)}
+                      className={`${styles.filterTab} ${archiveCategory === catKey ? styles.filterTabActive : ''}`}
+                    >
+                      <Tag size={14} />
+                      <span>{CATEGORY_LABELS[catKey] || catKey}</span>
+                      <span className={styles.filterCountBadge}>{count}</span>
+                    </button>
+                  )
+                })}
               </div>
             </div>
           </ScrollReveal>
@@ -197,7 +225,7 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
                   : null
 
               return (
-                <ScrollReveal key={item.id || idx} animation="fade-up" delay={idx * 50}>
+                <ScrollReveal key={item.id || idx} animation="fade-up" delay={idx * 40}>
                   <div
                     className={styles.card}
                     onClick={() => setLightboxItem(item)}
@@ -209,7 +237,7 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
                       <img src={imgUrl} alt={item.title} className={styles.image} />
                       <div className={styles.overlay}>
                         <div className={styles.zoomBtn}>
-                          <Eye size={22} />
+                          <Eye size={20} />
                           <span>بزرگ‌نمایی</span>
                         </div>
                       </div>
@@ -333,3 +361,4 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
     </div>
   )
 }
+

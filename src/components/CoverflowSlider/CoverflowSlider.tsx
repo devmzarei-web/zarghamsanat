@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow, Navigation, Pagination, Autoplay } from 'swiper/modules'
 import type { Swiper as SwiperClass } from 'swiper'
-import { ChevronRight, ChevronLeft, Maximize2, MapPin, Tag, Wrench } from 'lucide-react'
+import { ChevronRight, ChevronLeft, Maximize2, MapPin, Tag, Wrench, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import styles from './CoverflowSlider.module.css'
 
@@ -92,9 +92,34 @@ export default function CoverflowSlider({
   }
 
   const initialIndex = Math.floor(items.length / 2)
+  const activeBgUrl = getImageUrl(activeItem.image)
 
   return (
     <div className={styles.sliderContainer}>
+      {/* Dynamic Ambient Background Blur */}
+      <div
+        className={styles.ambientBackdrop}
+        style={{ backgroundImage: `url(${activeBgUrl})` }}
+      />
+      <div className={styles.ambientOverlay} />
+
+      {/* Floating Side Navigation Controls for Edge-to-Edge viewports */}
+      <button
+        className={`${styles.floatingNavBtn} ${styles.floatingNavPrev}`}
+        onClick={() => swiperInstance?.slidePrev()}
+        aria-label="تصویر قبلی"
+      >
+        <ChevronRight size={26} />
+      </button>
+
+      <button
+        className={`${styles.floatingNavBtn} ${styles.floatingNavNext}`}
+        onClick={() => swiperInstance?.slideNext()}
+        aria-label="تصویر بعدی"
+      >
+        <ChevronLeft size={26} />
+      </button>
+
       <div className={styles.swiperWrapper}>
         <Swiper
           effect="coverflow"
@@ -106,13 +131,13 @@ export default function CoverflowSlider({
           loopAdditionalSlides={items.length}
           coverflowEffect={{
             rotate: 0,
-            stretch: -30,
-            depth: -100,
-            modifier: 1,
+            stretch: 0,
+            depth: 150,
+            modifier: 1.25,
             slideShadows: false,
           }}
           autoplay={{
-            delay: 4500,
+            delay: 5000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}
@@ -124,18 +149,24 @@ export default function CoverflowSlider({
           {items.map((item, idx) => {
             const imgUrl = getImageUrl(item.image)
             const itemCat = categoryLabels[item.category] || item.customCategory || item.category
+            const isActive = idx === activeIndex
 
             return (
               <SwiperSlide key={item.id || idx} className={styles.slide}>
                 <div
-                  className={styles.card}
+                  className={`${styles.card} ${isActive ? styles.activeCard : ''}`}
                   onClick={() => onOpenLightbox(item)}
                   role="button"
                   tabIndex={0}
                 >
                   <img src={imgUrl} alt={item.title} className={styles.cardImage} />
                   <div className={styles.cardGradientOverlay} />
-                  <span className={styles.slideCategoryBadge}>{itemCat}</span>
+                  
+                  <span className={styles.slideCategoryBadge}>
+                    <Sparkles size={12} />
+                    <span>{itemCat}</span>
+                  </span>
+
                   <button
                     className={styles.quickExpandBtn}
                     onClick={(e) => {
@@ -153,31 +184,9 @@ export default function CoverflowSlider({
         </Swiper>
       </div>
 
-      {/* Dynamic Detail Info Card & Navigation Controls */}
+      {/* Dynamic Animated Glassmorphism Caption Panel */}
       <div className={styles.detailBox}>
-        <div className={styles.controlsRow}>
-          <button
-            className={styles.navCircleBtn}
-            onClick={() => swiperInstance?.slidePrev()}
-            aria-label="اسلاید قبلی"
-          >
-            <ChevronRight size={22} />
-          </button>
-
-          <span className={styles.slideCounter}>
-            {activeIndex + 1} / {items.length}
-          </span>
-
-          <button
-            className={styles.navCircleBtn}
-            onClick={() => swiperInstance?.slideNext()}
-            aria-label="اسلاید بعدی"
-          >
-            <ChevronLeft size={22} />
-          </button>
-        </div>
-
-        <div className={styles.activeDetails}>
+        <div key={activeItem.id || activeIndex} className={styles.activeDetailsContent}>
           <div className={styles.badgeGroup}>
             <span className={styles.catBadge}>
               <Tag size={13} />
@@ -206,7 +215,40 @@ export default function CoverflowSlider({
 
           {activeItem.caption && <p className={styles.activeCaption}>{activeItem.caption}</p>}
         </div>
+
+        {/* Counter & Progress Bar */}
+        <div className={styles.controlsRow}>
+          <button
+            className={styles.navCircleBtn}
+            onClick={() => swiperInstance?.slidePrev()}
+            aria-label="اسلاید قبلی"
+          >
+            <ChevronRight size={18} />
+          </button>
+
+          <div className={styles.progressTrack}>
+            <div
+              className={styles.progressBar}
+              style={{ width: `${((activeIndex + 1) / items.length) * 100}%` }}
+            />
+          </div>
+
+          <span className={styles.slideCounter}>
+            <span className={styles.currentNum}>{String(activeIndex + 1).padStart(2, '0')}</span>
+            <span className={styles.sep}>/</span>
+            <span className={styles.totalNum}>{String(items.length).padStart(2, '0')}</span>
+          </span>
+
+          <button
+            className={styles.navCircleBtn}
+            onClick={() => swiperInstance?.slideNext()}
+            aria-label="اسلاید بعدی"
+          >
+            <ChevronLeft size={18} />
+          </button>
+        </div>
       </div>
     </div>
   )
 }
+
