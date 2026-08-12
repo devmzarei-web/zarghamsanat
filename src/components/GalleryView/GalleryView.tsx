@@ -251,7 +251,7 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
                       <div className={styles.cardMetaRow}>
                         {sTitle && (
                           <Link
-                            href={sSlug ? `/services/${sSlug}` : '/services'}
+                            href={sSlug ? `/services#${sSlug}` : '/services'}
                             className={styles.serviceLinkTag}
                             onClick={(e) => e.stopPropagation()}
                           >
@@ -334,7 +334,7 @@ export default function GalleryView({ items = [] }: GalleryViewProps) {
 
                 {typeof lightboxItem.relatedService === 'object' && lightboxItem.relatedService && (
                   <Link
-                    href={`/services/${lightboxItem.relatedService.slug}`}
+                    href={`/services#${lightboxItem.relatedService.slug}`}
                     className={styles.lightboxServiceLink}
                   >
                     <Wrench size={13} />

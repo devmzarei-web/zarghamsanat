@@ -203,7 +203,7 @@ export default function CoverflowSlider({
 
             {serviceTitle && (
               <Link
-                href={serviceSlug ? `/services/${serviceSlug}` : '/services'}
+                href={serviceSlug ? `/services#${serviceSlug}` : '/services'}
                 className={styles.serviceBadge}
               >
                 <Wrench size={13} />
