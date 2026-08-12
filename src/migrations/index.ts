@@ -10,7 +10,7 @@ import * as migration_20260807_170000_add_team_section_fields_to_pages from './2
 import * as migration_20260810_230000_add_crew_gallery_collection from './20260810_230000_add_crew_gallery_collection';
 import * as migration_20260810_240000_fix_pages_hero_image_column from './20260810_240000_fix_pages_hero_image_column';
 import * as migration_20260810_250000_add_gallery_relationships from './20260810_250000_add_gallery_relationships';
-import * as migration_20260812_270000_add_presentation_fields_to_site_settings from './20260812_270000_add_presentation_fields_to_site_settings';
+import * as migration_20260812_120000_add_presentation_fields_to_site_settings from './20260812_120000_add_presentation_fields_to_site_settings';
 
 export const migrations = [
   {
@@ -74,8 +74,8 @@ export const migrations = [
     name: '20260810_250000_add_gallery_relationships',
   },
   {
-    up: migration_20260812_270000_add_presentation_fields_to_site_settings.up,
-    down: migration_20260812_270000_add_presentation_fields_to_site_settings.down,
-    name: '20260812_270000_add_presentation_fields_to_site_settings',
+    up: migration_20260812_120000_add_presentation_fields_to_site_settings.up,
+    down: migration_20260812_120000_add_presentation_fields_to_site_settings.down,
+    name: '20260812_120000_add_presentation_fields_to_site_settings',
   },
 ];

@@ -9,6 +9,7 @@
     "dev": "next dev --webpack",
     "build": "payload generate:types && next build --webpack",
     "migrate": "payload migrate --force",
+    "sync-db": "npx tsx src/scripts/migrate.ts",
     "start": "next start",
     "lint": "next lint",
     "payload": "payload"
