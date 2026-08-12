@@ -97,6 +97,8 @@ async function run() {
       "subtitle" varchar
     );`,
 
+    `ALTER TABLE "site_settings_hero_slides" ALTER COLUMN "image_id" DROP NOT NULL;`,
+
     `CREATE TABLE IF NOT EXISTS "site_settings_footer_quick_links" (
       "_order" integer NOT NULL,
       "_parent_id" integer NOT NULL,

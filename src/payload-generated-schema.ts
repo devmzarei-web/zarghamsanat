@@ -904,7 +904,6 @@ export const site_settings_hero_slides = pgTable(
     _parentID: integer("_parent_id").notNull(),
     id: varchar("id").primaryKey(),
     image: integer("image_id")
-      .notNull()
       .references(() => media.id, {
         onDelete: "set null",
       }),
