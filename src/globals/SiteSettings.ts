@@ -230,7 +230,6 @@ export const SiteSettings: GlobalConfig = {
               name: 'heroSlides',
               type: 'array',
               label: 'اسلاید‌های هیرو',
-              minRows: 1,
               maxRows: 3,
               fields: [
                 {
@@ -238,7 +237,6 @@ export const SiteSettings: GlobalConfig = {
                   type: 'upload',
                   relationTo: 'media',
                   label: 'تصویر اسلاید',
-                  required: true,
                 },
                 {
                   name: 'title',
@@ -352,6 +350,49 @@ export const SiteSettings: GlobalConfig = {
               type: 'upload',
               relationTo: 'media',
               label: 'تصویر OG (شبکه‌های اجتماعی)',
+            },
+          ],
+        },
+        // ── Footer ─────────────────────────────
+        {
+          label: 'فوتر (Footer)',
+          fields: [
+            {
+              name: 'footerDescription',
+              type: 'textarea',
+              label: 'توضیحات معرفی برند در فوتر',
+              defaultValue: 'شرکت ضرغام صنعت اروند مجری تخصصی پروژه‌های نفت، گاز، پتروشیمی و صنایع مختلف، با اتکا به نیروی انسانی متخصص، کیفیت عالی و برنامه‌ریزی دقیق زمان‌بندی در سطح کشور فعالیت می‌کند.',
+            },
+            {
+              name: 'footerCopyrightText',
+              type: 'text',
+              label: 'متن کپی‌رایت فوتر',
+              defaultValue: 'تمامی حقوق این وب‌سایت متعلق به شرکت ضرغام صنعت اروند می‌باشد.',
+            },
+            {
+              name: 'footerDevCredit',
+              type: 'text',
+              label: 'متن طراح و توسعه‌دهنده',
+              defaultValue: 'طراحی و توسعه: محمدعلی زارعی',
+            },
+            {
+              name: 'footerQuickLinks',
+              type: 'array',
+              label: 'لینک‌های سریع فوتر',
+              fields: [
+                {
+                  name: 'label',
+                  type: 'text',
+                  label: 'عنوان لینک',
+                  required: true,
+                },
+                {
+                  name: 'href',
+                  type: 'text',
+                  label: 'آدرس لینک (URL / Route)',
+                  required: true,
+                },
+              ],
             },
           ],
         },

@@ -33,6 +33,10 @@ interface FooterProps {
     address?: string
     postalCode?: string
     logo?: { url?: string; filename?: string } | string
+    footerDescription?: string
+    footerCopyrightText?: string
+    footerDevCredit?: string
+    footerQuickLinks?: Array<{ label: string; href: string }>
   }
   services?: Array<{
     id?: string
@@ -50,6 +54,19 @@ export default function Footer({ settings, services = [] }: FooterProps) {
   const email = settings?.email || 'info@zarghamsanat.ir'
   const address = settings?.address || 'آبادان، کوی قدس، خیابان بهار ۲۷، پلاک ۵'
   const postalCode = settings?.postalCode || '6317814564'
+  const footerDesc =
+    settings?.footerDescription ||
+    'شرکت ضرغام صنعت اروند مجری تخصصی پروژه‌های نفت، گاز، پتروشیمی و صنایع مختلف، با اتکا به نیروی انسانی متخصص، کیفیت عالی و برنامه‌ریزی دقیق زمان‌بندی در سطح کشور فعالیت می‌کند.'
+  const copyrightText =
+    settings?.footerCopyrightText ||
+    `تمامی حقوق این وب‌سایت متعلق به شرکت ${companyName} می‌باشد.`
+  const devCreditText = settings?.footerDevCredit || 'طراحی و توسعه: محمدعلی زارعی'
+
+  const quickLinks =
+    settings?.footerQuickLinks && settings.footerQuickLinks.length > 0
+      ? settings.footerQuickLinks
+      : QUICK_LINKS
+
   let logoUrl = '/images/Zargham-Logo.png'
   if (settings?.logo && typeof settings.logo === 'object') {
     if (settings.logo.url) logoUrl = settings.logo.url
@@ -86,7 +103,7 @@ export default function Footer({ settings, services = [] }: FooterProps) {
             </div>
           </div>
           <p className={styles.brandDesc}>
-            شرکت ضرغام صنعت اروند مجری تخصصی پروژه‌های نفت، گاز، پتروشیمی و صنایع مختلف، با اتکا به نیروی انسانی متخصص، کیفیت عالی و برنامه‌ریزی دقیق زمان‌بندی در سطح کشور فعالیت می‌کند.
+            {footerDesc}
           </p>
           <div className={styles.goldDivider} />
           <p className={styles.brandMotto}>{tagline}</p>
@@ -96,7 +113,7 @@ export default function Footer({ settings, services = [] }: FooterProps) {
         <div className={styles.col}>
           <h3 className={styles.colTitle}>لینک‌های سریع</h3>
           <ul className={styles.linkGrid}>
-            {QUICK_LINKS.map((link) => (
+            {quickLinks.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className={styles.footerLink}>
                   <ChevronLeft size={14} />
@@ -160,10 +177,10 @@ export default function Footer({ settings, services = [] }: FooterProps) {
       <div className={styles.bottomBar}>
         <div className={`container ${styles.bottomInner}`}>
           <p className={styles.copyright}>
-            © {toPersianDigits(currentYear)} تمامی حقوق این وب‌سایت متعلق به شرکت {companyName} می‌باشد.
+            © {toPersianDigits(currentYear)} {copyrightText}
           </p>
           <p className={styles.devCredit}>
-            طراحی و توسعه: <span>محمدعلی زارعی</span>
+            {devCreditText}
           </p>
         </div>
       </div>

@@ -973,7 +973,7 @@ export interface SiteSetting {
   presentationSecondaryBtnLink?: string | null;
   heroSlides?:
     | {
-        image: number | Media;
+        image?: (number | null) | Media;
         title?: string | null;
         subtitle?: string | null;
         id?: string | null;
@@ -994,6 +994,16 @@ export interface SiteSetting {
   metaTitle?: string | null;
   metaDescription?: string | null;
   ogImage?: (number | null) | Media;
+  footerDescription?: string | null;
+  footerCopyrightText?: string | null;
+  footerDevCredit?: string | null;
+  footerQuickLinks?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1073,6 +1083,16 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   metaTitle?: T;
   metaDescription?: T;
   ogImage?: T;
+  footerDescription?: T;
+  footerCopyrightText?: T;
+  footerDevCredit?: T;
+  footerQuickLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
