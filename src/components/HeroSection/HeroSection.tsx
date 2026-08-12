@@ -29,6 +29,7 @@ interface HeroSectionProps {
   presentationPrimaryBtnLink?: string
   presentationSecondaryBtnText?: string
   presentationSecondaryBtnLink?: string
+  presentationBgImageUrl?: string
 }
 
 // 3 Default generated hero slides with custom text per slide
@@ -69,6 +70,7 @@ export default function HeroSection({
   presentationPrimaryBtnLink,
   presentationSecondaryBtnText,
   presentationSecondaryBtnLink,
+  presentationBgImageUrl,
 }: HeroSectionProps) {
   const heroRef = useRef<HTMLElement>(null)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -84,6 +86,7 @@ export default function HeroSection({
   // Dynamic presentation fallbacks
   const presVideoUrl = presentationVideoUrl || videoUrl || '/media/presentation-video.mp4'
   const presCoverUrl = presentationVideoCoverUrl || '/images/hero-slide-1.png'
+  const presBgUrl = presentationBgImageUrl || '/images/presentation-hero-bg.jpg'
   const presBadge = presentationBadge || 'فیلم معرفی تخصص و سوابق شرکت'
   const presTitle = presentationTitle || 'شرکت مهندسی و صنعتی ضرغام صنعت اروند'
   const presSubtitle =
@@ -206,38 +209,48 @@ export default function HeroSection({
 
       {/* Mode 3: 3D Presentation Hero (Text Box Right, Video Player Box Left) */}
       {type === 'presentation' && (
-        <div className={`container ${styles.presentationContainer}`}>
-          {/* Right Column: 3D Depth Text Box */}
-          <div className={styles.presentationTextCard}>
-            <span className={styles.presBadge}>{presBadge}</span>
-            <h1 className={styles.presTitle}>{presTitle}</h1>
-            <p className={styles.presSubtitle}>{presSubtitle}</p>
-
-            <div className={styles.presCtas}>
-              <Link href={presPrimaryLink} className="btn btn--primary btn--lg">
-                {presPrimaryText}
-              </Link>
-              <Link href={presSecondaryLink} className="btn btn--ghost btn--lg">
-                {presSecondaryText}
-              </Link>
-            </div>
+        <>
+          <div className={styles.presentationBgWrap} aria-hidden="true">
+            <div
+              className={styles.presentationBgImg}
+              style={{ backgroundImage: `url("${presBgUrl}")` }}
+            />
+            <div className={styles.presentationBgOverlay} />
           </div>
 
-          {/* Left Column: 3D Angled Industrial TV Frame Video Player with Sound & Controls */}
-          <div className={styles.presentationTvBox}>
-            <div className={styles.tvFrame}>
-              <video
-                src={presVideoUrl}
-                poster={presCoverUrl}
-                controls
-                playsInline
-                className={styles.tvVideoPlayer}
-              >
-                مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
-              </video>
+          <div className={`container ${styles.presentationContainer}`}>
+            {/* Right Column: 3D Depth Text Box */}
+            <div className={styles.presentationTextCard}>
+              <span className={styles.presBadge}>{presBadge}</span>
+              <h1 className={styles.presTitle}>{presTitle}</h1>
+              <p className={styles.presSubtitle}>{presSubtitle}</p>
+
+              <div className={styles.presCtas}>
+                <Link href={presPrimaryLink} className="btn btn--primary btn--lg">
+                  {presPrimaryText}
+                </Link>
+                <Link href={presSecondaryLink} className="btn btn--ghost btn--lg">
+                  {presSecondaryText}
+                </Link>
+              </div>
+            </div>
+
+            {/* Left Column: 3D Angled Industrial TV Frame Video Player with Sound & Controls */}
+            <div className={styles.presentationTvBox}>
+              <div className={styles.tvFrame}>
+                <video
+                  src={presVideoUrl}
+                  poster={presCoverUrl}
+                  controls
+                  playsInline
+                  className={styles.tvVideoPlayer}
+                >
+                  مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+                </video>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Slider Controls */}

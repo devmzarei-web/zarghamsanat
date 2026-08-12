@@ -251,11 +251,41 @@
 
 /* ── 3D Presentation Hero Mode ── */
 .heroPresentation {
+  position: relative;
   background: radial-gradient(circle at 70% 30%, #0f2545 0%, #0a172c 70%) !important;
   min-height: 100vh;
   display: flex;
   align-items: center;
   overflow: hidden;
+}
+
+.presentationBgWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.presentationBgImg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(14px) scale(1.12);
+  opacity: 0.42;
+  transform-origin: center;
+  transition: opacity 0.5s ease;
+}
+
+.presentationBgOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(15, 37, 69, 0.65) 0%,
+    rgba(10, 23, 44, 0.93) 85%
+  );
 }
 
 .presentationContainer {
@@ -271,9 +301,9 @@
 }
 
 .presentationTextCard {
-  background: rgba(15, 37, 69, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(15, 37, 69, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border: 1.5px solid rgba(249, 115, 22, 0.35);
   border-radius: var(--radius-2xl, 1.5rem);
   padding: 2.75rem 2.5rem;
@@ -282,9 +312,9 @@
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 1.25rem;
-  text-align: right;
+  text-align: center;
 }
 
 .presentationTextCard:hover {
@@ -295,6 +325,7 @@
 .presBadge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.45rem 1.15rem;
   background: rgba(249, 115, 22, 0.18);
@@ -304,6 +335,7 @@
   font-size: var(--text-xs, 0.8rem);
   font-weight: 800;
   letter-spacing: 0.03em;
+  text-align: center;
 }
 
 .presTitle {
@@ -314,6 +346,7 @@
   line-height: 1.3;
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   margin: 0;
+  text-align: center;
 }
 
 .presSubtitle {
@@ -322,11 +355,13 @@
   line-height: 1.85;
   font-weight: 500;
   margin: 0;
+  text-align: center;
 }
 
 .presCtas {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1.25rem;
   margin-top: 0.75rem;
   flex-wrap: wrap;

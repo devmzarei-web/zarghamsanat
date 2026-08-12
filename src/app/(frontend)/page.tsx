@@ -101,6 +101,11 @@ export default async function HomePage() {
             ? (siteSettings.presentationVideoCover as { url: string }).url
             : undefined
         }
+        presentationBgImageUrl={
+          typeof siteSettings?.presentationBgImage === 'object' && siteSettings?.presentationBgImage
+            ? (siteSettings.presentationBgImage as { url: string }).url
+            : undefined
+        }
         presentationBadge={siteSettings?.presentationBadge}
         presentationTitle={siteSettings?.presentationTitle}
         presentationSubtitle={siteSettings?.presentationSubtitle}

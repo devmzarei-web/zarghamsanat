@@ -185,6 +185,15 @@ export const SiteSettings: GlobalConfig = {
               label: 'تصویر کاور/پوستر ویدیو معرفی',
             },
             {
+              name: 'presentationBgImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'تصویر پس‌زمینه هیرو معرفی (Presentation Background)',
+              admin: {
+                description: 'تصویر پس‌زمینه حالت ویدیو معرفی سه‌بعدی (در صورت عدم آپلود از تصویر پیش‌فرض بوکه صنعتی استفاده می‌شود)',
+              },
+            },
+            {
               name: 'presentationBadge',
               type: 'text',
               label: 'تگ‌لاین / برچسب هیرو ویدیو معرفی',

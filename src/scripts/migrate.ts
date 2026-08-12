@@ -68,6 +68,7 @@ async function run() {
     `ALTER TABLE "site_settings" ADD COLUMN IF NOT EXISTS "presentation_video_id" integer;`,
     `ALTER TABLE "site_settings" ADD COLUMN IF NOT EXISTS "presentation_video_url" varchar;`,
     `ALTER TABLE "site_settings" ADD COLUMN IF NOT EXISTS "presentation_video_cover_id" integer;`,
+    `ALTER TABLE "site_settings" ADD COLUMN IF NOT EXISTS "presentation_bg_image_id" integer;`,
     `ALTER TABLE "site_settings" ADD COLUMN IF NOT EXISTS "presentation_badge" varchar;`,
     `ALTER TABLE "site_settings" ADD COLUMN IF NOT EXISTS "presentation_title" varchar;`,
     `ALTER TABLE "site_settings" ADD COLUMN IF NOT EXISTS "presentation_subtitle" varchar;`,

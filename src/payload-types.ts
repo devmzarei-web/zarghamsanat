@@ -964,6 +964,10 @@ export interface SiteSetting {
    */
   presentationVideoUrl?: string | null;
   presentationVideoCover?: (number | null) | Media;
+  /**
+   * تصویر پس‌زمینه حالت ویدیو معرفی سه‌بعدی (در صورت عدم آپلود از تصویر پیش‌فرض بوکه صنعتی استفاده می‌شود)
+   */
+  presentationBgImage?: (number | null) | Media;
   presentationBadge?: string | null;
   presentationTitle?: string | null;
   presentationSubtitle?: string | null;
@@ -1053,6 +1057,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   presentationVideo?: T;
   presentationVideoUrl?: T;
   presentationVideoCover?: T;
+  presentationBgImage?: T;
   presentationBadge?: T;
   presentationTitle?: T;
   presentationSubtitle?: T;
