@@ -147,6 +147,7 @@ export const SiteSettings: GlobalConfig = {
               options: [
                 { label: 'ویدیو (پس‌زمینه)', value: 'video' },
                 { label: 'اسلایدر ۳ تصویر', value: 'slider' },
+                { label: 'ویدیو معرفی سه‌بعدی (Presentation Hero)', value: 'presentation' },
               ],
               defaultValue: 'slider',
               required: true,
@@ -155,10 +156,75 @@ export const SiteSettings: GlobalConfig = {
               name: 'heroVideo',
               type: 'upload',
               relationTo: 'media',
-              label: 'ویدیو هیرو',
+              label: 'ویدیو پس‌زمینه هیرو',
               admin: {
                 description: 'فایل ویدیو (MP4 توصیه می‌شود)',
               },
+            },
+            {
+              name: 'presentationVideo',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'ویدیو معرفی سه‌بعدی (Presentation Box)',
+              admin: {
+                description: 'فایل یا ویدیو اصلی تیزر معرفی شرکت برای حالت Presentation',
+              },
+            },
+            {
+              name: 'presentationVideoUrl',
+              type: 'text',
+              label: 'لینک مستقیم یا جایگزین ویدیو معرفی (آدرس MP4)',
+              admin: {
+                description: 'در صورت عدم آپلود فایل رسانه، می‌توانید لینک مستقیم ویدیو MP4 را اینجا وارد کنید',
+              },
+            },
+            {
+              name: 'presentationVideoCover',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'تصویر کاور/پوستر ویدیو معرفی',
+            },
+            {
+              name: 'presentationBadge',
+              type: 'text',
+              label: 'تگ‌لاین / برچسب هیرو ویدیو معرفی',
+              defaultValue: 'فیلم معرفی تخصص و سوابق شرکت',
+            },
+            {
+              name: 'presentationTitle',
+              type: 'text',
+              label: 'عنوان اصلی هیرو ویدیو معرفی',
+              defaultValue: 'شرکت مهندسی و صنعتی ضرغام صنعت اروند',
+            },
+            {
+              name: 'presentationSubtitle',
+              type: 'textarea',
+              label: 'زیرعنوان / توضیح هیرو ویدیو معرفی',
+              defaultValue: 'پیشرو در اجرای پروژه‌های پایپینگ صنعتی، نصب تجهیزات مکانیکی، سیویل و ساخت مخازن با بالاترین استانداردهای کیفی کشور',
+            },
+            {
+              name: 'presentationPrimaryBtnText',
+              type: 'text',
+              label: 'متن دکمه اصلی (اصلی)',
+              defaultValue: 'مشاهده پروژه‌ها',
+            },
+            {
+              name: 'presentationPrimaryBtnLink',
+              type: 'text',
+              label: 'لینک دکمه اصلی',
+              defaultValue: '/projects',
+            },
+            {
+              name: 'presentationSecondaryBtnText',
+              type: 'text',
+              label: 'متن دکمه دوم (ثانویه)',
+              defaultValue: 'درباره ما بیشتر بدانید',
+            },
+            {
+              name: 'presentationSecondaryBtnLink',
+              type: 'text',
+              label: 'لینک دکمه دوم',
+              defaultValue: '/about',
             },
             {
               name: 'heroSlides',

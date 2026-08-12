@@ -84,12 +84,30 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection
-        type={(siteSettings?.heroType as 'video' | 'slider') ?? 'slider'}
+        type={(siteSettings?.heroType as 'video' | 'slider' | 'presentation') ?? 'slider'}
         videoUrl={
           typeof siteSettings?.heroVideo === 'object' && siteSettings?.heroVideo
             ? (siteSettings.heroVideo as { url: string }).url
             : undefined
         }
+        presentationVideoUrl={
+          siteSettings?.presentationVideoUrl ||
+          (typeof siteSettings?.presentationVideo === 'object' && siteSettings?.presentationVideo
+            ? (siteSettings.presentationVideo as { url: string }).url
+            : undefined)
+        }
+        presentationVideoCoverUrl={
+          typeof siteSettings?.presentationVideoCover === 'object' && siteSettings?.presentationVideoCover
+            ? (siteSettings.presentationVideoCover as { url: string }).url
+            : undefined
+        }
+        presentationBadge={siteSettings?.presentationBadge}
+        presentationTitle={siteSettings?.presentationTitle}
+        presentationSubtitle={siteSettings?.presentationSubtitle}
+        presentationPrimaryBtnText={siteSettings?.presentationPrimaryBtnText}
+        presentationPrimaryBtnLink={siteSettings?.presentationPrimaryBtnLink}
+        presentationSecondaryBtnText={siteSettings?.presentationSecondaryBtnText}
+        presentationSecondaryBtnLink={siteSettings?.presentationSecondaryBtnLink}
         slides={
           siteSettings?.heroSlides?.map((slide: any) => ({
             image: typeof slide.image === 'object' ? slide.image : { url: '' },

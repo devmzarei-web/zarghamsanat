@@ -950,11 +950,27 @@ export interface SiteSetting {
    * کد Hex رنگ متن اصلی (مانند #111827)
    */
   textColor?: string | null;
-  heroType: 'video' | 'slider';
+  heroType: 'video' | 'slider' | 'presentation';
   /**
    * فایل ویدیو (MP4 توصیه می‌شود)
    */
   heroVideo?: (number | null) | Media;
+  /**
+   * فایل یا ویدیو اصلی تیزر معرفی شرکت برای حالت Presentation
+   */
+  presentationVideo?: (number | null) | Media;
+  /**
+   * در صورت عدم آپلود فایل رسانه، می‌توانید لینک مستقیم ویدیو MP4 را اینجا وارد کنید
+   */
+  presentationVideoUrl?: string | null;
+  presentationVideoCover?: (number | null) | Media;
+  presentationBadge?: string | null;
+  presentationTitle?: string | null;
+  presentationSubtitle?: string | null;
+  presentationPrimaryBtnText?: string | null;
+  presentationPrimaryBtnLink?: string | null;
+  presentationSecondaryBtnText?: string | null;
+  presentationSecondaryBtnLink?: string | null;
   heroSlides?:
     | {
         image: number | Media;
@@ -1024,6 +1040,16 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   textColor?: T;
   heroType?: T;
   heroVideo?: T;
+  presentationVideo?: T;
+  presentationVideoUrl?: T;
+  presentationVideoCover?: T;
+  presentationBadge?: T;
+  presentationTitle?: T;
+  presentationSubtitle?: T;
+  presentationPrimaryBtnText?: T;
+  presentationPrimaryBtnLink?: T;
+  presentationSecondaryBtnText?: T;
+  presentationSecondaryBtnLink?: T;
   heroSlides?:
     | T
     | {
