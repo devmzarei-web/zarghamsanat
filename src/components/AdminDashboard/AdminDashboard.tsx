@@ -111,6 +111,61 @@ export default function AdminDashboard() {
           </div>
           <ChevronLeft size={18} className={styles.arrowIcon} />
         </Link>
+
+        <Link href="/admin/collections/clients" className={styles.statCard}>
+          <div className={`${styles.iconWrap} ${styles.blueIcon}`}>
+            <Building2 size={24} />
+          </div>
+          <div className={styles.statInfo}>
+            <span className={styles.statLabel}>کارفرمایان و همکاران</span>
+            <span className={styles.statSub}>لوگو و اطلاعات مشتریان</span>
+          </div>
+          <ChevronLeft size={18} className={styles.arrowIcon} />
+        </Link>
+
+        <Link href="/admin/collections/pages" className={styles.statCard}>
+          <div className={`${styles.iconWrap} ${styles.purpleIcon}`}>
+            <FileText size={24} />
+          </div>
+          <div className={styles.statInfo}>
+            <span className={styles.statLabel}>صفحات سایت</span>
+            <span className={styles.statSub}>مدیریت محتوای صفحات ثابت</span>
+          </div>
+          <ChevronLeft size={18} className={styles.arrowIcon} />
+        </Link>
+
+        <Link href="/admin/collections/team" className={styles.statCard}>
+          <div className={`${styles.iconWrap} ${styles.goldIcon}`}>
+            <Users size={24} />
+          </div>
+          <div className={styles.statInfo}>
+            <span className={styles.statLabel}>اعضای تیم و مدیریت</span>
+            <span className={styles.statSub}>معرفی مدیران و مهندسین</span>
+          </div>
+          <ChevronLeft size={18} className={styles.arrowIcon} />
+        </Link>
+
+        <Link href="/admin/collections/media" className={styles.statCard}>
+          <div className={`${styles.iconWrap} ${styles.greenIcon}`}>
+            <ImageIcon size={24} />
+          </div>
+          <div className={styles.statInfo}>
+            <span className={styles.statLabel}>رسانه‌ها و فایل‌ها</span>
+            <span className={styles.statSub}>آپلود و مدیریت تمامی تصاویر</span>
+          </div>
+          <ChevronLeft size={18} className={styles.arrowIcon} />
+        </Link>
+
+        <Link href="/admin/collections/users" className={styles.statCard}>
+          <div className={`${styles.iconWrap} ${styles.orangeIcon}`}>
+            <ShieldCheck size={24} />
+          </div>
+          <div className={styles.statInfo}>
+            <span className={styles.statLabel}>کاربران ادمین</span>
+            <span className={styles.statSub}>مدیریت دسترسی‌های سیستم</span>
+          </div>
+          <ChevronLeft size={18} className={styles.arrowIcon} />
+        </Link>
       </div>
 
       {/* Quick Actions & System Settings Section */}
