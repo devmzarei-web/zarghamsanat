@@ -22,31 +22,14 @@ interface TeamSectionProps {
   members?: TeamMember[]
 }
 
-const DEFAULT_MEMBERS: TeamMember[] = [
-  {
-    name: 'مهندس زرغام زارعی',
-    role: 'مدیرعامل و رئیس هیئت مدیره',
-    isCeo: true,
-    bio: 'با بیش از ۱۵ سال سابقه راهبری پروژه‌های کلان پایپینگ، نصب تجهیزات مکانیکی و مخازن ذخیره در صنایع نفت، گاز و پتروشیمی.',
-    quote: 'ارتقای مستمر کیفیت فنی، تعهد دقیق به جدول زمان‌بندی و اولویت‌بخشی کامل به ایمنی (HSE)، منشور اخلاقی ماست.',
-    email: 'info@zarghamsanat.com',
-    phone: '061-53328646',
-  },
-  {
-    name: 'مهندس علی زارعی',
-    role: 'معاونت اجرایی و مدیر پروژه‌ها',
-    bio: 'سرپرستی کلیه عملیات‌های پایپینگ، نصب تجهیزات مکانیکی، کنترل کیفیت و برنامه‌ریزی پروژه‌های صنعتی.',
-    email: 'exec@zarghamsanat.com',
-    phone: '0916-000-0000',
-  },
-]
-
 export default function TeamSection({
   badge = 'سرمایه انسانی و رهبری',
   title = 'مدیریت ارشد و تیم متخصصین',
   members = [],
 }: TeamSectionProps) {
-  const list = members.length > 0 ? members : DEFAULT_MEMBERS
+  const list = members
+
+  if (!list || list.length === 0) return null
 
   return (
     <section className={styles.section} aria-label="مدیریت و اعضای تیم">

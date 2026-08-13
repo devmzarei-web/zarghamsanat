@@ -6,19 +6,6 @@ import styles from './ClientLogos.module.css'
 import ScrollReveal from '@/components/ScrollReveal/ScrollReveal'
 import EmployerModal, { Client, Project } from '@/components/EmployerModal/EmployerModal'
 
-const DEFAULT_CLIENTS: Client[] = [
-  { id: '1', name: 'مهندسی و ساختمان تیو انرژی' },
-  { id: '2', name: 'شرکت پتروشیمی مارون' },
-  { id: '3', name: 'پالایش نفت آبادان' },
-  { id: '4', name: 'پیشگامان فولاد شرق (فولاد شادگان)' },
-  { id: '5', name: 'شرکت صنعتی عمراب' },
-  { id: '6', name: 'شرکت جهان فولاد سیرجان' },
-  { id: '7', name: 'شرکت ماشین‌سازی ویژه' },
-  { id: '8', name: 'شرکت کمک‌صنعتگران جنوب' },
-  { id: '9', name: 'طراحی و مهندسی عالی‌نام' },
-  { id: '10', name: 'کنسرسیوم سابیک-پترو ODCC' },
-]
-
 interface ClientLogosProps {
   clients?: Client[]
   projects?: Project[]
@@ -36,9 +23,11 @@ const getMediaUrl = (mediaObj: any): string | null => {
   return null
 }
 
-export default function ClientLogos({ clients, projects = [] }: ClientLogosProps) {
-  const displayClients = clients && clients.length > 0 ? clients : DEFAULT_CLIENTS
+export default function ClientLogos({ clients = [], projects = [] }: ClientLogosProps) {
+  const displayClients = clients
   const [selectedClient, setSelectedClient] = useState<Client | null>(null)
+
+  if (!displayClients || displayClients.length === 0) return null
 
   // Prioritize clients with uploaded logos so they appear first
   const sortedClients = [...displayClients].sort((a, b) => {

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import Link from 'next/link'
-import { ChevronLeft, ArrowUpLeft, Sparkles, ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ArrowUpLeft, Sparkles, ChevronDown, ChevronUp } from 'lucide-react'
 import { getProjectUrl, getServiceUrl } from '@/lib/utils'
 import styles from './ServicesSection.module.css'
 import ContactForm from '@/components/ContactForm/ContactForm'
@@ -38,35 +38,48 @@ interface ServicesSectionProps {
 }
 
 export default function ServicesSection({ services, projects = [] }: ServicesSectionProps) {
-  const list = services && services.length > 0 ? services : DEFAULT_SERVICES
+  const list = services && services.length > 0 ? services : []
   const [active, setActive] = useState(0)
+  const [projectSlideIndex, setProjectSlideIndex] = useState(0)
   const [isFormExpanded, setIsFormExpanded] = useState(false)
   const detailRef = useRef<HTMLDivElement>(null)
 
-  const activeService = list[active]
+  const activeService = list[active] || list[0]
 
-  // Find a project related to the active service (by ID or Slug)
-  const relatedProject = projects.find(p => {
-    if (!p.relatedService || !activeService) return false
+  // Find ALL projects related to the active service (by ID or Slug)
+  const linkedProjects = projects.filter((p) => {
+    if (!activeService) return false
     const sId = String(activeService.id)
     const sSlug = activeService.slug ? String(activeService.slug) : ''
 
-    const rel = p.relatedService
-    if (Array.isArray(rel)) {
-      return rel.some((item: any) =>
-        typeof item === 'object' && item !== null
-          ? String(item.id) === sId || (item.slug && String(item.slug) === sSlug)
-          : String(item) === sId
-      )
+    const rels: any[] = []
+    if ((p as any).relatedServices) {
+      if (Array.isArray((p as any).relatedServices)) {
+        rels.push(...(p as any).relatedServices)
+      } else {
+        rels.push((p as any).relatedServices)
+      }
     }
-    if (typeof rel === 'object' && rel !== null) {
-      return String(rel.id) === sId || (rel.slug && String(rel.slug) === sSlug)
+    if (p.relatedService) {
+      if (Array.isArray(p.relatedService)) {
+        rels.push(...p.relatedService)
+      } else {
+        rels.push(p.relatedService)
+      }
     }
-    return String(rel) === sId
+
+    return rels.some((item: any) =>
+      typeof item === 'object' && item !== null
+        ? String(item.id) === sId || (item.slug && String(item.slug) === sSlug)
+        : String(item) === sId || String(item) === sSlug
+    )
   })
+
+  const currentProject = linkedProjects[projectSlideIndex] || linkedProjects[0]
 
   const handleServiceSelect = (index: number) => {
     setActive(index)
+    setProjectSlideIndex(0)
     if (typeof window !== 'undefined' && window.innerWidth <= 1024) {
       setTimeout(() => {
         detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
@@ -75,11 +88,11 @@ export default function ServicesSection({ services, projects = [] }: ServicesSec
   }
 
   // Data to display in the center pane
-  const displayImage = relatedProject?.coverImage || activeService.coverImage
-  const displayTitle = relatedProject?.title || activeService.title
-  const displayDesc = relatedProject?.serviceDescription || activeService.shortDescription
-  const displayLink = relatedProject ? getProjectUrl(relatedProject.slug) : getServiceUrl(activeService.slug)
-  const linkLabel = relatedProject ? 'مشاهده پروژه' : 'اطلاعات بیشتر'
+  const displayImage = currentProject?.coverImage || activeService?.coverImage
+  const displayTitle = currentProject?.title || activeService?.title
+  const displayDesc = currentProject?.serviceDescription || activeService?.shortDescription
+  const displayLink = currentProject ? getProjectUrl(currentProject.slug) : (activeService ? getServiceUrl(activeService.slug) : '/services')
+  const linkLabel = currentProject ? 'مشاهده پروژه' : 'اطلاعات بیشتر'
 
   return (
     <section className={styles.section} aria-label="خدمات و پروژه‌ها">
@@ -152,13 +165,15 @@ export default function ServicesSection({ services, projects = [] }: ServicesSec
               aria-labelledby={`service-tab-${active}`}
             >
               {/* Mobile Active Service Indicator Header */}
-              <div className={styles.mobileSelectedIndicator}>
-                <Sparkles size={14} className={styles.sparkleIcon} />
-                <span>خدمت انتخاب شده: <strong>{activeService.title}</strong></span>
-              </div>
+              {activeService && (
+                <div className={styles.mobileSelectedIndicator}>
+                  <Sparkles size={14} className={styles.sparkleIcon} />
+                  <span>خدمت انتخاب شده: <strong>{activeService.title}</strong></span>
+                </div>
+              )}
 
-              {/* The key prop forces React to unmount and remount this element when 'active' changes, triggering CSS animations */}
-              <div key={`anim-${active}`} className={styles.detailAnimContainer}>
+              {/* The key prop forces React to unmount and remount this element when 'active' or 'projectSlideIndex' changes */}
+              <div key={`anim-${active}-${projectSlideIndex}`} className={styles.detailAnimContainer}>
                 <div className={styles.detail}>
                   {displayImage ? (
                     <div className={styles.detailImage}>
@@ -178,7 +193,33 @@ export default function ServicesSection({ services, projects = [] }: ServicesSec
                   )}
                   
                   <div className={styles.detailBody}>
-                    {relatedProject && <span className={styles.projectBadge}>پروژه مرتبط</span>}
+                    {currentProject && (
+                      <div className={styles.projectBadgeRow}>
+                        <span className={styles.projectBadge}>
+                          پروژه مرتبط {linkedProjects.length > 1 ? `(${projectSlideIndex + 1} از ${linkedProjects.length})` : ''}
+                        </span>
+                        {linkedProjects.length > 1 && (
+                          <div className={styles.sliderControls}>
+                            <button
+                              type="button"
+                              className={styles.sliderArrow}
+                              onClick={() => setProjectSlideIndex((prev) => (prev - 1 + linkedProjects.length) % linkedProjects.length)}
+                              aria-label="پروژه قبلی"
+                            >
+                              <ChevronRight size={16} />
+                            </button>
+                            <button
+                              type="button"
+                              className={styles.sliderArrow}
+                              onClick={() => setProjectSlideIndex((prev) => (prev + 1) % linkedProjects.length)}
+                              aria-label="پروژه بعدی"
+                            >
+                              <ChevronLeft size={16} />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
                     <h3 className={styles.detailTitle}>{displayTitle}</h3>
                     <p className={styles.detailDesc}>{displayDesc}</p>
                     <Link href={displayLink} className={styles.detailLink}>

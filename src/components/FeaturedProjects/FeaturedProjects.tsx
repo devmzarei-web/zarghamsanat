@@ -18,36 +18,6 @@ interface FeaturedProjectsProps {
   projects: Project[]
 }
 
-const DEFAULT_PROJECTS: Project[] = [
-  {
-    id: '1',
-    title: 'سیویل، سندبلاست و رنگ مخازن پتروشیمی مارون',
-    slug: 'marun-petrochemical-tanks',
-    client: 'مهندسی و ساختمان تیو انرژی',
-    location: 'ماهشهر، پتروشیمی مارون',
-    serviceDescription: 'رنگ‌آمیزی ۱۵ هزار متر مربع داخل و خارج مخازن، اجرای فونداسیون سوپراستراکچر مخازن و دایک‌وال‌های اطراف.',
-    coverImage: { url: '/media/image9.png', alt: 'پتروشیمی مارون' },
-  },
-  {
-    id: '2',
-    title: 'نصب و پایپینگ تجهیزات تصفیه آب فولاد شادگان',
-    slug: 'shadgan-steel-water-treatment',
-    client: 'شرکت عمراب',
-    location: 'شادگان',
-    serviceDescription: 'عملیات پایپینگ ۱۰۰ هزار اینچ، نصب ۳۰۰ تن تجهیزات ثابت، ۲۵۰ تن تجهیزات دوار و ۱۰ هزار متر مربع رنگ.',
-    coverImage: { url: '/media/image22.jpeg', alt: 'فولاد شادگان' },
-  },
-  {
-    id: '3',
-    title: 'پایپینگ مخازن کروی پالایشگاه آبادان',
-    slug: 'abadan-refinery-spherical-tanks',
-    client: 'مهندسی و ساختمان تیو انرژی',
-    location: 'پالایش نفت آبادان',
-    serviceDescription: 'پایپینگ ۲۴ هزار اینچ، ساخت و نصب ۸۰ تن ساپورت و استراکچر، کابل‌کشی و سندبلاست و رنگ‌آمیزی.',
-    coverImage: { url: '/media/image30.jpg', alt: 'مخازن کروی پالایشگاه آبادان' },
-  },
-]
-
 function ProjectCard({ project }: { project: Project }) {
   return (
     <article className={styles.card}>
@@ -72,14 +42,18 @@ function ProjectCard({ project }: { project: Project }) {
         <h3 className={styles.cardTitle}>{project.title}</h3>
 
         <div className={styles.cardMeta}>
-          <span className={styles.metaItem}>
-            <Building size={13} />
-            {project.client}
-          </span>
-          <span className={styles.metaItem}>
-            <MapPin size={13} />
-            {project.location}
-          </span>
+          {project.client && (
+            <span className={styles.metaItem}>
+              <Building size={13} />
+              {project.client}
+            </span>
+          )}
+          {project.location && (
+            <span className={styles.metaItem}>
+              <MapPin size={13} />
+              {project.location}
+            </span>
+          )}
         </div>
 
         <p className={styles.cardDesc}>{project.serviceDescription}</p>
@@ -93,8 +67,10 @@ function ProjectCard({ project }: { project: Project }) {
   )
 }
 
-export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
-  const displayProjects = projects && projects.length > 0 ? projects : DEFAULT_PROJECTS
+export default function FeaturedProjects({ projects = [] }: FeaturedProjectsProps) {
+  const displayProjects = projects
+
+  if (!displayProjects || displayProjects.length === 0) return null
 
   return (
     <section className={styles.section} aria-label="پروژه‌های شاخص">

@@ -296,6 +296,7 @@ export interface Project {
     };
     [k: string]: unknown;
   } | null;
+  relatedServices?: (number | Service)[] | null;
   relatedService?: (number | null) | Service;
   coverImage?: (number | null) | Media;
   beforeAfterImages?:
@@ -343,6 +344,10 @@ export interface Certificate {
   image?: (number | null) | Media;
   description?: string | null;
   featured?: boolean | null;
+  /**
+   * عدد کوچک‌تر در ابتدا نمایش داده می‌شود (مثلاً ۱، ۲، ۳...)
+   */
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -725,6 +730,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   client?: T;
   serviceDescription?: T;
   description?: T;
+  relatedServices?: T;
   relatedService?: T;
   coverImage?: T;
   beforeAfterImages?:
@@ -765,6 +771,7 @@ export interface CertificatesSelect<T extends boolean = true> {
   image?: T;
   description?: T;
   featured?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }

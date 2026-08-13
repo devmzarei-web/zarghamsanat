@@ -11,7 +11,7 @@ export const Certificates: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'type', 'issuer', 'updatedAt'],
+    defaultColumns: ['name', 'type', 'order', 'issuer', 'updatedAt'],
   },
   fields: [
     {
@@ -71,6 +71,15 @@ export const Certificates: CollectionConfig = {
       type: 'checkbox',
       label: 'نمایش در صفحه اصلی',
       defaultValue: false,
+    },
+    {
+      name: 'order',
+      type: 'number',
+      label: 'ترتیب نمایش (اولویت)',
+      defaultValue: 0,
+      admin: {
+        description: 'عدد کوچک‌تر در ابتدا نمایش داده می‌شود (مثلاً ۱، ۲، ۳...)',
+      },
     },
   ],
 }

@@ -14,38 +14,36 @@ interface DocumentScanItem {
   url: string
 }
 
-// All official certificates & satisfaction letters combined from PowerPoint catalogue
-const ALL_DOCUMENTS: DocumentScanItem[] = [
-  { title: 'گواهینامه رتبه‌بندی و صلاحیت پیمانکاری', issuer: 'سازمان مدیریت و برنامه‌ریزی کشور', url: '/media/image2.png' },
-  { title: 'گواهینامه صلاحیت ایمنی پیمانکاران (HSE)', issuer: 'وزارت تعاون، کار و رفاه اجتماعی', url: '/media/image3.jpg' },
-  { title: 'گواهینامه عضویت انجمن شرکت‌های ساختمانی خوزستان', issuer: 'انجمن شرکت‌های ساختمانی', url: '/media/image4.jpg' },
-  { title: 'گواهینامه صلاحیت رتبه‌بندی ۵ نفت و گاز', issuer: 'معاونت برنامه‌ریزی و نظارت راهبردی', url: '/media/image5.jpg' },
-  { title: 'گواهینامه سیستم مدیریت کیفیت ISO 9001:2015', issuer: 'مرکز بین‌المللی ISO', url: '/media/image6.jpg' },
-  { title: 'گواهینامه ایمنی و بهداشت شغلی ISO 45001:2018', issuer: 'مرکز بین‌المللی ISO', url: '/media/image7.jpg' },
-  { title: 'رضایت‌نامه و تاییدیه حسن انجام کار', issuer: 'مهندسی و ساختمان تیو انرژی', url: '/media/image47.png' },
-  { title: 'رضایت‌نامه و تاییدیه حسن انجام کار', issuer: 'شرکت صنعتی پیشگامان فولاد شرق و عمراب', url: '/media/image48.png' },
-  { title: 'رضایت‌نامه و تاییدیه حسن انجام کار', issuer: 'شرکت پالایش نفت آبادان', url: '/media/image49.png' },
-  { title: 'رضایت‌نامه و تاییدیه حسن انجام کار', issuer: 'شرکت جهان فولاد سیرجان', url: '/media/image50.jpg' },
-  { title: 'رضایت‌نامه و تاییدیه حسن انجام کار', issuer: 'شرکت ماشین‌سازی ویژه', url: '/media/image51.jpg' },
-  { title: 'رضایت‌نامه و تاییدیه حسن انجام کار', issuer: 'شرکت کمک‌صنعتگران جنوب', url: '/media/image52.jpg' },
-  { title: 'رضایت‌نامه و تاییدیه حسن انجام کار', issuer: 'شرکت طراحی و مهندسی عالی‌نام', url: '/media/image53.jpg' },
-]
-
 interface CertificationsStripProps {
   certificates?: any[]
 }
 
-export default function CertificationsStrip({ certificates }: CertificationsStripProps = {}) {
+export default function CertificationsStrip({ certificates = [] }: CertificationsStripProps = {}) {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
 
+  const cmsDocs: DocumentScanItem[] = certificates
+    ? certificates
+        .map((c: any) => ({
+          id: c.id,
+          title: c.name || c.title,
+          issuer: c.issuer,
+          url: typeof c.image === 'object' && c.image?.url ? c.image.url : c.url,
+          order: c.order ?? 0,
+        }))
+        .filter((d) => Boolean(d.url))
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    : []
+
+  if (cmsDocs.length === 0) return null
+
   const openLightbox = (index: number) => {
-    setLightboxIndex(index % ALL_DOCUMENTS.length)
+    setLightboxIndex(index % cmsDocs.length)
     setLightboxOpen(true)
   }
 
-  // Multiply documents 3 times for a 100% full, unbroken infinite loop circle
-  const tickerItems = [...ALL_DOCUMENTS, ...ALL_DOCUMENTS, ...ALL_DOCUMENTS]
+  // Repeat items if necessary to ensure a smooth loop
+  const tickerItems = cmsDocs.length < 10 ? [...cmsDocs, ...cmsDocs, ...cmsDocs, ...cmsDocs] : [...cmsDocs, ...cmsDocs]
 
   return (
     <>
@@ -92,7 +90,7 @@ export default function CertificationsStrip({ certificates }: CertificationsStri
       <LightboxModal
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        images={ALL_DOCUMENTS.map(d => ({ url: d.url, title: d.title, issuer: d.issuer }))}
+        images={cmsDocs.map(d => ({ url: d.url, title: d.title, issuer: d.issuer }))}
         currentIndex={lightboxIndex}
         onNavigate={(idx) => setLightboxIndex(idx)}
       />

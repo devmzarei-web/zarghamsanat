@@ -35,6 +35,7 @@ async function getHomePageData() {
       }),
       payload.find({
         collection: 'certificates',
+        sort: 'order',
         limit: 100,
       }),
       payload.find({

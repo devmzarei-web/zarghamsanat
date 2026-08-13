@@ -108,6 +108,16 @@ async function run() {
 
     `ALTER TABLE "site_settings_hero_slides" ALTER COLUMN "image_id" DROP NOT NULL;`,
 
+    `ALTER TABLE "certificates" ADD COLUMN IF NOT EXISTS "order" numeric DEFAULT 0;`,
+
+    `CREATE TABLE IF NOT EXISTS "projects_rels" (
+      "id" serial PRIMARY KEY,
+      "order" integer,
+      "parent_id" integer NOT NULL,
+      "path" varchar NOT NULL,
+      "services_id" integer
+    );`,
+
     `CREATE TABLE IF NOT EXISTS "site_settings_footer_quick_links" (
       "_order" integer NOT NULL,
       "_parent_id" integer NOT NULL,
@@ -153,9 +163,38 @@ async function run() {
           presentationPrimaryBtnLink: '/projects',
           presentationSecondaryBtnText: 'درباره ما بیشتر بدانید',
           presentationSecondaryBtnLink: '/about',
+          footerQuickLinks: [
+            { label: 'صفحه اصلی', href: '/' },
+            { label: 'درباره ما', href: '/about' },
+            { label: 'خدمات ما', href: '/services' },
+            { label: 'پروژه‌ها', href: '/projects' },
+            { label: 'گواهینامه‌ها', href: '/certificates' },
+            { label: 'گالری تصاویر', href: '/gallery' },
+            { label: 'اعضای تیم و مدیریت', href: '/crew' },
+            { label: 'مقالات و اخبار', href: '/articles' },
+            { label: 'ارتباط با ما', href: '/contact' },
+          ],
         },
       })
       console.log('✅ Site Settings global document initialized.')
+    } else if (!current?.footerQuickLinks || (current.footerQuickLinks as any[]).length === 0) {
+      await payload.updateGlobal({
+        slug: 'site-settings',
+        data: {
+          footerQuickLinks: [
+            { label: 'صفحه اصلی', href: '/' },
+            { label: 'درباره ما', href: '/about' },
+            { label: 'خدمات ما', href: '/services' },
+            { label: 'پروژه‌ها', href: '/projects' },
+            { label: 'گواهینامه‌ها', href: '/certificates' },
+            { label: 'گالری تصاویر', href: '/gallery' },
+            { label: 'اعضای تیم و مدیریت', href: '/crew' },
+            { label: 'مقالات و اخبار', href: '/articles' },
+            { label: 'ارتباط با ما', href: '/contact' },
+          ],
+        },
+      })
+      console.log('✅ Footer quick links pre-populated in Site Settings.')
     }
   } catch (err: any) {
     console.log('Global init note:', err?.message || err)

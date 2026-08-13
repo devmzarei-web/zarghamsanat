@@ -31,90 +31,14 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-const DEFAULT_PROJECTS = [
-  {
-    id: '1',
-    title: 'سیویل، سندبلاست و رنگ مخازن پتروشیمی مارون',
-    slug: 'marun-petrochemical-tanks',
-    client: 'مهندسی و ساختمان تیو انرژی',
-    location: 'ماهشهر، پتروشیمی مارون',
-    serviceDescription: 'رنگ‌آمیزی ۱۵ هزار متر مربع داخل و خارج مخازن، اجرای فونداسیون سوپراستراکچر مخازن و دایک‌وال‌های اطراف.',
-    coverImage: { url: '/media/image9.png', alt: 'پتروشیمی مارون' },
-  },
-  {
-    id: '2',
-    title: 'نصب و پایپینگ تجهیزات تصفیه آب فولاد شادگان',
-    slug: 'shadgan-steel-water-treatment',
-    client: 'شرکت عمراب',
-    location: 'شادگان',
-    serviceDescription: 'عملیات پایپینگ ۱۰۰ هزار اینچ، نصب ۳۰۰ تن تجهیزات ثابت، ۲۵۰ تن تجهیزات دوار و ۱۰ هزار متر مربع رنگ.',
-    coverImage: { url: '/media/image22.jpeg', alt: 'فولاد شادگان' },
-  },
-  {
-    id: '3',
-    title: 'پایپینگ مخازن کروی پالایشگاه آبادان',
-    slug: 'abadan-refinery-spherical-tanks',
-    client: 'مهندسی و ساختمان تیو انرژی',
-    location: 'پالایش نفت آبادان',
-    serviceDescription: 'پایپینگ ۲۴ هزار اینچ، ساخت و نصب ۸۰ تن ساپورت و استراکچر، کابل‌کشی و سندبلاست و رنگ‌آمیزی.',
-    coverImage: { url: '/media/image30.jpg', alt: 'مخازن کروی پالایشگاه آبادان' },
-  },
-  {
-    id: '4',
-    title: 'احداث مجتمع ذخیره‌سازی پالایشگاه آبادان',
-    slug: 'abadan-refinery-storage-complex',
-    client: 'پارس تابلو / تیو انرژی',
-    location: 'پالایشگاه آبادان',
-    serviceDescription: 'پایپینگ ۱۰ هزار اینچ، ساخت مخزن ذخیره ۱۳۵ تن، استراکچر ۱۰۰ تن، بتن‌ریزی ۱۵۰۰ متر مکعب.',
-    coverImage: { url: '/media/image35.jpg', alt: 'مجتمع ذخیره‌سازی پالایشگاه آبادان' },
-  },
-  {
-    id: '5',
-    title: 'نصب تجهیزات مکانیکال یوتیلیتی پتروشیمی گچساران',
-    slug: 'gachsaran-petrochemical-utility',
-    client: 'ماشین‌سازی ویژه',
-    location: 'گچساران',
-    serviceDescription: 'نصب تجهیزات پکیج بلودان و RO ۷۸ تن، تجهیزات ثابت ۲۸۶ تن، دوار ۱۲۸ تن (۱۱۲ عدد ثابت، ۸۵ عدد دوار).',
-    coverImage: { url: '/media/image40.jpeg', alt: 'پتروشیمی گچساران' },
-  },
-  {
-    id: '6',
-    title: 'بازسازی کامل واحد ۶۰۰ پتروشیمی آبادان',
-    slug: 'abadan-petrochemical-unit-600',
-    client: 'کمک‌صنعتگران جنوب',
-    location: 'پتروشیمی آبادان',
-    serviceDescription: 'عملیات پایپینگ ۳۰ هزار اینچ، ساخت و نصب ساپورت ۵۰ تن، سندبلاست و رنگ‌آمیزی ۵۰۰۰ متر مربع.',
-    coverImage: { url: '/media/image42.jpg', alt: 'واحد ۶۰۰ پتروشیمی آبادان' },
-  },
-  {
-    id: '7',
-    title: 'جمع‌آوری گازهای فلر پالایش نفت آبادان',
-    slug: 'abadan-refinery-flare-gas-recovery',
-    client: 'طراحی و مهندسی عالی‌نام',
-    location: 'پالایشگاه نفت آبادان',
-    serviceDescription: 'اجرای پایپینگ ۱۱ هزار اینچ، ساخت و نصب ساپورت ۳۵ تن، سندبلاست و رنگ ۳۰۰۰ متر مربع و پیش‌راه‌اندازی.',
-    coverImage: { url: '/media/image45.jpg', alt: 'پروژه جمع‌آوری گازهای فلر' },
-  },
-  {
-    id: '8',
-    title: 'ترنچ و ترانشه آب و نیروی مکران چابهار',
-    slug: 'chabahar-makran-water-power-trench',
-    client: 'مهندسی و ساختمان تیو انرژی',
-    location: 'چابهار، مکران',
-    serviceDescription: 'بتن‌ریزی ۳۰۰۰ متر مکعب، قالب‌بندی ۲۰ هزار متر مربع، آرماتوربندی ۲۴۰ تن، ورق‌گذاری ۵۷ تن.',
-    coverImage: { url: '/media/image33.jpg', alt: 'آب و نیروی مکران چابهار' },
-  },
-]
-
 export default async function ProjectsPage() {
   const cmsPage = await getProjectsPageData()
-  let projects: any[] = DEFAULT_PROJECTS
+  let projects: any[] = []
 
   try {
     const payload = await getPayloadClient()
     const result = await payload.find({ collection: 'projects', sort: 'order', limit: 100 })
-    const docs = JSON.parse(JSON.stringify(result?.docs ?? []))
-    if (docs.length > 0) projects = docs
+    projects = JSON.parse(JSON.stringify(result?.docs ?? []))
   } catch (_) {}
 
   return (
@@ -129,73 +53,80 @@ export default async function ProjectsPage() {
 
       <section className="section">
         <div className="container">
-          <div className={styles.projectsGrid}>
-            {projects.map((project: any) => {
-              const clientName = typeof project.clientRelation === 'object' && project.clientRelation?.name
-                ? project.clientRelation.name
-                : project.client
+          {projects.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--white)', borderRadius: 'var(--radius-2xl)', border: '1px solid var(--gray-200)' }}>
+              <h3 style={{ fontSize: '1.25rem', color: 'var(--navy-900)', fontWeight: 800 }}>پروژه‌ای یافت نشد</h3>
+              <p style={{ color: 'var(--gray-600)', marginTop: '0.5rem' }}>در حال حاضر پروژه‌ای در سامانه ثبت نشده است.</p>
+            </div>
+          ) : (
+            <div className={styles.projectsGrid}>
+              {projects.map((project: any) => {
+                const clientName = typeof project.clientRelation === 'object' && project.clientRelation?.name
+                  ? project.clientRelation.name
+                  : project.client
 
-              return (
-                <Link
-                  key={project.id}
-                  href={getProjectUrl(project.slug)}
-                  style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
-                >
-                  <article
-                    style={{
-                      background: '#ffffff',
-                      borderRadius: '1rem',
-                      overflow: 'hidden',
-                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
-                      border: '1px solid rgba(0, 0, 0, 0.08)',
-                      transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                      height: '100%',
-                      cursor: 'pointer',
-                    }}
-                    className="card"
+                return (
+                  <Link
+                    key={project.id}
+                    href={getProjectUrl(project.slug)}
+                    style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
                   >
-                    <div style={{ position: 'relative', height: '220px', background: '#0f2545' }}>
-                      {project.coverImage ? (
-                        <img
-                          src={typeof project.coverImage === 'object' ? project.coverImage.url : project.coverImage}
-                          alt={typeof project.coverImage === 'object' ? (project.coverImage.alt || project.title) : project.title}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                      ) : (
-                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.2)', fontSize: '3rem' }}>
-                          🏗️
-                        </div>
-                      )}
-                    </div>
-                    <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                      <h2 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#0f2545', fontFamily: 'var(--font-heading)' }}>
-                        {project.title}
-                      </h2>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-                        {clientName && (
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', color: '#6b7280' }}>
-                            <Building size={12} style={{ color: '#f97316' }} />
-                            {clientName}
-                          </span>
-                        )}
-                        {project.location && (
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', color: '#6b7280' }}>
-                            <MapPin size={12} style={{ color: '#f97316' }} />
-                            {project.location}
-                          </span>
+                    <article
+                      style={{
+                        background: '#ffffff',
+                        borderRadius: '1rem',
+                        overflow: 'hidden',
+                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+                        border: '1px solid rgba(0, 0, 0, 0.08)',
+                        transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+                        height: '100%',
+                        cursor: 'pointer',
+                      }}
+                      className="card"
+                    >
+                      <div style={{ position: 'relative', height: '220px', background: '#0f2545' }}>
+                        {project.coverImage ? (
+                          <img
+                            src={typeof project.coverImage === 'object' ? project.coverImage.url : project.coverImage}
+                            alt={typeof project.coverImage === 'object' ? (project.coverImage.alt || project.title) : project.title}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        ) : (
+                          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.2)', fontSize: '3rem' }}>
+                            🏗️
+                          </div>
                         )}
                       </div>
-                      <p style={{ fontSize: '0.875rem', color: '#4b5563', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                        {project.serviceDescription}
-                      </p>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: 700, color: '#f97316', paddingTop: '0.75rem', borderTop: '1px solid #f3f4f6' }}>
-                        مشاهده جزئیات <ChevronLeft size={14} />
-                      </span>
-                    </div>
-                  </article>
-                </Link>
-              )})}
-          </div>
+                      <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        <h2 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#0f2545', fontFamily: 'var(--font-heading)' }}>
+                          {project.title}
+                        </h2>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                          {clientName && (
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', color: '#6b7280' }}>
+                              <Building size={12} style={{ color: '#f97316' }} />
+                              {clientName}
+                            </span>
+                          )}
+                          {project.location && (
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', color: '#6b7280' }}>
+                              <MapPin size={12} style={{ color: '#f97316' }} />
+                              {project.location}
+                            </span>
+                          )}
+                        </div>
+                        <p style={{ fontSize: '0.875rem', color: '#4b5563', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                          {project.serviceDescription}
+                        </p>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', fontWeight: 700, color: '#f97316', paddingTop: '0.75rem', borderTop: '1px solid #f3f4f6' }}>
+                          مشاهده جزئیات <ChevronLeft size={14} />
+                        </span>
+                      </div>
+                    </article>
+                  </Link>
+                )})}
+            </div>
+          )}
         </div>
       </section>
     </>

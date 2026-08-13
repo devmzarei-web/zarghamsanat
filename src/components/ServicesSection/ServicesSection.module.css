@@ -200,10 +200,21 @@
   position: relative;
 }
 
-.projectBadge {
+.projectBadgeRow {
   position: absolute;
   top: -16px;
   right: 2.25rem;
+  left: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: auto;
+}
+
+.projectBadge {
+  position: relative;
+  top: 0;
+  right: 0;
   background: var(--safety-orange-500);
   color: var(--white);
   padding: 0.25rem 0.75rem;
@@ -211,6 +222,32 @@
   font-size: var(--text-xs);
   font-weight: 800;
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+.sliderControls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.sliderArrow {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(10, 23, 44, 0.9);
+  border: 1px solid var(--safety-orange-500);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sliderArrow:hover {
+  background: var(--safety-orange-500);
+  color: var(--white);
+  transform: scale(1.1);
 }
 
 .detailTitle {

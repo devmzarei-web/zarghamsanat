@@ -52,10 +52,17 @@ export const Projects: CollectionConfig = {
       label: 'توضیحات کامل پروژه',
     },
     {
+      name: 'relatedServices',
+      type: 'relationship',
+      relationTo: 'services',
+      label: 'خدمات مرتبط (امکان انتخاب چند خدمت)',
+      hasMany: true,
+    },
+    {
       name: 'relatedService',
       type: 'relationship',
       relationTo: 'services',
-      label: 'خدمت مرتبط',
+      label: 'خدمت مرتبط (تک خدمت)',
       hasMany: false,
     },
     {
