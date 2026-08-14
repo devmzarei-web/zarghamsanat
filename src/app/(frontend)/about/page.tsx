@@ -57,6 +57,17 @@ export default async function AboutPage() {
   const specialists = stats?.specialists ?? 80
   const trustedClients = stats?.trustedClients ?? 40
 
+  const pageVideoUrl =
+    (typeof cmsPage?.video === 'object' && cmsPage?.video?.url ? cmsPage.video.url : undefined) ||
+    (typeof cmsPage?.video === 'string' && cmsPage.video ? cmsPage.video : undefined) ||
+    cmsPage?.videoUrl ||
+    '/media/video.mp4'
+
+  const pageVideoCoverUrl =
+    typeof cmsPage?.videoCover === 'object' && cmsPage?.videoCover?.url
+      ? cmsPage.videoCover.url
+      : cmsPage?.heroImage?.url || undefined
+
   const defaultBodyContent = `شرکت ضرغام صنعت اروند، یکی از شرکت‌های پیمانکاری در اجرای پروژه‌های نفت، گاز، پتروشیمی و صنایع مختلف می‌باشد که از بدو تأسیس تاکنون، با اتکا به ظرفیت بالای نیروی انسانی متخصص تلاش کرده است تا تعهدات قراردادی خود با کارفرمایان را به نحو احسن انجام داده و ضمن مدیریت هزینه‌ها، کیفیت و زمان‌بندی پروژه‌ها را سرلوحه کارهای خود قرار دهد.`
 
   return (
@@ -106,6 +117,37 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* 3D Video Representation Showcase Section (Fetches from page's own CMS video field) */}
+      {pageVideoUrl && (
+        <section className={styles.videoSection} aria-label="ویدیو معرفی شرکت">
+          <div className="container">
+            <div className={styles.videoGrid}>
+              <div className={styles.videoTextCard}>
+                <span className={styles.videoBadge}>🎥 تیزر رسمی شرکت</span>
+                <h2 className={styles.videoTitle}>فیلم معرفی تخصص و سوابق اجرای پروژه</h2>
+                <p className={styles.videoSubtitle}>
+                  مشاهده تیزر معرفی توانمندی‌های واحد مهندسی، کارگاه‌های پیش‌ساخت پایپینگ، نصب تجهیزات مکانیکی و پروژه های پالایشگاهی ضرغام صنعت اروند
+                </p>
+              </div>
+
+              <div className={styles.tvBox}>
+                <div className={styles.tvFrame}>
+                  <video
+                    src={pageVideoUrl}
+                    poster={pageVideoCoverUrl}
+                    controls
+                    playsInline
+                    className={styles.videoPlayer}
+                  >
+                    مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Leadership & Team Section */}
       <TeamSection

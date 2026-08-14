@@ -59,6 +59,29 @@ export const Pages: CollectionConfig = {
       label: 'متن اصلی / توضیحات صفحه',
     },
     {
+      name: 'video',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'ویدیو اختصاصی صفحه (Media Upload)',
+      admin: {
+        description: 'فایل ویدیوی اختصاصی تیزر یا معرفی برای این صفحه',
+      },
+    },
+    {
+      name: 'videoUrl',
+      type: 'text',
+      label: 'لینک مستقیم یا جایگزین ویدیو (آدرس MP4)',
+      admin: {
+        description: 'در صورت عدم آپلود فایل در رسانه، می‌توانید لینک مستقیم MP4 را وارد کنید',
+      },
+    },
+    {
+      name: 'videoCover',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'تصویر کاور/پوستر ویدیوی صفحه',
+    },
+    {
       name: 'teamSectionBadge',
       type: 'text',
       label: 'بج / نشان بخش تیم مدیریت',

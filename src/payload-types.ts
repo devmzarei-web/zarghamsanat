@@ -438,6 +438,15 @@ export interface Page {
   heroImage?: (number | null) | Media;
   storyTitle?: string | null;
   bodyContent?: string | null;
+  /**
+   * فایل ویدیوی اختصاصی تیزر یا معرفی برای این صفحه
+   */
+  video?: (number | null) | Media;
+  /**
+   * در صورت عدم آپلود فایل در رسانه، می‌توانید لینک مستقیم MP4 را وارد کنید
+   */
+  videoUrl?: string | null;
+  videoCover?: (number | null) | Media;
   teamSectionBadge?: string | null;
   teamSectionTitle?: string | null;
   metaTitle?: string | null;
@@ -840,6 +849,9 @@ export interface PagesSelect<T extends boolean = true> {
   heroImage?: T;
   storyTitle?: T;
   bodyContent?: T;
+  video?: T;
+  videoUrl?: T;
+  videoCover?: T;
   teamSectionBadge?: T;
   teamSectionTitle?: T;
   metaTitle?: T;

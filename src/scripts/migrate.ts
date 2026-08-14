@@ -79,6 +79,9 @@ async function run() {
     `ALTER TABLE "site_settings" ADD COLUMN IF NOT EXISTS "footer_description" varchar;`,
     `ALTER TABLE "site_settings" ADD COLUMN IF NOT EXISTS "footer_copyright_text" varchar;`,
     `ALTER TABLE "site_settings" ADD COLUMN IF NOT EXISTS "footer_dev_credit" varchar;`,
+    `ALTER TABLE "pages" ADD COLUMN IF NOT EXISTS "video_id" integer;`,
+    `ALTER TABLE "pages" ADD COLUMN IF NOT EXISTS "video_url" varchar;`,
+    `ALTER TABLE "pages" ADD COLUMN IF NOT EXISTS "video_cover_id" integer;`,
 
     `CREATE TABLE IF NOT EXISTS "site_settings_nav_items" (
       "_order" integer NOT NULL,
