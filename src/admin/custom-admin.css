@@ -1,27 +1,96 @@
-@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
 
-:root {
+/* ==========================================================================
+   Payload CMS Custom Theme - Soft Beige & Warm Cream (Complete Light Theme)
+   ========================================================================== */
+
+:root,
+[data-theme='light'],
+[data-theme='dark'],
+html,
+body {
   --font-family-base: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-body: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-heading: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --theme-bg: #0a172c;
-  --theme-elevation-50: #0f203c;
-  --theme-elevation-100: #112240;
-  --theme-elevation-150: #172a4d;
-  --theme-elevation-200: #1e3661;
-  --theme-border-color: rgba(255, 255, 255, 0.12);
-  --theme-input-bg: #0d1b33;
+
+  /* Soft Beige Core Elevations */
+  --theme-bg: #f5f0e8 !important;
+  --theme-elevation-0: #f5f0e8 !important;
+  --theme-elevation-50: #faf6ef !important;
+  --theme-elevation-100: #ffffff !important;
+  --theme-elevation-150: #f3ede2 !important;
+  --theme-elevation-200: #ede4d4 !important;
+  --theme-elevation-250: #e6dac5 !important;
+  --theme-elevation-300: #ded0b7 !important;
+  --theme-elevation-350: #d5c4a7 !important;
+  --theme-elevation-400: #cbb896 !important;
+  --theme-elevation-450: #bfab86 !important;
+  --theme-elevation-500: #b19d77 !important;
+  --theme-elevation-550: #9e8a64 !important;
+  --theme-elevation-600: #897551 !important;
+  --theme-elevation-650: #746241 !important;
+  --theme-elevation-700: #5f4f32 !important;
+  --theme-elevation-750: #4c3e25 !important;
+  --theme-elevation-800: #3c301b !important;
+  --theme-elevation-850: #2d2413 !important;
+  --theme-elevation-900: #20190c !important;
+  --theme-elevation-950: #151007 !important;
+  --theme-elevation-1000: #0a0803 !important;
+
+  /* Color Base Tokens for Payload 3.0 */
+  --color-base-0: #ffffff !important;
+  --color-base-50: #faf6ef !important;
+  --color-base-100: #f3ede2 !important;
+  --color-base-150: #ede4d4 !important;
+  --color-base-200: #e6dac5 !important;
+  --color-base-300: #ded0b7 !important;
+  --color-base-400: #cbb896 !important;
+  --color-base-500: #897551 !important;
+  --color-base-600: #5f4f32 !important;
+  --color-base-700: #3c301b !important;
+  --color-base-800: #2a2216 !important;
+  --color-base-850: #221a10 !important;
+  --color-base-900: #1a140b !important;
+  --color-base-950: #120e07 !important;
+  --color-base-1000: #000000 !important;
+
+  /* Dark Texts & High-Contrast Typography */
+  --theme-text: #211c16 !important;
+  --theme-text-high-contrast: #110e0a !important;
+  --color-text: #211c16 !important;
+  --color-text-high-contrast: #110e0a !important;
+  --theme-border-color: #dfd4c2 !important;
+
+  /* Inputs and Form Fields */
+  --theme-input-bg: #ffffff !important;
+  --theme-input-border: #d5c8b2 !important;
+  --theme-input-text: #1a140e !important;
+  --theme-input-placeholder: #8c7f6e !important;
+
+  /* Warm Accent */
+  --theme-accent: #c2410c !important;
+  --color-accent: #c2410c !important;
+  --theme-error-500: #dc2626 !important;
+  --theme-success-500: #16a34a !important;
+  --theme-warning-500: #d97706 !important;
 }
 
-html, body {
+/* ==========================================================================
+   Global Body & Layout Reset
+   ========================================================================== */
+
+html,
+body {
   direction: rtl !important;
   text-align: right !important;
   font-family: var(--font-family-base) !important;
-  background-color: #0a172c !important;
-  color: #ffffff !important;
+  background-color: #f5f0e8 !important;
+  color: #211c16 !important;
+  font-synthesis: none !important;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Force RTL on all Payload Admin containers */
+/* RTL enforcement */
 [class*="payload-admin"],
 [class*="nav"],
 [class*="sidebar"],
@@ -34,46 +103,295 @@ html, body {
   text-align: right !important;
 }
 
-/* Primary Brand Accent (Safety Orange) */
-button.btn--style-primary,
-.btn--style-primary,
-button[type="submit"] {
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
-  border-color: transparent !important;
-  color: #ffffff !important;
-  font-weight: 800 !important;
-  border-radius: 8px !important;
+/* ==========================================================================
+   Sidebar & Navigation (Soft Warm Beige)
+   ========================================================================== */
+
+.nav,
+.template-default__nav,
+aside[class*="nav"],
+div[class*="nav-wrapper"] {
+  background-color: #ebe4d6 !important;
+  border-left: 1px solid #dfd4c2 !important;
 }
 
-button.btn--style-primary:hover,
-.btn--style-primary:hover {
-  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
-  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4) !important;
-}
-
-/* Sidebar Custom Styling */
-.nav {
-  background-color: #0d1b33 !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-.nav__link {
-  color: rgba(255, 255, 255, 0.85) !important;
+.nav__link,
+.nav a,
+a[class*="nav__link"] {
+  color: #3b3226 !important;
   font-weight: 700 !important;
+  transition: all 0.2s ease !important;
 }
 
 .nav__link:hover,
-.nav__link--active {
-  color: #f97316 !important;
-  background: rgba(249, 115, 22, 0.12) !important;
-  border-right: 3px solid #f97316 !important;
+.nav__link--active,
+a[class*="nav__link--active"],
+a[class*="nav__link"]:hover {
+  color: #c2410c !important;
+  background: #dfd4c0 !important;
+  border-right: 3px solid #ea580c !important;
 }
 
-/* Table Headings & Headers */
-th, td {
+.nav__group-label,
+.nav__label,
+span[class*="nav__group-label"] {
+  color: #786955 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  font-size: 0.75rem !important;
+}
+
+/* App Header & Top Bar */
+header.app-header,
+header[class*="app-header"],
+header[class*="header"] {
+  background-color: #faf6ef !important;
+  border-bottom: 1px solid #dfd4c2 !important;
+  color: #211c16 !important;
+}
+
+/* ==========================================================================
+   Typography, Headings, Paragraphs & Links
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+[class*="title"],
+[class*="heading"] {
+  color: #1a140e !important;
+  font-family: var(--font-family-heading) !important;
+  font-weight: 800 !important;
+}
+
+p, span, div, li {
+  color: #211c16;
+}
+
+a {
+  color: #b45309 !important;
+  text-decoration: none !important;
+}
+
+a:hover {
+  color: #ea580c !important;
+}
+
+/* ==========================================================================
+   Buttons & Actions
+   ========================================================================== */
+
+button.btn--style-primary,
+.btn--style-primary,
+button[type="submit"],
+.btn--style-pill {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  border: 1px solid #c2410c !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+
+button.btn--style-primary:hover,
+.btn--style-primary:hover,
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+button.btn--style-secondary,
+.btn--style-secondary,
+button.btn--style-transparent,
+.btn--style-transparent,
+button[class*="btn--style-secondary"],
+button[class*="btn--style-none"] {
+  background: #ffffff !important;
+  border: 1px solid #d5c8b2 !important;
+  color: #2a2218 !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+}
+
+button.btn--style-secondary:hover,
+.btn--style-secondary:hover {
+  background: #ede4d4 !important;
+  border-color: #bfae94 !important;
+  color: #1a140e !important;
+}
+
+/* ==========================================================================
+   Form Fields, Inputs & Controls
+   ========================================================================== */
+
+.field-type,
+[class*="field-type"],
+.form__field {
+  margin-bottom: 1.25rem !important;
+}
+
+label,
+.field-label,
+label[class*="label"] {
+  color: #211c16 !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  margin-bottom: 0.35rem !important;
+  display: block !important;
+}
+
+.field-description,
+.description,
+[class*="description"] {
+  color: #6d6150 !important;
+  font-size: 0.8125rem !important;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+textarea,
+select,
+.input,
+[class*="input"],
+[class*="select__control"],
+[class*="react-select"] {
+  background-color: #ffffff !important;
+  border: 1px solid #d5c8b2 !important;
+  color: #1a140e !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(90, 70, 45, 0.04) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #ea580c !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18) !important;
+}
+
+/* Checkboxes, Radios, Toggles */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: #ea580c !important;
+}
+
+/* ==========================================================================
+   Cards, Collapsibles, Blocks & Drawers
+   ========================================================================== */
+
+.card,
+.doc-header,
+.collection-list__wrap,
+[class*="card"],
+[class*="collapsible"],
+[class*="block-wrap"],
+[class*="array-field__row"],
+[class*="group-field"] {
+  background-color: #ffffff !important;
+  border: 1px solid #dfd4c2 !important;
+  border-radius: 10px !important;
+}
+
+.collapsible__header,
+[class*="collapsible__header"] {
+  background-color: #faf6ef !important;
+  border-bottom: 1px solid #dfd4c2 !important;
+  color: #1a140e !important;
+}
+
+/* ==========================================================================
+   Tables, Lists & Pagination
+   ========================================================================== */
+
+table,
+.table,
+[class*="table"] {
+  background-color: #ffffff !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: 1px solid #dfd4c2 !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+
+th,
+thead th,
+.table th,
+[class*="table"] th {
+  background-color: #ede4d4 !important;
+  color: #1a140e !important;
+  font-weight: 800 !important;
   text-align: right !important;
+  border-bottom: 1px solid #dfd4c2 !important;
+  padding: 0.85rem 1rem !important;
 }
 
-.table header {
-  background: #112240 !important;
+td,
+tbody td,
+.table td,
+[class*="table"] td {
+  background-color: #ffffff !important;
+  color: #211c16 !important;
+  text-align: right !important;
+  border-bottom: 1px solid #f0e8dc !important;
+  padding: 0.85rem 1rem !important;
+}
+
+tr:hover td,
+.table tr:hover td {
+  background-color: #faf5ec !important;
+}
+
+/* ==========================================================================
+   Modals, Drawers & Popups
+   ========================================================================== */
+
+.drawer,
+.modal,
+[class*="drawer__content"],
+[class*="modal__content"],
+[class*="popup__content"] {
+  background-color: #faf6ef !important;
+  border: 1px solid #dfd4c2 !important;
+  color: #211c16 !important;
+}
+
+.drawer__header,
+.modal__header {
+  background-color: #ede4d4 !important;
+  border-bottom: 1px solid #dfd4c2 !important;
+}
+
+/* Overlay */
+.drawer__backdrop,
+.modal__backdrop,
+[class*="backdrop"] {
+  background-color: rgba(35, 28, 20, 0.45) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* ==========================================================================
+   Login / Auth Views
+   ========================================================================== */
+
+.template-minimal,
+[class*="template-minimal"],
+.login {
+  background-color: #f5f0e8 !important;
+}
+
+.template-minimal__wrap,
+[class*="template-minimal__wrap"] {
+  background-color: #ffffff !important;
+  border: 1.5px solid #dfd4c2 !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 0 15px 40px rgba(90, 70, 45, 0.08) !important;
 }
